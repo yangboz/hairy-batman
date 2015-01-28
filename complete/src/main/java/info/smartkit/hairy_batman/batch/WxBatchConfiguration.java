@@ -1,12 +1,12 @@
 package info.smartkit.hairy_batman.batch;
 
-import info.smartkit.hairy_batman.domain.Person;
 import info.smartkit.hairy_batman.domain.WxFoo;
 
 import javax.sql.DataSource;
 
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
+import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
@@ -20,11 +20,12 @@ import org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper;
 import org.springframework.batch.item.file.mapping.DefaultLineMapper;
 import org.springframework.batch.item.file.transform.DelimitedLineTokenizer;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-//@Configuration
-//@EnableBatchProcessing
+@Configuration
+@EnableBatchProcessing
 public class WxBatchConfiguration
 {
 
@@ -37,9 +38,10 @@ public class WxBatchConfiguration
         reader.setLineMapper(new DefaultLineMapper<WxFoo>()
         {
             {
-                setLineTokenizer(new DelimitedLineTokenizer()
+                setLineTokenizer(new DelimitedLineTokenizer(";")
                 {
                     {
+                        // System.out.println("setLineTokenizer");
                         setNames(new String[] {"code", "store", "manager", "agency", "unit", "onSubscribe",
                         "subscribe", "followSubscribe", "onService", "service", "followService"});
                     }
@@ -76,16 +78,16 @@ public class WxBatchConfiguration
 
     // tag::jobstep[]
     @Bean
-    public Job importUserJob(JobBuilderFactory jobs, Step s1)
+    public Job importWxFooJob(JobBuilderFactory jobs, Step s1)
     {
-        return jobs.get("importUserJob").incrementer(new RunIdIncrementer()).flow(s1).end().build();
+        return jobs.get("importWxFooJob").incrementer(new RunIdIncrementer()).flow(s1).end().build();
     }
 
     @Bean
-    public Step step1(StepBuilderFactory stepBuilderFactory, ItemReader<Person> reader, ItemWriter<Person> writer,
-        ItemProcessor<Person, Person> processor)
+    public Step step1(StepBuilderFactory stepBuilderFactory, ItemReader<WxFoo> reader, ItemWriter<WxFoo> writer,
+        ItemProcessor<WxFoo, WxFoo> processor)
     {
-        return stepBuilderFactory.get("step1").<Person, Person>chunk(10).reader(reader).processor(processor)
+        return stepBuilderFactory.get("step1").<WxFoo, WxFoo>chunk(10).reader(reader).processor(processor)
             .writer(writer).build();
     }
 

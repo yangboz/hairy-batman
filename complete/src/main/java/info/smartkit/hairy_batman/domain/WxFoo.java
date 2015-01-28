@@ -30,10 +30,11 @@ public class WxFoo
 
     }
 
-    public WxFoo(String code, String store, String manager, String agency, String unit, boolean onSubscribe,
-        String subscribe, long followSubscribe, boolean onService, String service, long followService)
+    public WxFoo(String code, String store, String manager, String agency, String unit, String onSubscribe,
+        String subscribe, String followSubscribe, String onService, String service, String followService)
     {
         this.code = code;
+        this.store = store;
         this.manager = manager;
         this.agency = agency;
         this.unit = unit;
@@ -42,7 +43,7 @@ public class WxFoo
         this.followSubscribe = followSubscribe;
         this.onService = onService;
         this.service = service;
-        this.flollowService = followService;
+        this.followService = followService;
     }
 
     private String code;// 代码
@@ -105,14 +106,14 @@ public class WxFoo
         this.unit = unit;
     }
 
-    private boolean onSubscribe;// 是否开通订阅号
+    private String onSubscribe;// 是否开通订阅号
 
-    public boolean isOnSubscribe()
+    public String getOnSubscribe()
     {
         return onSubscribe;
     }
 
-    public void setOnSubscribe(boolean onSubscribe)
+    public void setOnSubscribe(String onSubscribe)
     {
         this.onSubscribe = onSubscribe;
     }
@@ -129,26 +130,26 @@ public class WxFoo
         this.subscribe = subscribe;
     }
 
-    private long followSubscribe;// 关注量1
+    private String followSubscribe;// 关注量1
 
-    public long getFollowSubscribe()
+    public String getFollowSubscribe()
     {
         return followSubscribe;
     }
 
-    public void setFollowSubscribe(long followSubscribe)
+    public void setFollowSubscribe(String followSubscribe)
     {
         this.followSubscribe = followSubscribe;
     }
 
-    private boolean onService;// 是否开通服务号
+    private String onService;// 是否开通服务号
 
-    public boolean isOnService()
+    public String getOnService()
     {
         return onService;
     }
 
-    public void setOnService(boolean onService)
+    public void setOnService(String onService)
     {
         this.onService = onService;
     }
@@ -165,21 +166,23 @@ public class WxFoo
         this.service = service;
     }
 
-    private long flollowService;// 关注量2
+    private String followService;// 关注量2
 
-    public long getFlollowService()
+    public String getFollowService()
     {
-        return flollowService;
+        return followService;
     }
 
-    public void setFlollowService(long flollowService)
+    public void setFollowService(String followService)
     {
-        this.flollowService = flollowService;
+        this.followService = followService;
     }
 
     @Override
     public String toString()
     {
-        return "code: " + code + ", store: " + store;
+        return "code: " + code + ", store: " + store + ",manager: " + manager + ",agency: " + agency + ",unit: " + unit
+            + ",onSubscribe: " + onSubscribe + ",subscribe: " + subscribe + ",followSubscribe: " + followSubscribe
+            + ",onService: " + onService + ",service: " + service + ",followService: " + followService;
     }
 }
