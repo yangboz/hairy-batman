@@ -13,17 +13,24 @@ import org.springframework.jdbc.core.RowMapper;
 
 @ComponentScan
 @EnableAutoConfiguration
-public class Application {
+public class Application
+{
 
-    public static void main(String[] args) {
+    private static final String WX_API = "http://www.kjson.com/weixin/api?key=45cfa3defbebeaab767517d2339b57e5";
+
+    public static void main(String[] args)
+    {
         ApplicationContext ctx = SpringApplication.run(Application.class, args);
 
-        List<Person> results = ctx.getBean(JdbcTemplate.class).query("SELECT first_name, last_name FROM people", new RowMapper<Person>() {
-            @Override
-            public Person mapRow(ResultSet rs, int row) throws SQLException {
-                return new Person(rs.getString(1), rs.getString(2));
-            }
-        });
+        List<Person> results =
+            ctx.getBean(JdbcTemplate.class).query("SELECT first_name, last_name FROM people", new RowMapper<Person>()
+            {
+                @Override
+                public Person mapRow(ResultSet rs, int row) throws SQLException
+                {
+                    return new Person(rs.getString(1), rs.getString(2));
+                }
+            });
 
         for (Person person : results) {
             System.out.println("Found <" + person + "> in the database.");
