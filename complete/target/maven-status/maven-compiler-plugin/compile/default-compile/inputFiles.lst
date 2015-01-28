@@ -1,4 +1,4 @@
-/Users/yangboz/Documents/Git/hairy-batman/complete/src/main/java/hello/PersonItemProcessor.java
-/Users/yangboz/Documents/Git/hairy-batman/complete/src/main/java/hello/Person.java
-/Users/yangboz/Documents/Git/hairy-batman/complete/src/main/java/hello/BatchConfiguration.java
-/Users/yangboz/Documents/Git/hairy-batman/complete/src/main/java/hello/Application.java
+/Users/yangboz/Documents/Git/hairy-batman/complete/src/main/java/info/smartkit/hairy_batman/batch/BatchConfiguration.java
+/Users/yangboz/Documents/Git/hairy-batman/complete/src/main/java/info/smartkit/hairy_batman/Application.java
+/Users/yangboz/Documents/Git/hairy-batman/complete/src/main/java/info/smartkit/hairy_batman/domain/Person.java
+/Users/yangboz/Documents/Git/hairy-batman/complete/src/main/java/info/smartkit/hairy_batman/batch/PersonItemProcessor.java
