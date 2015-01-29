@@ -15,26 +15,32 @@
  * 
  * All rights reserved.
  */
-package info.smartkit.hairy_batman.query;
+package info.smartkit.hairy_batman.config;
 
-import org.springframework.core.io.ClassPathResource;
+import info.smartkit.hairy_batman.domain.WxFoo;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 /**
- * Abstract query class for CSV reading and parsing then querying.
+ * Global variables storage here.
  * 
  * @author yangboz
  */
-public class CsvQuery
+public class GlobalVariables
 {
-    protected ClassPathResource csv;
+    //
+    public static List<WxFoo> wxFooList = new ArrayList<WxFoo>();
 
-    public CsvQuery()
+    //
+    public static final String DATE_FORMAT_NOW = "yyyy-MM-dd HH:mm:ss";
+
+    public static String now()
     {
-
-    }
-
-    public CsvQuery(String csv)
-    {
-        this.csv = new ClassPathResource(csv);
+        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT_NOW);
+        return sdf.format(cal.getTime());
     }
 }

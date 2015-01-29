@@ -35,7 +35,7 @@ public class WxBatchConfiguration
     public ItemReader<WxFoo> reader()
     {
         FlatFileItemReader<WxFoo> reader = new FlatFileItemReader<WxFoo>();
-        reader.setResource(new ClassPathResource(GlobalConsts.CSV_RESOURCE_FILE));
+        reader.setResource(new ClassPathResource(GlobalConsts.CSV_RESOURCE_FILE_INPUT));
         reader.setLineMapper(new DefaultLineMapper<WxFoo>()
         {
             {

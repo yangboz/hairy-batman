@@ -40,7 +40,10 @@ public class GlobalConsts
 
     public static final String[] CSV_COLUMNS_NAME = QUERY_COLUMNS_NAME.split(",");
 
-    public static final String CSV_RESOURCE_FILE = "QueryNumOfReadLike.csv";
+    public static final String CSV_RESOURCE_FILE_INPUT = "QueryNumOfReadLike.csv";
+
+    public static final String CSV_RESOURCE_FILE_OUTPUT = "QueryNumOfReadLike_output.csv";
 
     public static final String CSV_DELIMITED_LINE_TOKENIZER = ";";
+
 }

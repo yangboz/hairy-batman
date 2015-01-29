@@ -227,4 +227,13 @@ public class WxFoo
             + ",articleLikeNum: " + articleLikeNum + ",articleLikeRate: " + articleLikeRate + ",moniterTime: "
             + moniterTime;
     }
+
+    public String[] toStringArray()
+    {
+        return new String[] {this.getCode(), this.getStore(), this.getManager(), this.getAgency(), this.getUnit(),
+        this.getOnSubscribe(), this.getSubscribeId(), this.getArticleTime(), this.getArticleUrl(),
+        this.getArticleTitle(), this.getArticleReadNum(), this.getArticleLikeNum(), this.getArticleLikeRate(),
+        this.getMoniterTime()};
+    }
+
 }

@@ -17,58 +17,51 @@
  */
 package info.smartkit.hairy_batman.plain;
 
-import java.util.ArrayList;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
- * Parse kjson.com API result.
+ * KJson object entity.
+ * {url=http://mp.weixin.qq.com/s?__biz=MjM5ODE4MTUzMg==&mid=202895379&idx=1&sn=a46187dd2e3fc704b72277dbf863f356
+ * &3rd=MzA3MDU4NTYzMw==&scene=6#rd, read=2018, like=20}
  * 
  * @author yangboz
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class WxBar
+public class WxKJson
 {
-    private String ok;
+    private String url;
 
-    public String getOk()
+    public String getUrl()
     {
-        return ok;
+        return url;
     }
 
-    public void setOk(String ok)
+    public void setUrl(String url)
     {
-        this.ok = ok;
+        this.url = url;
     }
 
-    private String reason;
+    private String read;
 
-    public String getReason()
+    public String getRead()
     {
-        return reason;
+        return read;
     }
 
-    public void setReason(String reason)
+    public void setRead(String read)
     {
-        this.reason = reason;
+        this.read = read;
     }
 
-    private ArrayList<WxKJson> data;
+    private String like;
 
-    public ArrayList<WxKJson> getData()
+    public String getLike()
     {
-        return data;
+        return like;
     }
 
-    public void setData(ArrayList<WxKJson> data)
+    public void setLike(String like)
     {
-        this.data = data;
+        this.like = like;
     }
-
-    @Override
-    public String toString()
-    {
-        return "ok: " + ok + ",reason: " + reason + ",data: " + data.toString();
-    }
-
 }
