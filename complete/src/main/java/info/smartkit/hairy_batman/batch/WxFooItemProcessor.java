@@ -28,8 +28,6 @@ public class WxFooItemProcessor implements ItemProcessor<WxFoo, WxFoo>
                 followService);
 
         System.out.println("Converting (" + wxFoo + ") into (" + transformedWxFoo + ")");
-        // TODO:API call here.
         return transformedWxFoo;
     }
-
 }
