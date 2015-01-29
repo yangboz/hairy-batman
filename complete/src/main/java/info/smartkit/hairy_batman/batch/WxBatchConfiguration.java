@@ -1,5 +1,6 @@
 package info.smartkit.hairy_batman.batch;
 
+import info.smartkit.hairy_batman.config.GlobalConsts;
 import info.smartkit.hairy_batman.domain.WxFoo;
 
 import javax.sql.DataSource;
@@ -34,16 +35,15 @@ public class WxBatchConfiguration
     public ItemReader<WxFoo> reader()
     {
         FlatFileItemReader<WxFoo> reader = new FlatFileItemReader<WxFoo>();
-        reader.setResource(new ClassPathResource("sample-data-wx.csv"));
+        reader.setResource(new ClassPathResource(GlobalConsts.CSV_RESOURCE_FILE));
         reader.setLineMapper(new DefaultLineMapper<WxFoo>()
         {
             {
-                setLineTokenizer(new DelimitedLineTokenizer(";")
+                setLineTokenizer(new DelimitedLineTokenizer(GlobalConsts.CSV_DELIMITED_LINE_TOKENIZER)
                 {
                     {
-                        // System.out.println("setLineTokenizer");
-                        setNames(new String[] {"code", "store", "manager", "agency", "unit", "onSubscribe",
-                        "subscribe", "followSubscribe", "onService", "service", "followService"});
+                        // System.out.println("GlobalConsts.CSV_COLUMNS_NAME: " + GlobalConsts.CSV_COLUMNS_NAME);
+                        setNames(GlobalConsts.CSV_COLUMNS_NAME);
                     }
                 });
                 setFieldSetMapper(new BeanWrapperFieldSetMapper<WxFoo>()
@@ -68,8 +68,8 @@ public class WxBatchConfiguration
     {
         JdbcBatchItemWriter<WxFoo> writer = new JdbcBatchItemWriter<WxFoo>();
         writer.setItemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<WxFoo>());
-        writer
-            .setSql("INSERT INTO wxfoo (code, store,manager,agency,unit,onSubscribe,subscribe,followSubscribe,onService,service,followService) VALUES (:code, :store,:manager,:agency,:unit,:onSubscribe,:subscribe,:followSubscribe,:onService,:service,:followService)");
+        writer.setSql("INSERT INTO " + GlobalConsts.QUERY_TABLE_NAME + "(" + GlobalConsts.QUERY_COLUMNS_NAME
+            + ") VALUES (:" + GlobalConsts.QUERY_COLUMNS_LABEL + ")");
         writer.setDataSource(dataSource);
         return writer;
     }

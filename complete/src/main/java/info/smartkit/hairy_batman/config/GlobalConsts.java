@@ -24,5 +24,23 @@ package info.smartkit.hairy_batman.config;
  */
 public class GlobalConsts
 {
-    public static final String KJSON_API = "http://www.kjson.com/weixin/api?key=45cfa3defbebeaab767517d2339b57e5";
+    public static final String KJSON_API_URI = "http://www.kjson.com/weixin/api?key=45cfa3defbebeaab767517d2339b57e5";
+
+    // @see:http://www.kjson.com/weixin/bind
+    public static final long KJSON_API_QPM = 60;// Query numbers per minutes;
+
+    public static final long KJSON_API_PPQ = 20;// Page numbers per query;
+
+    public static final String QUERY_TABLE_NAME = "wxfoo";
+
+    public static final String QUERY_COLUMNS_NAME =
+        "code,store,manager,agency,unit,onSubscribe,subscribeId,articleTime,articleUrl,articleTitle,articleReadNum,articleLikeNum,articleLikeRate,updateTime";
+
+    public static final String QUERY_COLUMNS_LABEL = QUERY_COLUMNS_NAME.replace(",", ",:");
+
+    public static final String[] CSV_COLUMNS_NAME = QUERY_COLUMNS_NAME.split(",");
+
+    public static final String CSV_RESOURCE_FILE = "QueryNumOfReadLike.csv";
+
+    public static final String CSV_DELIMITED_LINE_TOKENIZER = ";";
 }

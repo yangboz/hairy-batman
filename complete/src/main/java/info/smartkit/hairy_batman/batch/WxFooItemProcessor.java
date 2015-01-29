@@ -17,15 +17,18 @@ public class WxFooItemProcessor implements ItemProcessor<WxFoo, WxFoo>
         final String agency = wxFoo.getAgency();
         final String unit = wxFoo.getUnit();
         final String onSubscribe = wxFoo.getOnSubscribe();
-        final String subscribe = wxFoo.getSubscribe();
-        final String followSubscribe = wxFoo.getFollowSubscribe();
-        final String onService = wxFoo.getOnService();
-        final String service = wxFoo.getService();
-        final String followService = wxFoo.getFollowService();
+        final String subscribeId = wxFoo.getSubscribeId();
+        final String articleTime = wxFoo.getArticleTime();
+        final String articleUrl = wxFoo.getArticleUrl();
+        final String articleTitle = wxFoo.getArticleTitle();
+        final String articleReadNum = wxFoo.getArticleReadNum();
+        final String articleLikeNum = wxFoo.getArticleLikeNum();
+        final String articleLikeRate = wxFoo.getArticleLikeRate();
+        final String updateTime = wxFoo.getUpdateTime();
 
         final WxFoo transformedWxFoo =
-            new WxFoo(code, store, manager, agency, unit, onSubscribe, subscribe, followSubscribe, onService, service,
-                followService);
+            new WxFoo(code, store, manager, agency, unit, onSubscribe, subscribeId, articleTime, articleUrl,
+                articleTitle, articleReadNum, articleLikeNum, articleLikeRate, updateTime);
 
         System.out.println("Converting (" + wxFoo + ") into (" + transformedWxFoo + ")");
         return transformedWxFoo;

@@ -31,7 +31,8 @@ public class WxFoo
     }
 
     public WxFoo(String code, String store, String manager, String agency, String unit, String onSubscribe,
-        String subscribe, String followSubscribe, String onService, String service, String followService)
+        String subscribeId, String articleTime, String articleUrl, String articleTitle, String articleReadNum,
+        String articleLikeNum, String articleLikeRate, String updateTime)
     {
         this.code = code;
         this.store = store;
@@ -39,11 +40,14 @@ public class WxFoo
         this.agency = agency;
         this.unit = unit;
         this.onSubscribe = onSubscribe;
-        this.subscribe = subscribe;
-        this.followSubscribe = followSubscribe;
-        this.onService = onService;
-        this.service = service;
-        this.followService = followService;
+        this.subscribeId = subscribeId;
+        this.articleTime = articleTime;
+        this.articleUrl = articleUrl;
+        this.articleTitle = articleTitle;
+        this.articleReadNum = articleReadNum;
+        this.articleLikeNum = articleLikeNum;
+        this.articleLikeRate = articleLikeRate;
+        this.updateTime = updateTime;
     }
 
     private String code;// 代码
@@ -118,71 +122,109 @@ public class WxFoo
         this.onSubscribe = onSubscribe;
     }
 
-    private String subscribe;// 订阅号名全称
+    private String subscribeId;// 订阅号名全称,subscribeId VARCHAR(20),
 
-    public String getSubscribe()
+    public String getSubscribeId()
     {
-        return subscribe;
+        return subscribeId;
     }
 
-    public void setSubscribe(String subscribe)
+    public void setSubscribeId(String subscribeId)
     {
-        this.subscribe = subscribe;
+        this.subscribeId = subscribeId;
     }
 
-    private String followSubscribe;// 关注量1
+    private String articleTime;// 文章发布日期，articleTime VARCHAR(10),
 
-    public String getFollowSubscribe()
+    public String getArticleTime()
     {
-        return followSubscribe;
+        return articleTime;
     }
 
-    public void setFollowSubscribe(String followSubscribe)
+    public void setArticleTime(String articleTime)
     {
-        this.followSubscribe = followSubscribe;
+        this.articleTime = articleTime;
     }
 
-    private String onService;// 是否开通服务号
+    private String articleUrl;// 文章地址，articleUrl VARCHAR(255),
 
-    public String getOnService()
+    public String getArticleUrl()
     {
-        return onService;
+        return articleUrl;
     }
 
-    public void setOnService(String onService)
+    public void setArticleUrl(String articleUrl)
     {
-        this.onService = onService;
+        this.articleUrl = articleUrl;
     }
 
-    private String service;// 服务号全称
+    private String articleTitle;// 文章标题,articleTitle VARCHAR(50),
 
-    public String getService()
+    public String getArticleTitle()
     {
-        return service;
+        return articleTitle;
     }
 
-    public void setService(String service)
+    public void setArticleTitle(String articleTitle)
     {
-        this.service = service;
+        this.articleTitle = articleTitle;
     }
 
-    private String followService;// 关注量2
+    private String articleReadNum;// 文章阅读数,articleReadNum VARCHAR(10),
 
-    public String getFollowService()
+    public String getArticleReadNum()
     {
-        return followService;
+        return articleReadNum;
     }
 
-    public void setFollowService(String followService)
+    public void setArticleReadNum(String articleReadNum)
     {
-        this.followService = followService;
+        this.articleReadNum = articleReadNum;
+    }
+
+    private String articleLikeNum;// 文章点赞数,articleLikeNum VARCHAR(10),
+
+    public String getArticleLikeNum()
+    {
+        return articleLikeNum;
+    }
+
+    public void setArticleLikeNum(String articleLikeNum)
+    {
+        this.articleLikeNum = articleLikeNum;
+    }
+
+    private String articleLikeRate;// 文章点赞率,articleLikeRate VARCHAR(5),
+
+    public String getArticleLikeRate()
+    {
+        return articleLikeRate;
+    }
+
+    public void setArticleLikeRate(String articleLikeRate)
+    {
+        this.articleLikeRate = articleLikeRate;
+    }
+
+    private String updateTime;// 检测日期, updateTime VARCHAR(10)
+
+    public String getUpdateTime()
+    {
+        return updateTime;
+    }
+
+    public void setUpdateTime(String updateTime)
+    {
+        this.updateTime = updateTime;
     }
 
     @Override
     public String toString()
     {
         return "code: " + code + ", store: " + store + ",manager: " + manager + ",agency: " + agency + ",unit: " + unit
-            + ",onSubscribe: " + onSubscribe + ",subscribe: " + subscribe + ",followSubscribe: " + followSubscribe
-            + ",onService: " + onService + ",service: " + service + ",followService: " + followService;
+            + ",onSubscribe: " + onSubscribe + ",subscribeId: " + subscribeId + ",articleTime: " + articleTime
+            + ",articleUrl: " + articleUrl + ",articleTitle: " + articleTitle + ",articleReadNum: " + articleReadNum
+            + ",articleLikeNum: " + articleLikeNum + ",articleLikeRate: " + articleLikeRate + ",updateTime: "
+            + updateTime;
     }
 }

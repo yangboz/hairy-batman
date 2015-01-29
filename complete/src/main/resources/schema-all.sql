@@ -8,9 +8,12 @@ CREATE TABLE wxfoo  (
     agency VARCHAR(20),
     unit VARCHAR(20),
     onSubscribe VARCHAR(5),
-    subscribe VARCHAR(20),
-    followSubscribe VARCHAR(10),
-    onService VARCHAR(5),
-    service VARCHAR(20),
-    followService VARCHAR(10)
+    subscribeId VARCHAR(20),
+    articleTime VARCHAR(10),
+    articleUrl VARCHAR(255),
+    articleTitle VARCHAR(50),
+    articleReadNum VARCHAR(10),
+    articleLikeNum VARCHAR(10),
+    articleLikeRate VARCHAR(5),
+    updateTime VARCHAR(10)
 );

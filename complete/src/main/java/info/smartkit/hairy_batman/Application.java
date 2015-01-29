@@ -42,25 +42,24 @@ public class Application
             "urls",
             "http://mp.weixin.qq.com/s?__biz=MjM5ODE4MTUzMg==&mid=202895379&idx=1&sn=a46187dd2e3fc704b72277dbf863f356&3rd=MzA3MDU4NTYzMw==&scene=6#rd");
         //
-        WxBar api_results = restTemplate.postForObject(GlobalConsts.KJSON_API, map, WxBar.class);
-        // WxBar returns = restTemplate.getForObject(GlobalConsts.KJSON_API, WxBar.class);
+        WxBar api_results = restTemplate.postForObject(GlobalConsts.KJSON_API_URI, map, WxBar.class);
+        // WxBar returns = restTemplate.getForObject(GlobalConsts.KJSON_API_URI, WxBar.class);
         System.out.println("Results:  " + api_results.toString());
 
         // Spring-batch reading CSV testing.
         List<WxFoo> batch_results =
-            ctx.getBean(JdbcTemplate.class)
-                .query(
-                    "SELECT code, store,manager,agency,unit,onSubscribe,subscribe,followSubscribe,onService,service,followService FROM wxfoo",
-                    new RowMapper<WxFoo>()
+            ctx.getBean(JdbcTemplate.class).query(
+                "SELECT " + GlobalConsts.QUERY_COLUMNS_NAME + " FROM " + GlobalConsts.QUERY_TABLE_NAME,
+                new RowMapper<WxFoo>()
+                {
+                    @Override
+                    public WxFoo mapRow(ResultSet rs, int row) throws SQLException
                     {
-                        @Override
-                        public WxFoo mapRow(ResultSet rs, int row) throws SQLException
-                        {
-                            return new WxFoo(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs
-                                .getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs
-                                .getString(10), rs.getString(11));
-                        }
-                    });
+                        return new WxFoo(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs
+                            .getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs
+                            .getString(10), rs.getString(11), rs.getString(12), rs.getString(13), rs.getString(14));
+                    }
+                });
 
         for (WxFoo wxFoo : batch_results) {
             System.out.println("Found <" + wxFoo + "> in the database.");
