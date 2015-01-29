@@ -66,6 +66,7 @@ public class WxBatchConfiguration
     @Bean
     public ItemWriter<WxFoo> writer(DataSource dataSource)
     {
+        System.out.println("GlobalConsts.QUERY_COLUMNS_LABEL: " + GlobalConsts.QUERY_COLUMNS_LABEL);
         JdbcBatchItemWriter<WxFoo> writer = new JdbcBatchItemWriter<WxFoo>();
         writer.setItemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<WxFoo>());
         writer.setSql("INSERT INTO " + GlobalConsts.QUERY_TABLE_NAME + "(" + GlobalConsts.QUERY_COLUMNS_NAME

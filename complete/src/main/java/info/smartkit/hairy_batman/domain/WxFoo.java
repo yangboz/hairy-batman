@@ -32,7 +32,7 @@ public class WxFoo
 
     public WxFoo(String code, String store, String manager, String agency, String unit, String onSubscribe,
         String subscribeId, String articleTime, String articleUrl, String articleTitle, String articleReadNum,
-        String articleLikeNum, String articleLikeRate, String updateTime)
+        String articleLikeNum, String articleLikeRate, String moniterTime)
     {
         this.code = code;
         this.store = store;
@@ -47,7 +47,7 @@ public class WxFoo
         this.articleReadNum = articleReadNum;
         this.articleLikeNum = articleLikeNum;
         this.articleLikeRate = articleLikeRate;
-        this.updateTime = updateTime;
+        this.moniterTime = moniterTime;
     }
 
     private String code;// 代码
@@ -206,16 +206,16 @@ public class WxFoo
         this.articleLikeRate = articleLikeRate;
     }
 
-    private String updateTime;// 检测日期, updateTime VARCHAR(10)
+    private String moniterTime;// 检测日期, updateTime VARCHAR(10)
 
-    public String getUpdateTime()
+    public String getMoniterTime()
     {
-        return updateTime;
+        return moniterTime;
     }
 
-    public void setUpdateTime(String updateTime)
+    public void setMoniterTime(String moniterTime)
     {
-        this.updateTime = updateTime;
+        this.moniterTime = moniterTime;
     }
 
     @Override
@@ -224,7 +224,7 @@ public class WxFoo
         return "code: " + code + ", store: " + store + ",manager: " + manager + ",agency: " + agency + ",unit: " + unit
             + ",onSubscribe: " + onSubscribe + ",subscribeId: " + subscribeId + ",articleTime: " + articleTime
             + ",articleUrl: " + articleUrl + ",articleTitle: " + articleTitle + ",articleReadNum: " + articleReadNum
-            + ",articleLikeNum: " + articleLikeNum + ",articleLikeRate: " + articleLikeRate + ",updateTime: "
-            + updateTime;
+            + ",articleLikeNum: " + articleLikeNum + ",articleLikeRate: " + articleLikeRate + ",moniterTime: "
+            + moniterTime;
     }
 }

@@ -34,7 +34,7 @@ public class GlobalConsts
     public static final String QUERY_TABLE_NAME = "wxfoo";
 
     public static final String QUERY_COLUMNS_NAME =
-        "code,store,manager,agency,unit,onSubscribe,subscribeId,articleTime,articleUrl,articleTitle,articleReadNum,articleLikeNum,articleLikeRate,updateTime";
+        "code,store,manager,agency,unit,onSubscribe,subscribeId,articleTime,articleUrl,articleTitle,articleReadNum,articleLikeNum,articleLikeRate,moniterTime";
 
     public static final String QUERY_COLUMNS_LABEL = QUERY_COLUMNS_NAME.replace(",", ",:");
 

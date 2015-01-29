@@ -15,5 +15,5 @@ CREATE TABLE wxfoo  (
     articleReadNum VARCHAR(10),
     articleLikeNum VARCHAR(10),
     articleLikeRate VARCHAR(5),
-    updateTime VARCHAR(10)
+    moniterTime VARCHAR(20)
 );

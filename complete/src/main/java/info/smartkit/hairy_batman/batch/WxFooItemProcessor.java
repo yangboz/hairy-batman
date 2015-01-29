@@ -24,11 +24,11 @@ public class WxFooItemProcessor implements ItemProcessor<WxFoo, WxFoo>
         final String articleReadNum = wxFoo.getArticleReadNum();
         final String articleLikeNum = wxFoo.getArticleLikeNum();
         final String articleLikeRate = wxFoo.getArticleLikeRate();
-        final String updateTime = wxFoo.getUpdateTime();
+        final String moniterTime = wxFoo.getMoniterTime();
 
         final WxFoo transformedWxFoo =
             new WxFoo(code, store, manager, agency, unit, onSubscribe, subscribeId, articleTime, articleUrl,
-                articleTitle, articleReadNum, articleLikeNum, articleLikeRate, updateTime);
+                articleTitle, articleReadNum, articleLikeNum, articleLikeRate, moniterTime);
 
         System.out.println("Converting (" + wxFoo + ") into (" + transformedWxFoo + ")");
         return transformedWxFoo;
