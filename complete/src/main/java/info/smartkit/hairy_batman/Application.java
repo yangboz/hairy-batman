@@ -7,6 +7,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.boot.SpringApplication;
@@ -51,9 +52,22 @@ public class Application
             e.printStackTrace();
             System.out.println(e.toString());
         }
+        // for (WxFoo elem : batch_results) {
+        // System.out.println("elem.toStringArray():" + elem.toStringArray());
+        // writer.writeNext(elem.toStringArray());
+        // }
+
+        List<String[]> allElements = new ArrayList<String[]>();
         for (WxFoo elem : batch_results) {
             System.out.println("elem.toStringArray():" + elem.toStringArray());
-            writer.writeNext(elem.toStringArray());
+            allElements.add(elem.toStringArray());
+        }
+        writer.writeAll(allElements);
+        try {
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println(e.toString());
         }
     }
 }

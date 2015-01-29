@@ -31,6 +31,7 @@ public class WxFooItemProcessor implements ItemProcessor<WxFoo, WxFoo>
         // new WxFoo(code, store, manager, agency, unit, onSubscribe, subscribeId, articleTime, articleUrl,
         // articleTitle, articleReadNum, articleLikeNum, articleLikeRate, moniterTime);
         new ApiQuery(wxFoo).query();
+        new ApiQuery(wxFoo).parse();
         //
         System.out.println("ApiQuery converting..." + wxFoo);
         return wxFoo;
