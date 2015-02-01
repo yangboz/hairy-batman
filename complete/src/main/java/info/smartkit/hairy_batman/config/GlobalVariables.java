@@ -44,7 +44,10 @@ public class GlobalVariables
         return sdf.format(cal.getTime());
     }
 
-    // Temporary for storage with OpenId info updated.
+    // Temporary for storage with WX OpenId info updated.
     public static List<WxFoo> wxFooListWithOpenId = new ArrayList<WxFoo>();
+
+    // Temporary for storage with WX UserId info updated.
+    public static List<WxFoo> wxFooListWithUserId = new ArrayList<WxFoo>();
 
 }

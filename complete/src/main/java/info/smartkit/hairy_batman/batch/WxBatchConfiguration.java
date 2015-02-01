@@ -105,16 +105,16 @@ public class WxBatchConfiguration
 
     // tag::jobstep[]
     @Bean
-    public Job csvImportWxFooJob(JobBuilderFactory jobs, Step s0)
+    public Job csvImportWxFooJob(JobBuilderFactory jobs, Step s1)
     {
-        return jobs.get("csvImportWxFooJob").incrementer(new RunIdIncrementer()).flow(s0).end().build();
+        return jobs.get("csvImportWxFooJob").incrementer(new RunIdIncrementer()).flow(s1).end().build();
     }
 
     @Bean
     public Step step0(StepBuilderFactory stepBuilderFactory, ItemReader<WxFoo> reader, ItemWriter<WxFoo> writer,
         ItemProcessor<WxFoo, WxFoo> processor)
     {
-        return stepBuilderFactory.get("step0").<WxFoo, WxFoo>chunk(10).reader(reader).processor(processor)
+        return stepBuilderFactory.get("step1").<WxFoo, WxFoo>chunk(10).reader(reader).processor(processor)
             .writer(writer).build();
     }
 

@@ -15,7 +15,7 @@ public class WxFooItemProcessor implements ItemProcessor<WxFoo, WxFoo>
     public WxFoo process(final WxFoo wxFoo) throws Exception
     {
         //
-        new SogouSearchQuery(wxFoo).parse();
+        new SogouSearchQuery(wxFoo).parseWxOpenId();
         // System.out.println("ApiQuery converting..." + wxFoo);
         LOG.debug("SogouSearchQuery processing..." + wxFoo);
         // new KJsonApiQuery(wxFoo).query();

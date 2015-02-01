@@ -48,9 +48,17 @@ public class GlobalConsts
 
     public static final String SOGOU_SEARCH_URL_BASE = "http://weixin.sogou.com/weixin?type=1&query=";
 
-    public static final String SOGOU_SEARCH_HTML_ELEMENTS = "span";
+    public static final String SOGOU_SEARCH_WX_USER_ID_HTML_ELEMENTS = "span";
 
-    public static final String SOGOU_SEARCH_KEYWORDS = "微信号：";
+    public static final String SOGOU_SEARCH_WX_USER_ID_HTML_ELE_IDENTITY = "";
 
-    public static final String WEIXIN_SOGOU_URL_JSON = "http://weixin.sogou.com/gzhjs?cb=sogou.weixin.gzhcb&openid=";
+    public static final String SOGOU_SEARCH_WX_OPEN_ID_HTML_ELEMENTS = "div";
+
+    public static final String SOGOU_SEARCH_WX_OPEN_ID_HTML_ELE_IDENTITY = "[href*=/gzh?]";
+
+    public static final String SOGOU_SEARCH_WX_USER_ID_KEYWORDS = "微信号：";
+
+    public static final String SOGOU_SEARCH_WX_OPEN_ID_KEYWORDS = "openid=";
+
+    public static final String SOGOU_SEARCH_URL_JSON = "http://weixin.sogou.com/gzhjs?openid=";
 }

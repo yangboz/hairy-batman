@@ -23,16 +23,11 @@ import info.smartkit.hairy_batman.domain.WxFoo;
 import info.smartkit.hairy_batman.plain.WxBar;
 import info.smartkit.hairy_batman.plain.WxKJson;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.util.LinkedMultiValueMap;
@@ -103,30 +98,4 @@ public class KJsonApiQuery
         LOG.info("GlobalVariables.wxFooList:" + GlobalVariables.wxFooList.toString());
     }
 
-    public void parse()
-    {
-        Document doc;
-        try {
-
-            // need http protocol
-            doc = Jsoup.connect(wxFoo.getArticleUrl()).get();
-
-            // get page title
-            String title = doc.title();
-            System.out.println("title : " + title);
-
-            // get all links
-            Elements links = doc.select("a[href]");
-            for (Element link : links) {
-
-                // get the value from href attribute
-                System.out.println("\nlink : " + link.attr("href"));
-                System.out.println("text : " + link.text());
-
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 }

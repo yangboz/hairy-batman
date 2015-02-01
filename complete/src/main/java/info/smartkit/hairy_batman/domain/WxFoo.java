@@ -247,4 +247,17 @@ public class WxFoo
     {
         this.openId = openId;
     }
+
+    private String userId = null;// 微信用户ID
+
+    public String getUserId()
+    {
+        return userId;
+    }
+
+    public void setUserId(String userId)
+    {
+        this.userId = userId;
+    }
+
 }
