@@ -1,4 +1,9 @@
-/Users/yangboz/Documents/Git/hairy-batman/complete/src/main/java/info/smartkit/hairy_batman/batch/BatchConfiguration.java
+/Users/yangboz/Documents/Git/hairy-batman/complete/src/main/java/info/smartkit/hairy_batman/query/ApiQuery.java
+/Users/yangboz/Documents/Git/hairy-batman/complete/src/main/java/info/smartkit/hairy_batman/config/GlobalVariables.java
+/Users/yangboz/Documents/Git/hairy-batman/complete/src/main/java/info/smartkit/hairy_batman/plain/WxBar.java
+/Users/yangboz/Documents/Git/hairy-batman/complete/src/main/java/info/smartkit/hairy_batman/config/GlobalConsts.java
+/Users/yangboz/Documents/Git/hairy-batman/complete/src/main/java/info/smartkit/hairy_batman/domain/WxFoo.java
+/Users/yangboz/Documents/Git/hairy-batman/complete/src/main/java/info/smartkit/hairy_batman/plain/WxKJson.java
+/Users/yangboz/Documents/Git/hairy-batman/complete/src/main/java/info/smartkit/hairy_batman/batch/WxFooItemProcessor.java
 /Users/yangboz/Documents/Git/hairy-batman/complete/src/main/java/info/smartkit/hairy_batman/Application.java
-/Users/yangboz/Documents/Git/hairy-batman/complete/src/main/java/info/smartkit/hairy_batman/domain/Person.java
-/Users/yangboz/Documents/Git/hairy-batman/complete/src/main/java/info/smartkit/hairy_batman/batch/PersonItemProcessor.java
+/Users/yangboz/Documents/Git/hairy-batman/complete/src/main/java/info/smartkit/hairy_batman/batch/WxBatchConfiguration.java
