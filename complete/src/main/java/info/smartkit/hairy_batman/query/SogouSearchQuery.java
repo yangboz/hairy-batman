@@ -20,17 +20,20 @@ package info.smartkit.hairy_batman.query;
 import info.smartkit.hairy_batman.config.GlobalConsts;
 import info.smartkit.hairy_batman.config.GlobalVariables;
 import info.smartkit.hairy_batman.domain.WxFoo;
+import info.smartkit.hairy_batman.plain.WxSogou;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 
-import org.apache.commons.httpclient.HttpStatus;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.EntityUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.codehaus.jackson.JsonParseException;
+import org.codehaus.jackson.map.JsonMappingException;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -133,46 +136,63 @@ public class SogouSearchQuery
     }
 
     // @see: http://weixin.sogou.com/gzhjs?cb=sogou.weixin.gzhcb&openid=oIWsFt_Ri_gqjARIY_shVuqjc3Zo
-    @SuppressWarnings("deprecation")
     private void parseSogouJsonSite(String openId)
     {
-        String html = null;
-        DefaultHttpClient httpClient = new DefaultHttpClient();// 创建httpClient对象
-        HttpGet httpget = new HttpGet(GlobalConsts.SOGOU_SEARCH_URL_JSON + openId);// 以get方式请求该URL
+        ObjectMapper mapper = new ObjectMapper(); // can reuse, share globally
+        WxSogou wxSogouJson = null;
         try {
-            HttpResponse responce = httpClient.execute(httpget);// 得到responce对象
-            int resStatu = responce.getStatusLine().getStatusCode();// 返回码
-            if (resStatu == HttpStatus.SC_OK) {// 200正常 其他就不对
-                // 获得相应实体
-                HttpEntity entity = responce.getEntity();
-                if (entity != null) {
-                    html = EntityUtils.toString(entity);// 获得html源代码
-                }
-            }
-        } catch (Exception e) {
-            // e.printStackTrace();
+            wxSogouJson =
+                mapper.readValue(this.getJsonContent(GlobalConsts.SOGOU_SEARCH_URL_JSON + openId), WxSogou.class);
+        } catch (JsonParseException e) {
             LOG.error(e.toString());
-        } finally {
-            httpClient.getConnectionManager().shutdown();
+        } catch (JsonMappingException e) {
+            LOG.error(e.toString());
+        } catch (IOException e) {
+            LOG.error(e.toString());
         }
-        LOG.info("parseSogouJsonSite result:" + html);
-        // // Sogou API testing using RestTemplate.
-        // RestTemplate restTemplate = new RestTemplate();
-        // // restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
-        // MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
-        // // @see:
-        // //
-        // http://stackoverflow.com/questions/22329368/spring-android-rest-template-parse-json-data-with-content-type-text-html
-        // converter.setSupportedMediaTypes(Collections.singletonList(MediaType.ALL));
-        // restTemplate.getMessageConverters().add(converter);
-        // // Spring batch for CSV reading.
-        // //
-        // WxBar api_query_resutls = restTemplate.getForObject(GlobalConsts.SOGOU_SEARCH_URL_JSON + openId,
-        // WxBar.class);
-        // // WxBar returns = restTemplate.getForObject(GlobalConsts.KJSON_API_URI, WxBar.class);
-        // ArrayList<WxKJson> api_query_resutls_data = api_query_resutls.getData();
-        // // System.out.println("ApiQuery result data:  " + api_query_resutls_data);
-        // LOG.info("ApiQuery result data:  " + api_query_resutls_data);
+        LOG.info("wxSogou json result:" + wxSogouJson.toString());
     }
 
+    private String getJsonContent(String urlStr)
+    {
+        try {// 获取HttpURLConnection连接对象
+            URL url = new URL(urlStr);
+            HttpURLConnection httpConn = (HttpURLConnection) url.openConnection();
+            // 设置连接属性
+            httpConn.setConnectTimeout(3000);
+            httpConn.setDoInput(true);
+            httpConn.setRequestMethod("GET");
+            // 获取相应码
+            int respCode = httpConn.getResponseCode();
+            if (respCode == 200) {
+                String a = ConvertStream2Json(httpConn.getInputStream());
+                return a.substring(a.indexOf("(") + 1, a.lastIndexOf(")"));
+            }
+        } catch (MalformedURLException e) {
+            LOG.error(e.toString());
+        } catch (IOException e) {
+            LOG.error(e.toString());
+        }
+        return "";
+    }
+
+    private String ConvertStream2Json(InputStream inputStream)
+    {
+        String jsonStr = "";
+        // ByteArrayOutputStream相当于内存输出流
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        byte[] buffer = new byte[1024];
+        int len = 0;
+        // 将输入流转移到内存输出流中
+        try {
+            while ((len = inputStream.read(buffer, 0, buffer.length)) != -1) {
+                out.write(buffer, 0, len);
+            }
+            // 将内存流转换为字符串
+            jsonStr = new String(out.toByteArray());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return jsonStr;
+    }
 }

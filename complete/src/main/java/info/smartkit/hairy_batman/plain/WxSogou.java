@@ -77,4 +77,12 @@ public class WxSogou
     {
         this.items = items;
     }
+
+    @Override
+    public String toString()
+    {
+        return "page:" + this.getPage() + ",totalPages:" + this.getTotalPages() + ",totalItems:" + this.getTotalItems()
+            + ",items:" + this.getItems().toString();
+    }
+
 }
