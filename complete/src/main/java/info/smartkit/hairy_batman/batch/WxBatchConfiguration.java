@@ -20,8 +20,10 @@ import org.springframework.batch.item.file.FlatFileItemReader;
 import org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper;
 import org.springframework.batch.item.file.mapping.DefaultLineMapper;
 import org.springframework.batch.item.file.transform.DelimitedLineTokenizer;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -32,8 +34,23 @@ import org.springframework.jdbc.core.JdbcTemplate;
 // step3:读取step2保存的一行结果，请求kjson
 // API得到对应每一篇文章的阅读数和点赞数并保存,例如(OpenId,[{articleUrl1,readNum1,likeNum1},{articleUrl2,readNum2,likeNum2},...)
 // step4:基于step3保存表做数据分析;
+@PropertySource("classpath:application.properties")
 public class WxBatchConfiguration
 {
+    /*
+     * Load the properties
+     */
+    @Value("${database.driver}")
+    private String databaseDriver;
+
+    @Value("${database.url}")
+    private String databaseUrl;
+
+    @Value("${database.username}")
+    private String databaseUsername;
+
+    @Value("${database.password}")
+    private String databasePassword;
 
     // tag::readerwriterprocessor[]
     @Bean
@@ -97,20 +114,32 @@ public class WxBatchConfiguration
             .writer(writer).build();
     }
 
-    @Bean
-    public Step step2(StepBuilderFactory stepBuilderFactory, ItemReader<WxFoo> reader, ItemWriter<WxFoo> writer,
-        ItemProcessor<WxFoo, WxFoo> processor)
-    {
-        return stepBuilderFactory.get("step2").<WxFoo, WxFoo>chunk(10).reader(reader).processor(processor)
-            .writer(writer).build();
-    }
+    // @Bean
+    // public Step step2(StepBuilderFactory stepBuilderFactory, ItemReader<WxFoo> reader, ItemWriter<WxFoo> writer,
+    // ItemProcessor<WxFoo, WxFoo> processor)
+    // {
+    // return stepBuilderFactory.get("step2").<WxFoo, WxFoo>chunk(10).reader(reader).processor(processor)
+    // .writer(writer).build();
+    // }
 
     // end::jobstep[]
+
+    // @Bean
+    // public DataSource dataSource()
+    // {
+    // DriverManagerDataSource dataSource = new DriverManagerDataSource();
+    // dataSource.setDriverClassName(databaseDriver);
+    // dataSource.setUrl(databaseUrl);
+    // dataSource.setUsername(databaseUsername);
+    // dataSource.setPassword(databasePassword);
+    // return dataSource;
+    // }
 
     @Bean
     public JdbcTemplate jdbcTemplate(DataSource dataSource)
     {
-        return new JdbcTemplate(dataSource);
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+        return jdbcTemplate;
     }
 
 }

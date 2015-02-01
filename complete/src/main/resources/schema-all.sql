@@ -1,6 +1,6 @@
 DROP TABLE wxfoo IF EXISTS;
 
-CREATE TABLE wxfoo  (
+CREATE TABLE wxfoo (
     wxfoo_id BIGINT IDENTITY NOT NULL PRIMARY KEY,
     code VARCHAR(20),
     store VARCHAR(20),
