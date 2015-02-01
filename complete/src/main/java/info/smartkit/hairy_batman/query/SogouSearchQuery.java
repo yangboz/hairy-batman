@@ -150,7 +150,9 @@ public class SogouSearchQuery
         } catch (IOException e) {
             LOG.error(e.toString());
         }
+        GlobalVariables.openIdWithArticleList.put(openId, wxSogouJson);// Store it.
         LOG.info("wxSogou json result:" + wxSogouJson.toString());
+        // Dom4j parse items XML
     }
 
     private String getJsonContent(String urlStr)

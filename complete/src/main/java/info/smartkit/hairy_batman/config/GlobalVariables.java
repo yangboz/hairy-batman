@@ -18,11 +18,14 @@
 package info.smartkit.hairy_batman.config;
 
 import info.smartkit.hairy_batman.domain.WxFoo;
+import info.smartkit.hairy_batman.plain.WxSogou;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Global variables storage here.
@@ -49,5 +52,8 @@ public class GlobalVariables
 
     // Temporary for storage with WX UserId info updated.
     public static List<WxFoo> wxFooListWithUserId = new ArrayList<WxFoo>();
+
+    // Temporary for storage with WX OpenId info updated.
+    public static Map<String, WxSogou> openIdWithArticleList = new HashMap<String, WxSogou>();
 
 }

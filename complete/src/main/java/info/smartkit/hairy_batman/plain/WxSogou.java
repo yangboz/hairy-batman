@@ -19,6 +19,13 @@ package info.smartkit.hairy_batman.plain;
 
 import java.util.ArrayList;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.dom4j.Document;
+import org.dom4j.DocumentException;
+import org.dom4j.DocumentHelper;
+import org.dom4j.Element;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
@@ -30,6 +37,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class WxSogou
 {
+
+    private static Logger LOG = LogManager.getLogger(WxSogou.class);
+
     private long totalItems;
 
     public long getTotalItems()
@@ -82,7 +92,27 @@ public class WxSogou
     public String toString()
     {
         return "page:" + this.getPage() + ",totalPages:" + this.getTotalPages() + ",totalItems:" + this.getTotalItems()
-            + ",items:" + this.getItems().toString();
+            + ",items:" + this.getTitles().toString();
+    }
+
+    // Get items' titles.
+    public String[] getTitles()
+    {
+        String[] titles = new String[] {};
+
+        // TODO:XML travel to title element,and push it to titles;
+        for (Object item : this.items) {
+            try {
+                Document itemDoc = DocumentHelper.parseText((String) item);
+                Element rootNode = itemDoc.getRootElement();
+                Element titleEle = rootNode.element("title");
+                LOG.info("getTitles itemDoc text:" + itemDoc.getText());
+            } catch (DocumentException e) {
+                e.printStackTrace();
+                LOG.error(e.toString());
+            }
+        }
+        return titles;
     }
 
 }
