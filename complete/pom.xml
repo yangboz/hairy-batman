@@ -12,18 +12,27 @@
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>1.2.1.RELEASE</version>
 	</parent>
-	
+
 	<properties>
-<!-- 		<tomcat.version>7.0.56</tomcat.version> -->
+		<!-- <tomcat.version>7.0.56</tomcat.version> -->
 		<start-class>info.smartkit.hairy_batman.Application</start-class>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-<!-- 		<java.version>1.8</java.version> -->
+		<!-- <java.version>1.8</java.version> -->
 	</properties>
-
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-batch</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-logging</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-log4j2</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.hsqldb</groupId>

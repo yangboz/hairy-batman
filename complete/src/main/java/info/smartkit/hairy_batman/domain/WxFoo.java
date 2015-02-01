@@ -236,4 +236,15 @@ public class WxFoo
         this.getMoniterTime()};
     }
 
+    private String openId = null;// 微信openID
+
+    public String getOpenId()
+    {
+        return openId;
+    }
+
+    public void setOpenId(String openId)
+    {
+        this.openId = openId;
+    }
 }

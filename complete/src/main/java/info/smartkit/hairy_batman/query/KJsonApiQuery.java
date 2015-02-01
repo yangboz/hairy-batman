@@ -27,6 +27,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -42,18 +44,20 @@ import org.springframework.web.client.RestTemplate;
  * 
  * @author yangboz
  */
-public class ApiQuery
+public class KJsonApiQuery
 {
+    private static Logger LOG = LogManager.getLogger(KJsonApiQuery.class);
+
     protected WxFoo wxFoo;
 
     MultiValueMap<String, String> parameters;
 
-    public ApiQuery()
+    public KJsonApiQuery()
     {
 
     }
 
-    public ApiQuery(WxFoo wxFoo)
+    public KJsonApiQuery(WxFoo wxFoo)
     {
         this.wxFoo = wxFoo;
         this.parameters = new LinkedMultiValueMap<String, String>();
@@ -76,9 +80,12 @@ public class ApiQuery
         WxBar api_query_resutls = restTemplate.postForObject(GlobalConsts.KJSON_API_URI, this.parameters, WxBar.class);
         // WxBar returns = restTemplate.getForObject(GlobalConsts.KJSON_API_URI, WxBar.class);
         ArrayList<WxKJson> api_query_resutls_data = api_query_resutls.getData();
-        System.out.println("ApiQuery result data:  " + api_query_resutls_data);
+        // System.out.println("ApiQuery result data:  " + api_query_resutls_data);
+        LOG.info("ApiQuery result data:  " + api_query_resutls_data);
         WxKJson wxKJson = api_query_resutls_data.get(0);
-        System.out.println("Parsed ApiQuery results,articleReadNum:" + wxKJson.getRead() + ",articleLikeNum: "
+        // System.out.println("Parsed ApiQuery results,articleReadNum:" + wxKJson.getRead() + ",articleLikeNum: "
+        // + wxKJson.getLike());
+        LOG.info("Parsed ApiQuery results,articleReadNum:" + wxKJson.getRead() + ",articleLikeNum: "
             + wxKJson.getLike());
         //
         Long readNum = Long.parseLong(wxKJson.getRead());
@@ -92,7 +99,8 @@ public class ApiQuery
         //
         GlobalVariables.wxFooList.add(this.wxFoo);
         //
-        System.out.println("GlobalVariables.wxFooList:" + GlobalVariables.wxFooList.toString());
+        // System.out.println("GlobalVariables.wxFooList:" + GlobalVariables.wxFooList.toString());
+        LOG.info("GlobalVariables.wxFooList:" + GlobalVariables.wxFooList.toString());
     }
 
     public void parse()

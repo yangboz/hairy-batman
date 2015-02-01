@@ -5,6 +5,8 @@ import info.smartkit.hairy_batman.domain.WxFoo;
 
 import javax.sql.DataSource;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
@@ -29,14 +31,16 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 @Configuration
 @EnableBatchProcessing
-// step1:分析weixin.sogou.com搜索订阅号页面的微信OpenID,例如(http://weixin.sogou.com/weixin?type=1&query=gossipmaker)
+// step0:读取村长提供的CSV文件,提取微信订阅号相关信息;
+// step1:分析weixin.sogou.com搜索订阅号页面的微信OpenID,例如(http://weixin.sogou.com/weixin?type=1&query=gossipmaker);
 // step2:分析基于step1的OpenID组成的JSON结果得到对应的文章标题列表对应并保存,例如(http://weixin.sogou.com/gzhjs?cb=sogou.weixin.gzhcb&openid=oIWsFt_Ri_gqjARIY_shVuqjc3Zo)
-// step3:读取step2保存的一行结果，请求kjson
-// API得到对应每一篇文章的阅读数和点赞数并保存,例如(OpenId,[{articleUrl1,readNum1,likeNum1},{articleUrl2,readNum2,likeNum2},...)
-// step4:基于step3保存表做数据分析;
+// step3:读取step2保存的一行结果，请求kjson(将来要自己实现的)API得到对应每一篇文章的阅读数和点赞数并保存,例如(OpenId,[{articleUrl1,readNum1,likeNum1},{articleUrl2,readNum2,likeNum2},...)
+// step4:基于step3保存表做数据报表/KPI/统计分析;
 @PropertySource("classpath:application.properties")
 public class WxBatchConfiguration
 {
+    private static Logger LOG = LogManager.getLogger(WxBatchConfiguration.class);
+
     /*
      * Load the properties
      */
@@ -88,7 +92,7 @@ public class WxBatchConfiguration
     @Bean
     public ItemWriter<WxFoo> writer(DataSource dataSource)
     {
-        System.out.println("GlobalConsts.QUERY_COLUMNS_LABEL: " + GlobalConsts.QUERY_COLUMNS_LABEL);
+        LOG.debug("GlobalConsts.QUERY_COLUMNS_LABEL: " + GlobalConsts.QUERY_COLUMNS_LABEL);
         JdbcBatchItemWriter<WxFoo> writer = new JdbcBatchItemWriter<WxFoo>();
         writer.setItemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<WxFoo>());
         writer.setSql("INSERT INTO " + GlobalConsts.QUERY_TABLE_NAME + "(" + GlobalConsts.QUERY_COLUMNS_NAME
@@ -101,18 +105,32 @@ public class WxBatchConfiguration
 
     // tag::jobstep[]
     @Bean
-    public Job importWxFooJob(JobBuilderFactory jobs, Step s1)
+    public Job csvImportWxFooJob(JobBuilderFactory jobs, Step s0)
     {
-        return jobs.get("importWxFooJob").incrementer(new RunIdIncrementer()).flow(s1).end().build();
+        return jobs.get("csvImportWxFooJob").incrementer(new RunIdIncrementer()).flow(s0).end().build();
     }
 
     @Bean
-    public Step step1(StepBuilderFactory stepBuilderFactory, ItemReader<WxFoo> reader, ItemWriter<WxFoo> writer,
+    public Step step0(StepBuilderFactory stepBuilderFactory, ItemReader<WxFoo> reader, ItemWriter<WxFoo> writer,
         ItemProcessor<WxFoo, WxFoo> processor)
     {
-        return stepBuilderFactory.get("step1").<WxFoo, WxFoo>chunk(10).reader(reader).processor(processor)
+        return stepBuilderFactory.get("step0").<WxFoo, WxFoo>chunk(10).reader(reader).processor(processor)
             .writer(writer).build();
     }
+
+    // @Bean
+    // public Job openIdQueryJob(JobBuilderFactory jobs, Step s1)
+    // {
+    // return jobs.get("openIdQueryJob").incrementer(new RunIdIncrementer()).flow(s1).end().build();
+    // }
+    //
+    // @Bean
+    // public Step step1(StepBuilderFactory stepBuilderFactory, ItemReader<WxFoo> reader, ItemWriter<WxFoo> writer,
+    // ItemProcessor<WxFoo, WxFoo> processor)
+    // {
+    // return stepBuilderFactory.get("step1").<WxFoo, WxFoo>chunk(10).reader(reader).processor(processor)
+    // .writer(writer).build();
+    // }
 
     // @Bean
     // public Step step2(StepBuilderFactory stepBuilderFactory, ItemReader<WxFoo> reader, ItemWriter<WxFoo> writer,

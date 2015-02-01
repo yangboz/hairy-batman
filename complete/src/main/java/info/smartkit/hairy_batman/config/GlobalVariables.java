@@ -43,4 +43,8 @@ public class GlobalVariables
         SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT_NOW);
         return sdf.format(cal.getTime());
     }
+
+    // Temporary for storage with OpenId info updated.
+    public static List<WxFoo> wxFooListWithOpenId = new ArrayList<WxFoo>();
+
 }
