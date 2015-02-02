@@ -2,7 +2,7 @@ package info.smartkit.hairy_batman;
 
 import info.smartkit.hairy_batman.config.GlobalConsts;
 import info.smartkit.hairy_batman.config.GlobalVariables;
-import info.smartkit.hairy_batman.domain.WxFoo;
+import info.smartkit.hairy_batman.domain.WxSubscriber;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -34,21 +34,21 @@ public class Application
         // Check the openId storage results:
         LOG.info("GlobalVariables.wxFooListWithOpenId(size):" + GlobalVariables.wxFooListWithOpenId.size());
         // Spring-batch reading CSV testing.
-        List<WxFoo> batch_results =
+        List<WxSubscriber> batch_results =
             ctx.getBean(JdbcTemplate.class).query(
                 "SELECT " + GlobalConsts.QUERY_COLUMNS_NAME + " FROM " + GlobalConsts.QUERY_TABLE_NAME,
-                new RowMapper<WxFoo>()
+                new RowMapper<WxSubscriber>()
                 {
                     @Override
-                    public WxFoo mapRow(ResultSet rs, int row) throws SQLException
+                    public WxSubscriber mapRow(ResultSet rs, int row) throws SQLException
                     {
-                        return new WxFoo(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs
+                        return new WxSubscriber(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs
                             .getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs
                             .getString(10), rs.getString(11), rs.getString(12), rs.getString(13), rs.getString(14));
                     }
                 });
 
-        for (WxFoo wxFoo : batch_results) {
+        for (WxSubscriber wxFoo : batch_results) {
             // System.out.println("Found <" + wxFoo + "> in the database.");
             LOG.debug("Found <" + wxFoo + "> in the database.");
         }
@@ -67,7 +67,7 @@ public class Application
         // }
 
         List<String[]> allElements = new ArrayList<String[]>();
-        for (WxFoo elem : batch_results) {
+        for (WxSubscriber elem : batch_results) {
             // System.out.println("elem.toStringArray():" + elem.toStringArray());
             LOG.debug("elem.toStringArray():" + elem.toStringArray());
             allElements.add(elem.toStringArray());

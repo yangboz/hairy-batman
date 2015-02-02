@@ -22,15 +22,15 @@ package info.smartkit.hairy_batman.domain;
  * 
  * @author yangboz
  */
-public class WxFoo
+public class WxSubscriber
 {
 
-    public WxFoo()
+    public WxSubscriber()
     {
 
     }
 
-    public WxFoo(String code, String store, String manager, String agency, String unit, String onSubscribe,
+    public WxSubscriber(String code, String store, String manager, String agency, String unit, String onSubscribe,
         String subscribeId, String articleTime, String articleUrl, String articleTitle, String articleReadNum,
         String articleLikeNum, String articleLikeRate, String moniterTime)
     {

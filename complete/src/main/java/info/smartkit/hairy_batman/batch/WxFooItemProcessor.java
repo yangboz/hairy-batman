@@ -1,18 +1,18 @@
 package info.smartkit.hairy_batman.batch;
 
-import info.smartkit.hairy_batman.domain.WxFoo;
+import info.smartkit.hairy_batman.domain.WxSubscriber;
 import info.smartkit.hairy_batman.query.SogouSearchQuery;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.batch.item.ItemProcessor;
 
-public class WxFooItemProcessor implements ItemProcessor<WxFoo, WxFoo>
+public class WxFooItemProcessor implements ItemProcessor<WxSubscriber, WxSubscriber>
 {
     private static Logger LOG = LogManager.getLogger(WxFooItemProcessor.class);
 
     @Override
-    public WxFoo process(final WxFoo wxFoo) throws Exception
+    public WxSubscriber process(final WxSubscriber wxFoo) throws Exception
     {
         //
         new SogouSearchQuery(wxFoo).parseWxOpenId();

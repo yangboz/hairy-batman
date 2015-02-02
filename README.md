@@ -10,6 +10,10 @@ http://www.kjson.com/weixin/bind
 
 https://spring.io/guides/gs/consuming-rest/
 
+# LogStash
+=============
+https://www.digitalocean.com/community/tutorials/how-to-use-logstash-and-kibana-to-centralize-logs-on-centos-6
+
 # Notes:
 ==============
 

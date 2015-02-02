@@ -19,7 +19,7 @@ package info.smartkit.hairy_batman.query;
 
 import info.smartkit.hairy_batman.config.GlobalConsts;
 import info.smartkit.hairy_batman.config.GlobalVariables;
-import info.smartkit.hairy_batman.domain.WxFoo;
+import info.smartkit.hairy_batman.domain.WxSubscriber;
 import info.smartkit.hairy_batman.plain.WxBar;
 import info.smartkit.hairy_batman.plain.WxKJson;
 
@@ -43,7 +43,7 @@ public class KJsonApiQuery
 {
     private static Logger LOG = LogManager.getLogger(KJsonApiQuery.class);
 
-    protected WxFoo wxFoo;
+    protected WxSubscriber wxFoo;
 
     MultiValueMap<String, String> parameters;
 
@@ -52,7 +52,7 @@ public class KJsonApiQuery
 
     }
 
-    public KJsonApiQuery(WxFoo wxFoo)
+    public KJsonApiQuery(WxSubscriber wxFoo)
     {
         this.wxFoo = wxFoo;
         this.parameters = new LinkedMultiValueMap<String, String>();

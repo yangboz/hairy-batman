@@ -1,7 +1,7 @@
 package info.smartkit.hairy_batman.batch;
 
 import info.smartkit.hairy_batman.config.GlobalConsts;
-import info.smartkit.hairy_batman.domain.WxFoo;
+import info.smartkit.hairy_batman.domain.WxSubscriber;
 
 import javax.sql.DataSource;
 
@@ -58,11 +58,11 @@ public class WxBatchConfiguration
 
     // tag::readerwriterprocessor[]
     @Bean
-    public ItemReader<WxFoo> reader()
+    public ItemReader<WxSubscriber> reader()
     {
-        FlatFileItemReader<WxFoo> reader = new FlatFileItemReader<WxFoo>();
+        FlatFileItemReader<WxSubscriber> reader = new FlatFileItemReader<WxSubscriber>();
         reader.setResource(new ClassPathResource(GlobalConsts.CSV_RESOURCE_FILE_INPUT));
-        reader.setLineMapper(new DefaultLineMapper<WxFoo>()
+        reader.setLineMapper(new DefaultLineMapper<WxSubscriber>()
         {
             {
                 setLineTokenizer(new DelimitedLineTokenizer(GlobalConsts.CSV_DELIMITED_LINE_TOKENIZER)
@@ -72,10 +72,10 @@ public class WxBatchConfiguration
                         setNames(GlobalConsts.CSV_COLUMNS_NAME);
                     }
                 });
-                setFieldSetMapper(new BeanWrapperFieldSetMapper<WxFoo>()
+                setFieldSetMapper(new BeanWrapperFieldSetMapper<WxSubscriber>()
                 {
                     {
-                        setTargetType(WxFoo.class);
+                        setTargetType(WxSubscriber.class);
                     }
                 });
             }
@@ -84,17 +84,17 @@ public class WxBatchConfiguration
     }
 
     @Bean
-    public ItemProcessor<WxFoo, WxFoo> processor()
+    public ItemProcessor<WxSubscriber, WxSubscriber> processor()
     {
         return new WxFooItemProcessor();
     }
 
     @Bean
-    public ItemWriter<WxFoo> writer(DataSource dataSource)
+    public ItemWriter<WxSubscriber> writer(DataSource dataSource)
     {
         LOG.debug("GlobalConsts.QUERY_COLUMNS_LABEL: " + GlobalConsts.QUERY_COLUMNS_LABEL);
-        JdbcBatchItemWriter<WxFoo> writer = new JdbcBatchItemWriter<WxFoo>();
-        writer.setItemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<WxFoo>());
+        JdbcBatchItemWriter<WxSubscriber> writer = new JdbcBatchItemWriter<WxSubscriber>();
+        writer.setItemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<WxSubscriber>());
         writer.setSql("INSERT INTO " + GlobalConsts.QUERY_TABLE_NAME + "(" + GlobalConsts.QUERY_COLUMNS_NAME
             + ") VALUES (:" + GlobalConsts.QUERY_COLUMNS_LABEL + ")");
         writer.setDataSource(dataSource);
@@ -111,11 +111,11 @@ public class WxBatchConfiguration
     }
 
     @Bean
-    public Step step0(StepBuilderFactory stepBuilderFactory, ItemReader<WxFoo> reader, ItemWriter<WxFoo> writer,
-        ItemProcessor<WxFoo, WxFoo> processor)
+    public Step step0(StepBuilderFactory stepBuilderFactory, ItemReader<WxSubscriber> reader,
+        ItemWriter<WxSubscriber> writer, ItemProcessor<WxSubscriber, WxSubscriber> processor)
     {
-        return stepBuilderFactory.get("step1").<WxFoo, WxFoo>chunk(10).reader(reader).processor(processor)
-            .writer(writer).build();
+        return stepBuilderFactory.get("step1").<WxSubscriber, WxSubscriber>chunk(10).reader(reader)
+            .processor(processor).writer(writer).build();
     }
 
     // @Bean

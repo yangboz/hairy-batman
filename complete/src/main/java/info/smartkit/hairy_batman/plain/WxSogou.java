@@ -18,6 +18,8 @@
 package info.smartkit.hairy_batman.plain;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -95,24 +97,39 @@ public class WxSogou
             + ",items:" + this.getTitles().toString();
     }
 
-    // Get items' titles.
-    public String[] getTitles()
-    {
-        String[] titles = new String[] {};
+    //
+    private ArrayList<String> titles = new ArrayList<String>();
 
-        // TODO:XML travel to title element,and push it to titles;
+    // Get items' titles.
+    public ArrayList<String> getTitles()
+    {
+        // XML travel to title element,and push it to titles;
         for (Object item : this.items) {
             try {
-                Document itemDoc = DocumentHelper.parseText((String) item);
-                Element rootNode = itemDoc.getRootElement();
-                Element titleEle = rootNode.element("title");
-                LOG.info("getTitles itemDoc text:" + itemDoc.getText());
+                Document doc = DocumentHelper.parseText(item.toString());
+                Element root = doc.getRootElement();
+
+                @SuppressWarnings("rawtypes")
+                List aa = root.selectNodes("//item//display");
+
+                @SuppressWarnings("rawtypes")
+                Iterator iters = aa.iterator();
+                //
+                while (iters.hasNext()) {
+
+                    Element itemEle = (Element) iters.next();
+
+                    String title = itemEle.elementTextTrim("title");
+                    // String title1 = itemEle.elementTextTrim("title1");
+                    LOG.info("item title:" + title);
+                    this.titles.add(title);
+                    // System.out.println("title1:" + title1);
+                }
             } catch (DocumentException e) {
-                e.printStackTrace();
+                // e.printStackTrace();
                 LOG.error(e.toString());
             }
         }
-        return titles;
+        return this.titles;
     }
-
 }

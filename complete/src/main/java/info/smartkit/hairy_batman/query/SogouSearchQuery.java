@@ -19,7 +19,7 @@ package info.smartkit.hairy_batman.query;
 
 import info.smartkit.hairy_batman.config.GlobalConsts;
 import info.smartkit.hairy_batman.config.GlobalVariables;
-import info.smartkit.hairy_batman.domain.WxFoo;
+import info.smartkit.hairy_batman.domain.WxSubscriber;
 import info.smartkit.hairy_batman.plain.WxSogou;
 
 import java.io.ByteArrayOutputStream;
@@ -50,7 +50,7 @@ public class SogouSearchQuery
 {
     private static Logger LOG = LogManager.getLogger(SogouSearchQuery.class);
 
-    protected WxFoo wxFoo;
+    protected WxSubscriber wxFoo;
 
     MultiValueMap<String, String> parameters;
 
@@ -59,7 +59,7 @@ public class SogouSearchQuery
 
     }
 
-    public SogouSearchQuery(WxFoo wxFoo)
+    public SogouSearchQuery(WxSubscriber wxFoo)
     {
         this.wxFoo = wxFoo;
         this.parameters = new LinkedMultiValueMap<String, String>();
