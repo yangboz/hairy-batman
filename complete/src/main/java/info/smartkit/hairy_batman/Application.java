@@ -15,7 +15,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -30,12 +29,13 @@ public class Application
 
     public static void main(String[] args)
     {
-        ApplicationContext ctx = SpringApplication.run(Application.class, args);
+        //
+        GlobalVariables.appContext = SpringApplication.run(Application.class, args);
         // Check the openId storage results:
         LOG.info("GlobalVariables.wxFooListWithOpenId(size):" + GlobalVariables.wxFooListWithOpenId.size());
         // Spring-batch reading CSV testing.
         List<WxSubscriber> batch_results =
-            ctx.getBean(JdbcTemplate.class).query(
+            GlobalVariables.appContext.getBean(JdbcTemplate.class).query(
                 "SELECT " + GlobalConsts.QUERY_COLUMNS_NAME + " FROM " + GlobalConsts.QUERY_TABLE_NAME,
                 new RowMapper<WxSubscriber>()
                 {

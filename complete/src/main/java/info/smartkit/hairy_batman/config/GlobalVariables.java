@@ -27,6 +27,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.context.ApplicationContext;
+
 /**
  * Global variables storage here.
  * 
@@ -34,6 +36,9 @@ import java.util.Map;
  */
 public class GlobalVariables
 {
+    //
+    public static ApplicationContext appContext = null;
+
     //
     public static List<WxSubscriber> wxFooList = new ArrayList<WxSubscriber>();
 

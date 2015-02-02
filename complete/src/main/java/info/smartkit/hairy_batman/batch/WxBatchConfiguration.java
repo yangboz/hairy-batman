@@ -111,7 +111,7 @@ public class WxBatchConfiguration
     }
 
     @Bean
-    public Step step0(StepBuilderFactory stepBuilderFactory, ItemReader<WxSubscriber> reader,
+    public Step step1(StepBuilderFactory stepBuilderFactory, ItemReader<WxSubscriber> reader,
         ItemWriter<WxSubscriber> writer, ItemProcessor<WxSubscriber, WxSubscriber> processor)
     {
         return stepBuilderFactory.get("step1").<WxSubscriber, WxSubscriber>chunk(10).reader(reader)
