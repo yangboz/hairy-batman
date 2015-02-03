@@ -7,7 +7,6 @@ import info.smartkit.hairy_batman.reports.CSVReporter;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -50,12 +49,7 @@ public class Application
             LOG.debug("Found <" + wxFoo + "> in the database.");
         }
         // CSVReporting
-        ArrayList<String[]> allElements = new ArrayList<String[]>();
-        for (WxSubscriber elem : batch_results) {
-            // System.out.println("elem.toStringArray():" + elem.toStringArray());
-            LOG.debug("elem.toStringArray():" + elem.toStringArray());
-            allElements.add(elem.toStringArray());
-        }
-        new CSVReporter(GlobalConsts.CSV_RESOURCE_FILE_OUTPUT_OPENID, allElements).write();
+        new CSVReporter(GlobalConsts.CSV_RESOURCE_FILE_OUTPUT_FULL, batch_results, CSVReporter.REPORTER_TYPE.R_T_FULL)
+            .write();
     }
 }

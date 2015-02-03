@@ -21,6 +21,7 @@ import info.smartkit.hairy_batman.config.GlobalConsts;
 import info.smartkit.hairy_batman.config.GlobalVariables;
 import info.smartkit.hairy_batman.domain.WxSubscriber;
 import info.smartkit.hairy_batman.plain.WxSogou;
+import info.smartkit.hairy_batman.reports.CSVReporter;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -89,6 +90,9 @@ public class SogouSearchQuery
                 this.wxFoo.setOpenId(openIdLinkHref.split(GlobalConsts.SOGOU_SEARCH_WX_OPEN_ID_KEYWORDS)[1]);
                 LOG.info("saved wxOpenId value: " + this.wxFoo.getOpenId());
                 GlobalVariables.wxFooListWithOpenId.add(this.wxFoo);
+                // Save the procedure CSVReporting
+                new CSVReporter(GlobalConsts.CSV_RESOURCE_FILE_OUTPUT_OPENID, GlobalVariables.wxFooListWithOpenId,
+                    CSVReporter.REPORTER_TYPE.R_T_OPENID).write();
                 // Then,OpenID JSON site parse
                 this.parseSogouJsonSite(this.wxFoo.getOpenId());
             }
@@ -153,8 +157,9 @@ public class SogouSearchQuery
         GlobalVariables.openIdWithArticleList.put(openId, wxSogouJson);// Store it.
         LOG.info("wxSogou json result:" + wxSogouJson.toString());
         LOG.info("GlobalVariables.openIdWithArticleList:" + GlobalVariables.openIdWithArticleList.toString());
-        // Save it to CSV.
-
+        // Save the procedure CSVReporting
+        new CSVReporter(GlobalConsts.CSV_RESOURCE_FILE_OUTPUT_OPENID_ARITICLE, GlobalVariables.wxFooListWithOpenId,
+            CSVReporter.REPORTER_TYPE.R_T_OPENID_ARTICLE).write();
     }
 
     private String getJsonContent(String urlStr)

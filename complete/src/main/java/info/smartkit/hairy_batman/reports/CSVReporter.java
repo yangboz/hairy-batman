@@ -17,9 +17,12 @@
  */
 package info.smartkit.hairy_batman.reports;
 
+import info.smartkit.hairy_batman.domain.WxSubscriber;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -34,6 +37,13 @@ import au.com.bytecode.opencsv.CSVWriter;
 public class CSVReporter
 {
 
+    public enum REPORTER_TYPE
+    {
+        R_T_OPENID,
+        R_T_OPENID_ARTICLE,
+        R_T_FULL
+    };
+
     private static Logger LOG = LogManager.getLogger(CSVReporter.class);
 
     private String fileName;
@@ -47,12 +57,40 @@ public class CSVReporter
 
     public ArrayList<String[]> getDataSource()
     {
+        for (WxSubscriber elem : this.getRawDataSource()) {
+            String[] elemStrings = new String[] {};
+            // System.out.println("elem.toStringArray():" + elem.toStringArray());
+            switch (this.reporterType) {
+                case R_T_OPENID:
+                    elemStrings = elem.toOpenIdStringArray();
+                    break;
+                case R_T_OPENID_ARTICLE:
+                    elemStrings = elem.toOpenIdArticleStringArray();
+                    break;
+                case R_T_FULL:
+                    elemStrings = elem.toFullStringArray();
+                    break;
+                default:
+                    break;
+            }
+            LOG.debug("elemStrings:" + elemStrings);
+            dataSource.add(elemStrings);
+        }
         return dataSource;
     }
 
-    public void setDataSource(ArrayList<String[]> dataSource)
+    private REPORTER_TYPE reporterType = REPORTER_TYPE.R_T_FULL;
+
+    private List<WxSubscriber> rawDataSource = new ArrayList<WxSubscriber>();
+
+    public List<WxSubscriber> getRawDataSource()
     {
-        this.dataSource = dataSource;
+        return rawDataSource;
+    }
+
+    public void setRawDataSource(List<WxSubscriber> rawDataSource)
+    {
+        this.rawDataSource = rawDataSource;
     }
 
     public CSVReporter()
@@ -60,10 +98,11 @@ public class CSVReporter
 
     }
 
-    public CSVReporter(String fileName, ArrayList<String[]> dataSource)
+    public CSVReporter(String fileName, List<WxSubscriber> rawDataSource, REPORTER_TYPE reporterType)
     {
         this.fileName = fileName;
-        this.setDataSource(dataSource);
+        this.setRawDataSource(rawDataSource);
+        this.reporterType = reporterType;
     }
 
     public void write()

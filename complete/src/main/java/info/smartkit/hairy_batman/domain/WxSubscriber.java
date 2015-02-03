@@ -228,12 +228,23 @@ public class WxSubscriber
             + moniterTime;
     }
 
-    public String[] toStringArray()
+    public String[] toFullStringArray()
     {
         return new String[] {this.getCode(), this.getStore(), this.getManager(), this.getAgency(), this.getUnit(),
         this.getOnSubscribe(), this.getSubscribeId(), this.getArticleTime(), this.getArticleUrl(),
         this.getArticleTitle(), this.getArticleReadNum(), this.getArticleLikeNum(), this.getArticleLikeRate(),
         this.getMoniterTime()};
+    }
+
+    public String[] toOpenIdStringArray()
+    {
+        return new String[] {this.getCode(), this.getSubscribeId(), this.getOpenId()};
+    }
+
+    public String[] toOpenIdArticleStringArray()
+    {
+        return new String[] {this.getCode(), this.getSubscribeId(), this.getOpenId(), this.getArticleTitle(),
+        this.getArticleUrl()};
     }
 
     private String openId = null;// 微信openID

@@ -42,6 +42,8 @@ public class GlobalConsts
 
     public static final String CSV_RESOURCE_FILE_INPUT = "QueryNumOfReadLike.csv";
 
+    public static final String CSV_RESOURCE_FILE_OUTPUT_FULL = "QueryNumOfReadLike_output_full.csv";
+
     public static final String CSV_RESOURCE_FILE_OUTPUT_OPENID_ARITICLE =
         "QueryNumOfReadLike_output_openid_article.csv";
 
