@@ -17,15 +17,16 @@
  */
 package info.smartkit.hairy_batman.domain;
 
+
 /**
  * Foo object entity
  * 
  * @author yangboz
  */
-public class WxSubscriber
+public class WxComplexSubscriber extends WxSimpleSubscriber
 {
 
-    public WxSubscriber()
+    public WxComplexSubscriber()
     {
 
     }
@@ -42,9 +43,10 @@ public class WxSubscriber
         this.wxFooArticle = wxFooArticle;
     }
 
-    public WxSubscriber(String code, String store, String manager, String agency, String unit, String onSubscribe,
-        String subscribeId, String moniterTime, WxFooArticle wxFooArticle)
+    public WxComplexSubscriber(Integer id, String code, String store, String manager, String agency, String unit,
+        String onSubscribe, String subscribeId, String moniterTime, WxFooArticle wxFooArticle)
     {
+        this.id = id;
         this.code = code;
         this.store = store;
         this.manager = manager;
@@ -55,10 +57,11 @@ public class WxSubscriber
         this.wxFooArticle = wxFooArticle;
     }
 
-    public WxSubscriber(String code, String store, String manager, String agency, String unit, String onSubscribe,
-        String subscribeId, String articleTime, String articleUrl, String articleTitle, String articleReadNum,
-        String articleLikeNum, String articleLikeRate, String moniterTime)
+    public WxComplexSubscriber(Integer id, String code, String store, String manager, String agency, String unit,
+        String onSubscribe, String subscribeId, String articleTime, String articleUrl, String articleTitle,
+        String articleReadNum, String articleLikeNum, String articleLikeRate, String moniterTime)
     {
+        this.id = id;
         this.code = code;
         this.store = store;
         this.manager = manager;
@@ -73,30 +76,6 @@ public class WxSubscriber
         this.articleLikeNum = articleLikeNum;
         this.articleLikeRate = articleLikeRate;
         this.moniterTime = moniterTime;
-    }
-
-    private String code;// 代码
-
-    public String getCode()
-    {
-        return code;
-    }
-
-    public void setCode(String code)
-    {
-        this.code = code;
-    }
-
-    private String store;// 店名
-
-    public String getStore()
-    {
-        return store;
-    }
-
-    public void setStore(String store)
-    {
-        this.store = store;
     }
 
     private String manager;// 区域经理
@@ -145,18 +124,6 @@ public class WxSubscriber
     public void setOnSubscribe(String onSubscribe)
     {
         this.onSubscribe = onSubscribe;
-    }
-
-    private String subscribeId;// 订阅号名全称,subscribeId VARCHAR(20),
-
-    public String getSubscribeId()
-    {
-        return subscribeId;
-    }
-
-    public void setSubscribeId(String subscribeId)
-    {
-        this.subscribeId = subscribeId;
     }
 
     private String articleTime;// 文章发布日期，articleTime VARCHAR(10),
@@ -263,7 +230,8 @@ public class WxSubscriber
 
     public String[] toOpenIdStringArray()
     {
-        return new String[] {this.getCode(), this.getSubscribeId(), this.getOpenId()};
+        // return ArrayUtil.addAll(super.toStringArray(), new String[] {this.getOpenId()});
+        return new String[] {this.getCode(), this.getStore(), this.getSubscribeId(), this.getOpenId()};
     }
 
     public String[] toOpenIdArticleStringArray()

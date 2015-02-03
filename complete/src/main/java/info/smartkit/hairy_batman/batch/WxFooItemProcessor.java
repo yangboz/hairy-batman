@@ -1,22 +1,24 @@
 package info.smartkit.hairy_batman.batch;
 
-import info.smartkit.hairy_batman.domain.WxSubscriber;
+import info.smartkit.hairy_batman.domain.WxComplexSubscriber;
+import info.smartkit.hairy_batman.domain.WxSimpleSubscriber;
 import info.smartkit.hairy_batman.query.SogouSearchQuery;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.batch.item.ItemProcessor;
 
-public class WxFooItemProcessor implements ItemProcessor<WxSubscriber, WxSubscriber>
+public class WxFooItemProcessor implements ItemProcessor<WxSimpleSubscriber, WxSimpleSubscriber>
 {
     private static Logger LOG = LogManager.getLogger(WxFooItemProcessor.class);
 
     @Override
-    public WxSubscriber process(final WxSubscriber wxFoo) throws Exception
+    public WxSimpleSubscriber process(final WxSimpleSubscriber wxFoo) throws Exception
     {
         LOG.info("WxFooItemProcessor processing..." + wxFoo);
         // LOG.debug("SogouSearchQuery processing..." + wxFoo);
-        new SogouSearchQuery(wxFoo).parseWxOpenId();
+        new SogouSearchQuery(new WxComplexSubscriber(wxFoo.getId(), wxFoo.getCode(), wxFoo.getStore(), null, null,
+            null, null, wxFoo.getSubscribeId(), null, null)).parseWxOpenId();
         // new KJsonApiQuery(wxFoo).query();
         // LOG.debug("KJsonApiQuery processing..." + wxFoo);
         // TODO:JobLauncher start here.

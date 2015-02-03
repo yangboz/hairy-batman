@@ -36,11 +36,15 @@ public class GlobalConsts
     public static final String QUERY_COLUMNS_NAME =
         "code,store,manager,agency,unit,onSubscribe,subscribeId,articleTime,articleUrl,articleTitle,articleReadNum,articleLikeNum,articleLikeRate,moniterTime";
 
+    public static final String QUERY_COLUMNS_NAME_SIMPLE = "id,code,store,subscribeId";
+
     public static final String QUERY_COLUMNS_LABEL = QUERY_COLUMNS_NAME.replace(",", ",:");
 
     public static final String[] CSV_COLUMNS_NAME = QUERY_COLUMNS_NAME.split(",");
 
-    public static final String CSV_RESOURCE_FILE_INPUT_CSV = "QueryNumOfReadLike.csv";
+    public static final String[] CSV_COLUMNS_NAME_SIMPLE = QUERY_COLUMNS_NAME_SIMPLE.split(",");
+
+    public static final String CSV_RESOURCE_FILE_INPUT_CSV = "wxStatistic.csv";
 
     public static final String CSV_RESOURCE_FILE_INPUT_XLS = "wxStatistic.xls";
 
@@ -55,6 +59,8 @@ public class GlobalConsts
     public static final String CSV_RESOURCE_FILE_OUTPUT_OPENID = "QueryNumOfReadLike_output_openid.csv";
 
     public static final String CSV_DELIMITED_LINE_TOKENIZER = ";";
+
+    public static final String CSV_ENCODING_UTF = "UTF-8";
 
     public static final String SOGOU_SEARCH_URL_BASE = "http://weixin.sogou.com/weixin?type=1&query=";
 

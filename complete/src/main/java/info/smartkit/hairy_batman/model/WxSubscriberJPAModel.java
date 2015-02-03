@@ -3,27 +3,35 @@
  */
 package info.smartkit.hairy_batman.model;
 
-import com.blogspot.na5cent.exom.annotation.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  * @author yangboz
  */
-public class WxSubscriberModel
+@Entity
+@Table(name = "wxSubscribers")
+public class WxSubscriberJPAModel
 {
-    @Column(name = "序号")
-    private Integer id;// 序号
+    // An auto-generated id (unique for each user in the db)
+    @Id
+    // 序号
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
 
-    public Integer getId()
+    public long getId()
     {
         return id;
     }
 
-    public void setId(Integer id)
+    public void setId(long value)
     {
-        this.id = id;
+        this.id = value;
     }
 
-    @Column(name = "店代码")
     private String code;// 店代码
 
     public void setCode(String code)
@@ -36,7 +44,6 @@ public class WxSubscriberModel
         return code;
     }
 
-    @Column(name = "特约店名")
     private String store;// 特约店名
 
     public String getStore()
@@ -62,7 +69,6 @@ public class WxSubscriberModel
     // this.manager = manager;
     // }
 
-    @Column(name = "办事处")
     private String agency;// 办事处
 
     public String getAgency()
@@ -75,7 +81,6 @@ public class WxSubscriberModel
         this.agency = agency;
     }
 
-    @Column(name = "事业部")
     private String unit;// 事业部
 
     public String getUnit()
@@ -88,7 +93,6 @@ public class WxSubscriberModel
         this.unit = unit;
     }
 
-    @Column(name = "订阅号开通")
     private String onSubscribe;// 是否开通订阅号
 
     public String getOnSubscribe()
@@ -101,7 +105,6 @@ public class WxSubscriberModel
         this.onSubscribe = onSubscribe;
     }
 
-    @Column(name = "订阅号ID")
     private String subscribeId;// 订阅号名全称,subscribeId VARCHAR(20),
 
     public String getSubscribeId()

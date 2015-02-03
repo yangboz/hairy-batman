@@ -1,7 +1,7 @@
 package info.smartkit.hairy_batman.batch;
 
 import info.smartkit.hairy_batman.config.GlobalConsts;
-import info.smartkit.hairy_batman.domain.WxSubscriber;
+import info.smartkit.hairy_batman.domain.WxSimpleSubscriber;
 
 import javax.sql.DataSource;
 
@@ -59,9 +59,9 @@ public class WxBatchConfiguration
 
     // tag::readerwriterprocessor[]
     @Bean
-    public ItemReader<WxSubscriber> reader()
+    public ItemReader<WxSimpleSubscriber> reader()
     {
-        FlatFileItemReader<WxSubscriber> reader = new FlatFileItemReader<WxSubscriber>();
+        FlatFileItemReader<WxSimpleSubscriber> reader = new FlatFileItemReader<WxSimpleSubscriber>();
         // PoiItemReader<WxSubscriber> reader = new PoiItemReader<WxSubscriber>();
         // reader.setResource(new ClassPathResource(GlobalConsts.CSV_RESOURCE_FILE_INPUT_XLS));
         reader.setResource(new ClassPathResource(GlobalConsts.CSV_RESOURCE_FILE_INPUT_CSV));
@@ -78,21 +78,21 @@ public class WxBatchConfiguration
         // reader.setRowMapper(rowMapper);
         // reader.open(new ExecutionContext());
         // reader.setRowMapper(rowMapper);
-        reader.setLineMapper(new DefaultLineMapper<WxSubscriber>()
+        reader.setLineMapper(new DefaultLineMapper<WxSimpleSubscriber>()
         {
             {
                 // setLineTokenizer(new DelimitedLineTokenizer(GlobalConsts.CSV_DELIMITED_LINE_TOKENIZER)
                 setLineTokenizer(new DelimitedLineTokenizer(DelimitedLineTokenizer.DELIMITER_TAB)
                 {
                     {
-                        // System.out.println("GlobalConsts.CSV_COLUMNS_NAME: " + GlobalConsts.CSV_COLUMNS_NAME);
-                        setNames(GlobalConsts.CSV_COLUMNS_NAME);
+                        // System.out.println("GlobalConsts.CSV_COLUMNS_NAME: " + GlobalConsts.CSV_COLUMNS_NAME_SIMPLE);
+                        setNames(GlobalConsts.CSV_COLUMNS_NAME_SIMPLE);
                     }
                 });
-                setFieldSetMapper(new BeanWrapperFieldSetMapper<WxSubscriber>()
+                setFieldSetMapper(new BeanWrapperFieldSetMapper<WxSimpleSubscriber>()
                 {
                     {
-                        setTargetType(WxSubscriber.class);
+                        setTargetType(WxSimpleSubscriber.class);
                     }
                 });
             }
@@ -102,17 +102,17 @@ public class WxBatchConfiguration
     }
 
     @Bean
-    public ItemProcessor<WxSubscriber, WxSubscriber> processor()
+    public ItemProcessor<WxSimpleSubscriber, WxSimpleSubscriber> processor()
     {
         return new WxFooItemProcessor();
     }
 
     @Bean
-    public ItemWriter<WxSubscriber> writer(DataSource dataSource)
+    public ItemWriter<WxSimpleSubscriber> writer(DataSource dataSource)
     {
         LOG.debug("GlobalConsts.QUERY_COLUMNS_LABEL: " + GlobalConsts.QUERY_COLUMNS_LABEL);
-        JdbcBatchItemWriter<WxSubscriber> writer = new JdbcBatchItemWriter<WxSubscriber>();
-        writer.setItemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<WxSubscriber>());
+        JdbcBatchItemWriter<WxSimpleSubscriber> writer = new JdbcBatchItemWriter<WxSimpleSubscriber>();
+        writer.setItemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<WxSimpleSubscriber>());
         writer.setSql("INSERT INTO " + GlobalConsts.QUERY_TABLE_NAME + "(" + GlobalConsts.QUERY_COLUMNS_NAME
             + ") VALUES (:" + GlobalConsts.QUERY_COLUMNS_LABEL + ")");
         writer.setDataSource(dataSource);
@@ -129,10 +129,10 @@ public class WxBatchConfiguration
     }
 
     @Bean
-    public Step step1(StepBuilderFactory stepBuilderFactory, ItemReader<WxSubscriber> reader,
-        ItemWriter<WxSubscriber> writer, ItemProcessor<WxSubscriber, WxSubscriber> processor)
+    public Step step1(StepBuilderFactory stepBuilderFactory, ItemReader<WxSimpleSubscriber> reader,
+        ItemWriter<WxSimpleSubscriber> writer, ItemProcessor<WxSimpleSubscriber, WxSimpleSubscriber> processor)
     {
-        return stepBuilderFactory.get("step1").<WxSubscriber, WxSubscriber>chunk(10).reader(reader)
+        return stepBuilderFactory.get("step1").<WxSimpleSubscriber, WxSimpleSubscriber>chunk(10).reader(reader)
             .processor(processor).writer(writer).build();
     }
 

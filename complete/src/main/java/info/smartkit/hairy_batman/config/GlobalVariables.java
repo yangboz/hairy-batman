@@ -17,8 +17,8 @@
  */
 package info.smartkit.hairy_batman.config;
 
-import info.smartkit.hairy_batman.domain.WxSubscriber;
-import info.smartkit.hairy_batman.model.WxSubscriberModel;
+import info.smartkit.hairy_batman.domain.WxComplexSubscriber;
+import info.smartkit.hairy_batman.model.WxSubscriberExcelModel;
 import info.smartkit.hairy_batman.plain.WxSogou;
 
 import java.text.SimpleDateFormat;
@@ -41,10 +41,10 @@ public class GlobalVariables
     public static ApplicationContext appContext = null;
 
     //
-    public static List<WxSubscriber> wxFooList = new ArrayList<WxSubscriber>();
+    public static List<WxComplexSubscriber> wxFooList = new ArrayList<WxComplexSubscriber>();
 
     //
-    public static List<WxSubscriberModel> wxSubscriberModelList = new ArrayList<WxSubscriberModel>();
+    public static List<WxSubscriberExcelModel> wxSubscriberModelList = new ArrayList<WxSubscriberExcelModel>();
 
     //
     public static final String DATE_FORMAT_NOW = "yyyy-MM-dd HH:mm:ss";
@@ -57,10 +57,10 @@ public class GlobalVariables
     }
 
     // Temporary for storage with WX OpenId info updated.
-    public static List<WxSubscriber> wxFooListWithOpenId = new ArrayList<WxSubscriber>();
+    public static List<WxComplexSubscriber> wxFooListWithOpenId = new ArrayList<WxComplexSubscriber>();
 
     // Temporary for storage with WX UserId info updated.
-    public static List<WxSubscriber> wxFooListWithUserId = new ArrayList<WxSubscriber>();
+    public static List<WxComplexSubscriber> wxFooListWithUserId = new ArrayList<WxComplexSubscriber>();
 
     // Temporary for storage with WX OpenId info updated.
     public static Map<String, WxSogou> openIdWithArticleList = new HashMap<String, WxSogou>();

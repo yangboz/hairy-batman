@@ -17,10 +17,12 @@
  */
 package info.smartkit.hairy_batman.reports;
 
-import info.smartkit.hairy_batman.domain.WxSubscriber;
+import info.smartkit.hairy_batman.config.GlobalConsts;
+import info.smartkit.hairy_batman.domain.WxComplexSubscriber;
 
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,7 +60,7 @@ public class CSVReporter
 
     public ArrayList<String[]> getDataSource()
     {
-        for (WxSubscriber elem : this.getRawDataSource()) {
+        for (WxComplexSubscriber elem : this.getRawDataSource()) {
             String[] elemStrings = new String[] {};
             // System.out.println("elem.toStringArray():" + elem.toStringArray());
             switch (this.reporterType) {
@@ -85,14 +87,14 @@ public class CSVReporter
 
     private REPORTER_TYPE reporterType = REPORTER_TYPE.R_T_FULL;
 
-    private List<WxSubscriber> rawDataSource = new ArrayList<WxSubscriber>();
+    private List<WxComplexSubscriber> rawDataSource = new ArrayList<WxComplexSubscriber>();
 
-    public List<WxSubscriber> getRawDataSource()
+    public List<WxComplexSubscriber> getRawDataSource()
     {
         return rawDataSource;
     }
 
-    public void setRawDataSource(List<WxSubscriber> rawDataSource)
+    public void setRawDataSource(List<WxComplexSubscriber> rawDataSource)
     {
         this.rawDataSource = rawDataSource;
     }
@@ -102,7 +104,7 @@ public class CSVReporter
 
     }
 
-    public CSVReporter(String fileName, List<WxSubscriber> rawDataSource, REPORTER_TYPE reporterType)
+    public CSVReporter(String fileName, List<WxComplexSubscriber> rawDataSource, REPORTER_TYPE reporterType)
     {
         this.fileName = fileName;
         this.setRawDataSource(rawDataSource);
@@ -114,7 +116,8 @@ public class CSVReporter
         // CSVWriter
         CSVWriter writer = null;
         try {
-            writer = new CSVWriter(new FileWriter(this.getFileName(), true));
+            writer =
+                new CSVWriter(new OutputStreamWriter(new FileOutputStream(fileName), GlobalConsts.CSV_ENCODING_UTF));
             // writer.write("\uFEFF");
         } catch (IOException e) {
             // e.printStackTrace();

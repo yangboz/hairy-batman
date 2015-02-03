@@ -19,7 +19,7 @@ package info.smartkit.hairy_batman.query;
 
 import info.smartkit.hairy_batman.config.GlobalConsts;
 import info.smartkit.hairy_batman.config.GlobalVariables;
-import info.smartkit.hairy_batman.domain.WxSubscriber;
+import info.smartkit.hairy_batman.domain.WxComplexSubscriber;
 import info.smartkit.hairy_batman.plain.WxSogou;
 import info.smartkit.hairy_batman.reports.CSVReporter;
 
@@ -51,7 +51,7 @@ public class SogouSearchQuery
 {
     private static Logger LOG = LogManager.getLogger(SogouSearchQuery.class);
 
-    protected WxSubscriber wxFoo;
+    protected WxComplexSubscriber wxFoo;
 
     MultiValueMap<String, String> parameters;
 
@@ -60,12 +60,10 @@ public class SogouSearchQuery
 
     }
 
-    public SogouSearchQuery(WxSubscriber wxFoo)
+    public SogouSearchQuery(WxComplexSubscriber wxFoo)
     {
         this.wxFoo = wxFoo;
         this.parameters = new LinkedMultiValueMap<String, String>();
-        this.parameters.add("urls", wxFoo.getArticleUrl());
-        // "http://mp.weixin.qq.com/s?__biz=MjM5ODE4MTUzMg==&mid=202895379&idx=1&sn=a46187dd2e3fc704b72277dbf863f356&3rd=MzA3MDU4NTYzMw==&scene=6#rd");
     }
 
     public void parseWxOpenId()
@@ -142,6 +140,8 @@ public class SogouSearchQuery
     // @see: http://weixin.sogou.com/gzhjs?cb=sogou.weixin.gzhcb&openid=oIWsFt_Ri_gqjARIY_shVuqjc3Zo
     private void parseSogouJsonSite(String openId)
     {
+        LOG.info("GlobalVariables.wxFooListWithOpenId before parseSogouJsonSite:"
+            + GlobalVariables.wxFooListWithOpenId.toString());
         ObjectMapper mapper = new ObjectMapper(); // can reuse, share globally
         WxSogou wxSogouJson = null;
         try {
@@ -201,7 +201,7 @@ public class SogouSearchQuery
                 out.write(buffer, 0, len);
             }
             // 将内存流转换为字符串
-            jsonStr = new String(out.toByteArray(), "utf-8");
+            jsonStr = new String(out.toByteArray(), "UTF-8");
         } catch (IOException e) {
             e.printStackTrace();
         }

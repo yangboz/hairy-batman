@@ -2,7 +2,7 @@ package info.smartkit.hairy_batman;
 
 import info.smartkit.hairy_batman.config.GlobalConsts;
 import info.smartkit.hairy_batman.config.GlobalVariables;
-import info.smartkit.hairy_batman.domain.WxSubscriber;
+import info.smartkit.hairy_batman.domain.WxComplexSubscriber;
 import info.smartkit.hairy_batman.reports.CSVReporter;
 
 import java.sql.ResultSet;
@@ -30,21 +30,22 @@ public class Application
         // Check the openId storage results:
         LOG.info("GlobalVariables.wxFooListWithOpenId(size):" + GlobalVariables.wxFooListWithOpenId.size());
         // Spring-batch reading CSV testing.
-        List<WxSubscriber> batch_results =
+        List<WxComplexSubscriber> batch_results =
             GlobalVariables.appContext.getBean(JdbcTemplate.class).query(
                 "SELECT " + GlobalConsts.QUERY_COLUMNS_NAME + " FROM " + GlobalConsts.QUERY_TABLE_NAME,
-                new RowMapper<WxSubscriber>()
+                new RowMapper<WxComplexSubscriber>()
                 {
                     @Override
-                    public WxSubscriber mapRow(ResultSet rs, int row) throws SQLException
+                    public WxComplexSubscriber mapRow(ResultSet rs, int row) throws SQLException
                     {
-                        return new WxSubscriber(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs
-                            .getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs
-                            .getString(10), rs.getString(11), rs.getString(12), rs.getString(13), rs.getString(14));
+                        return new WxComplexSubscriber(rs.getInt(1), rs.getString(1), rs.getString(2), rs.getString(3),
+                            rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs
+                                .getString(9), rs.getString(10), rs.getString(11), rs.getString(12), rs.getString(13),
+                            rs.getString(14));
                     }
                 });
 
-        for (WxSubscriber wxFoo : batch_results) {
+        for (WxComplexSubscriber wxFoo : batch_results) {
             // System.out.println("Found <" + wxFoo + "> in the database.");
             LOG.info("Found <" + wxFoo + "> in the database.");
         }

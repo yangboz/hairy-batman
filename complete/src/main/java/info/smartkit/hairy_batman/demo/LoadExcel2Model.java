@@ -4,7 +4,7 @@
 package info.smartkit.hairy_batman.demo;
 
 import info.smartkit.hairy_batman.config.GlobalConsts;
-import info.smartkit.hairy_batman.model.WxSubscriberModel;
+import info.smartkit.hairy_batman.model.WxSubscriberExcelModel;
 
 import java.io.File;
 import java.util.List;
@@ -37,9 +37,9 @@ public class LoadExcel2Model
         // LOG.info("");
         // }
         File excelFile = new ClassPathResource(GlobalConsts.CSV_RESOURCE_FILE_INPUT_XLS).getFile();
-        List<WxSubscriberModel> items = ExOM.mapFromExcel(excelFile).toObjectOf(WxSubscriberModel.class).map();
+        List<WxSubscriberExcelModel> items = ExOM.mapFromExcel(excelFile).toObjectOf(WxSubscriberExcelModel.class).map();
 
-        for (WxSubscriberModel item : items) {
+        for (WxSubscriberExcelModel item : items) {
             LOG.info("WxSubscriberModel:" + item.toString());
         }
 
