@@ -32,8 +32,7 @@ public class LoadExcel2Model
         // LOG.info("birth date --> {}", item.getBirthdate());
         // LOG.info("");
         // }
-        File excelFile =
-            new File("/Users/yangboz/Documents/Git/hairy-batman/complete/src/main/resources/QueryNumOfReadLike.xls");
+        File excelFile = new File("/Users/yangboz/Documents/Git/hairy-batman/complete/src/main/resources/微信统计表格.xlsx");
         List<WxSubscriberModel> items = ExOM.mapFromExcel(excelFile).toObjectOf(WxSubscriberModel.class).map();
 
         for (WxSubscriberModel item : items) {
