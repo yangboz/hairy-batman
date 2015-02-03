@@ -40,7 +40,9 @@ public class GlobalConsts
 
     public static final String[] CSV_COLUMNS_NAME = QUERY_COLUMNS_NAME.split(",");
 
-    public static final String CSV_RESOURCE_FILE_INPUT = "QueryNumOfReadLike.csv";
+    public static final String CSV_RESOURCE_FILE_INPUT_CSV = "QueryNumOfReadLike.csv";
+
+    public static final String CSV_RESOURCE_FILE_INPUT_XLS = "wxStatistic.xls";
 
     public static final String CSV_RESOURCE_FILE_OUTPUT_FULL = "QueryNumOfReadLike_output_full.csv";
 

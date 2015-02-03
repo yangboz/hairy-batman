@@ -115,6 +115,7 @@ public class CSVReporter
         CSVWriter writer = null;
         try {
             writer = new CSVWriter(new FileWriter(this.getFileName(), true));
+            // writer.write("\uFEFF");
         } catch (IOException e) {
             // e.printStackTrace();
             LOG.error(e.toString());

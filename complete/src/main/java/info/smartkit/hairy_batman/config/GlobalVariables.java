@@ -18,6 +18,7 @@
 package info.smartkit.hairy_batman.config;
 
 import info.smartkit.hairy_batman.domain.WxSubscriber;
+import info.smartkit.hairy_batman.model.WxSubscriberModel;
 import info.smartkit.hairy_batman.plain.WxSogou;
 
 import java.text.SimpleDateFormat;
@@ -41,6 +42,9 @@ public class GlobalVariables
 
     //
     public static List<WxSubscriber> wxFooList = new ArrayList<WxSubscriber>();
+
+    //
+    public static List<WxSubscriberModel> wxSubscriberModelList = new ArrayList<WxSubscriberModel>();
 
     //
     public static final String DATE_FORMAT_NOW = "yyyy-MM-dd HH:mm:ss";

@@ -3,11 +3,15 @@
  */
 package info.smartkit.hairy_batman.demo;
 
+import info.smartkit.hairy_batman.config.GlobalConsts;
+import info.smartkit.hairy_batman.model.WxSubscriberModel;
+
 import java.io.File;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.core.io.ClassPathResource;
 
 import com.blogspot.na5cent.exom.ExOM;
 
@@ -32,7 +36,7 @@ public class LoadExcel2Model
         // LOG.info("birth date --> {}", item.getBirthdate());
         // LOG.info("");
         // }
-        File excelFile = new File("/Users/yangboz/Documents/Git/hairy-batman/complete/src/main/resources/微信统计表格.xlsx");
+        File excelFile = new ClassPathResource(GlobalConsts.CSV_RESOURCE_FILE_INPUT_XLS).getFile();
         List<WxSubscriberModel> items = ExOM.mapFromExcel(excelFile).toObjectOf(WxSubscriberModel.class).map();
 
         for (WxSubscriberModel item : items) {

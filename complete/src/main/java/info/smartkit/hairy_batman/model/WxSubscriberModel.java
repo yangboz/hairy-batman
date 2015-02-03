@@ -1,7 +1,7 @@
 /*
  * code https://github.com/jittagornp/excel-object-mapping
  */
-package info.smartkit.hairy_batman.demo;
+package info.smartkit.hairy_batman.model;
 
 import com.blogspot.na5cent.exom.annotation.Column;
 
