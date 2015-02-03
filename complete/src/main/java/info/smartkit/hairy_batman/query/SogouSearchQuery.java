@@ -160,6 +160,9 @@ public class SogouSearchQuery
         // Save the procedure CSVReporting
         new CSVReporter(GlobalConsts.CSV_RESOURCE_FILE_OUTPUT_OPENID_ARITICLE, GlobalVariables.wxFooListWithOpenId,
             CSVReporter.REPORTER_TYPE.R_T_OPENID_ARTICLE).write();
+        // KJSON API call.
+        // new KJsonApiQuery(wxFoo).query();
+        // LOG.debug("KJsonApiQuery processing..." + wxFoo);
     }
 
     private String getJsonContent(String urlStr)

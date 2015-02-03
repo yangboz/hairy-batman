@@ -41,6 +41,7 @@ public class CSVReporter
     {
         R_T_OPENID,
         R_T_OPENID_ARTICLE,
+        R_T_OPENID_ARTICLE_READ_LIKE,
         R_T_FULL
     };
 
@@ -66,6 +67,9 @@ public class CSVReporter
                     break;
                 case R_T_OPENID_ARTICLE:
                     elemStrings = elem.toOpenIdArticleStringArray();
+                    break;
+                case R_T_OPENID_ARTICLE_READ_LIKE:
+                    elemStrings = elem.toOpenIdArticleReadLikeStringArray();
                     break;
                 case R_T_FULL:
                     elemStrings = elem.toFullStringArray();

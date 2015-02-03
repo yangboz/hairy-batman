@@ -1,7 +1,7 @@
-DROP TABLE wxfoo IF EXISTS;
+DROP TABLE IF EXISTS `vendors`;
 
 CREATE TABLE wxfoo (
-    wxfoo_id BIGINT IDENTITY NOT NULL PRIMARY KEY,
+    wxfoo_id BigInt( 20 ) AUTO_INCREMENT NOT NULL,
     code VARCHAR(20),
     store VARCHAR(20),
     manager VARCHAR(20),
@@ -15,5 +15,6 @@ CREATE TABLE wxfoo (
     articleReadNum VARCHAR(10),
     articleLikeNum VARCHAR(10),
     articleLikeRate VARCHAR(5),
-    moniterTime VARCHAR(20)
+    moniterTime VARCHAR(20),
+    PRIMARY KEY ( `wxfoo_id` )
 );

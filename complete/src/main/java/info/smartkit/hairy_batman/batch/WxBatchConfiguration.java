@@ -3,10 +3,22 @@ package info.smartkit.hairy_batman.batch;
 import info.smartkit.hairy_batman.config.GlobalConsts;
 import info.smartkit.hairy_batman.domain.WxSubscriber;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import javax.sql.DataSource;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
@@ -28,6 +40,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 @Configuration
 @EnableBatchProcessing
@@ -62,6 +75,7 @@ public class WxBatchConfiguration
     {
         FlatFileItemReader<WxSubscriber> reader = new FlatFileItemReader<WxSubscriber>();
         reader.setResource(new ClassPathResource(GlobalConsts.CSV_RESOURCE_FILE_INPUT));
+        // reader.setEncoding("UTF-8");
         reader.setLineMapper(new DefaultLineMapper<WxSubscriber>()
         {
             {
@@ -80,6 +94,7 @@ public class WxBatchConfiguration
                 });
             }
         });
+        this.readExcelData("/Users/yangboz/Documents/Git/hairy-batman/complete/src/main/resources/QueryNumOfReadLike.xls");
         return reader;
     }
 
@@ -134,22 +149,99 @@ public class WxBatchConfiguration
 
     // end::jobstep[]
 
-    // @Bean
-    // public DataSource dataSource()
-    // {
-    // DriverManagerDataSource dataSource = new DriverManagerDataSource();
-    // dataSource.setDriverClassName(databaseDriver);
-    // dataSource.setUrl(databaseUrl);
-    // dataSource.setUsername(databaseUsername);
-    // dataSource.setPassword(databasePassword);
-    // return dataSource;
-    // }
+    @Bean
+    public DataSource dataSource()
+    {
+        DriverManagerDataSource dataSource = new DriverManagerDataSource();
+        dataSource.setDriverClassName(databaseDriver);
+        dataSource.setUrl(databaseUrl);
+        dataSource.setUsername(databaseUsername);
+        dataSource.setPassword(databasePassword);
+        return dataSource;
+    }
 
     @Bean
     public JdbcTemplate jdbcTemplate(DataSource dataSource)
     {
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
         return jdbcTemplate;
+    }
+
+    //
+    public List<WxSubscriber> readExcelData(String fileName)
+    {
+        List<WxSubscriber> countriesList = new ArrayList<WxSubscriber>();
+
+        try {
+            // Create the input stream from the xlsx/xls file
+            FileInputStream fis = new FileInputStream(fileName);
+
+            // Create Workbook instance for xlsx/xls file input stream
+            Workbook workbook = null;
+            if (fileName.toLowerCase().endsWith("xlsx")) {
+                workbook = new XSSFWorkbook(fis);
+            } else if (fileName.toLowerCase().endsWith("xls")) {
+                workbook = new HSSFWorkbook(fis);
+            }
+
+            // Get the number of sheets in the xlsx file
+            int numberOfSheets = workbook.getNumberOfSheets();
+
+            // loop through each of the sheets
+            for (int i = 0; i < numberOfSheets; i++) {
+
+                // Get the nth sheet from the workbook
+                Sheet sheet = workbook.getSheetAt(i);
+
+                // every sheet has rows, iterate over them
+                Iterator<Row> rowIterator = sheet.iterator();
+                while (rowIterator.hasNext()) {
+                    String name = "";
+                    String shortCode = "";
+
+                    // Get the row object
+                    Row row = rowIterator.next();
+
+                    // Every row has columns, get the column iterator and iterate over them
+                    Iterator<Cell> cellIterator = row.cellIterator();
+
+                    while (cellIterator.hasNext()) {
+                        // Get the Cell object
+                        Cell cell = cellIterator.next();
+
+                        // check the cell type and process accordingly
+                        switch (cell.getCellType()) {
+                            case Cell.CELL_TYPE_STRING:
+                                if (shortCode.equalsIgnoreCase("")) {
+                                    shortCode = cell.getStringCellValue().trim();
+                                } else if (name.equalsIgnoreCase("")) {
+                                    // 2nd column
+                                    name = cell.getStringCellValue().trim();
+                                } else {
+                                    // random data, leave it
+                                    System.out.println("Random data::" + cell.getStringCellValue());
+                                }
+                                break;
+                            case Cell.CELL_TYPE_NUMERIC:
+                                System.out.println("Random data::" + cell.getNumericCellValue());
+                        }
+                    } // end of cell iterator
+                    WxSubscriber c = new WxSubscriber();
+                    c.setCode(name);
+                    c.setStore(shortCode);
+                    countriesList.add(c);
+                } // end of rows iterator
+
+            } // end of sheets for loop
+
+            // close file input stream
+            fis.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return countriesList;
     }
 
 }

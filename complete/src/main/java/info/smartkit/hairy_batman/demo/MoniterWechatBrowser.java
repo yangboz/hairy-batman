@@ -15,7 +15,7 @@
  * 
  * All rights reserved.
  */
-package info.smartkit.hairy_batman;
+package info.smartkit.hairy_batman.demo;
 
 /**
  * TODO: DOCUMENT ME!

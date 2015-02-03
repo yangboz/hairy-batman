@@ -47,6 +47,9 @@ public class GlobalConsts
     public static final String CSV_RESOURCE_FILE_OUTPUT_OPENID_ARITICLE =
         "QueryNumOfReadLike_output_openid_article.csv";
 
+    public static final String CSV_RESOURCE_FILE_OUTPUT_OPENID_ARITICLE_READ_LIKE =
+        "QueryNumOfReadLike_output_openid_article_readlike.csv";
+
     public static final String CSV_RESOURCE_FILE_OUTPUT_OPENID = "QueryNumOfReadLike_output_openid.csv";
 
     public static final String CSV_DELIMITED_LINE_TOKENIZER = ";";

@@ -30,6 +30,31 @@ public class WxSubscriber
 
     }
 
+    private WxFooArticle wxFooArticle;
+
+    public WxFooArticle getWxFooArticle()
+    {
+        return wxFooArticle;
+    }
+
+    public void setWxFooArticle(WxFooArticle wxFooArticle)
+    {
+        this.wxFooArticle = wxFooArticle;
+    }
+
+    public WxSubscriber(String code, String store, String manager, String agency, String unit, String onSubscribe,
+        String subscribeId, String moniterTime, WxFooArticle wxFooArticle)
+    {
+        this.code = code;
+        this.store = store;
+        this.manager = manager;
+        this.agency = agency;
+        this.unit = unit;
+        this.onSubscribe = onSubscribe;
+        this.subscribeId = subscribeId;
+        this.wxFooArticle = wxFooArticle;
+    }
+
     public WxSubscriber(String code, String store, String manager, String agency, String unit, String onSubscribe,
         String subscribeId, String articleTime, String articleUrl, String articleTitle, String articleReadNum,
         String articleLikeNum, String articleLikeRate, String moniterTime)
@@ -245,6 +270,12 @@ public class WxSubscriber
     {
         return new String[] {this.getCode(), this.getSubscribeId(), this.getOpenId(), this.getArticleTitle(),
         this.getArticleUrl()};
+    }
+
+    public String[] toOpenIdArticleReadLikeStringArray()
+    {
+        return new String[] {this.getCode(), this.getSubscribeId(), this.getOpenId(), this.getArticleTitle(),
+        this.getArticleUrl(), this.getArticleReadNum(), this.getArticleLikeNum(), this.getArticleLikeRate()};
     }
 
     private String openId = null;// 微信openID

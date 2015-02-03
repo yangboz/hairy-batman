@@ -1,7 +1,7 @@
 package info.smartkit.hairy_batman.batch;
 
 import info.smartkit.hairy_batman.domain.WxSubscriber;
-import info.smartkit.hairy_batman.query.SogouSearchQuery;
+import info.smartkit.hairy_batman.query.KJsonApiQuery;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -14,11 +14,11 @@ public class WxFooItemProcessor implements ItemProcessor<WxSubscriber, WxSubscri
     @Override
     public WxSubscriber process(final WxSubscriber wxFoo) throws Exception
     {
-        //
-        new SogouSearchQuery(wxFoo).parseWxOpenId();
-        LOG.debug("SogouSearchQuery processing..." + wxFoo);
-        // new KJsonApiQuery(wxFoo).query();
-        // LOG.debug("KJsonApiQuery processing..." + wxFoo);
+        LOG.info("WxFooItemProcessor processing..." + wxFoo);
+        // new SogouSearchQuery(wxFoo).parseWxOpenId();
+        // LOG.debug("SogouSearchQuery processing..." + wxFoo);
+        new KJsonApiQuery(wxFoo).query();
+        LOG.debug("KJsonApiQuery processing..." + wxFoo);
         // TODO:JobLauncher start here.
         // TaskletStep taskletStep1 = new TaskletStep("step_parseWxOpenId");
         // Tasklet tasklet_parseWxOpenId = new TaskParseWxOpenId();

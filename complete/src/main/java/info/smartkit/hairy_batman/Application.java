@@ -46,7 +46,7 @@ public class Application
 
         for (WxSubscriber wxFoo : batch_results) {
             // System.out.println("Found <" + wxFoo + "> in the database.");
-            LOG.debug("Found <" + wxFoo + "> in the database.");
+            LOG.info("Found <" + wxFoo + "> in the database.");
         }
         // CSVReporting
         new CSVReporter(GlobalConsts.CSV_RESOURCE_FILE_OUTPUT_FULL, batch_results, CSVReporter.REPORTER_TYPE.R_T_FULL)
