@@ -87,7 +87,9 @@ public class SogouSearchQuery
             LOG.debug("openIdLinkHref:" + openIdLinkHref);
             // FIXME:过滤同一个订阅号搜到多条结果，默认选择第一个
             if (this.wxFoo.getOpenId() == null) {
-                this.wxFoo.setOpenId(openIdLinkHref.split(GlobalConsts.SOGOU_SEARCH_WX_OPEN_ID_KEYWORDS)[1]);
+            	if (openIdLinkHref.split(GlobalConsts.SOGOU_SEARCH_WX_OPEN_ID_KEYWORDS).length>1){
+            		this.wxFoo.setOpenId(openIdLinkHref.split(GlobalConsts.SOGOU_SEARCH_WX_OPEN_ID_KEYWORDS)[1]);
+            	}
                 LOG.info("saved wxOpenId value: " + this.wxFoo.getOpenId());
                 GlobalVariables.wxFooListWithOpenId.add(this.wxFoo);
                 // Save the procedure CSVReporting
