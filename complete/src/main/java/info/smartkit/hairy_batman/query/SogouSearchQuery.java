@@ -43,167 +43,182 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
 /**
- * Abstract query class for html(based on Sogou search) reading and parsing then querying.
+ * Abstract query class for html(based on Sogou search) reading and parsing then
+ * querying.
  * 
  * @author yangboz
  */
-public class SogouSearchQuery
-{
-    private static Logger LOG = LogManager.getLogger(SogouSearchQuery.class);
+public class SogouSearchQuery {
+	private static Logger LOG = LogManager.getLogger(SogouSearchQuery.class);
 
-    protected WxSubscriber wxFoo;
+	protected WxSubscriber wxFoo;
 
-    MultiValueMap<String, String> parameters;
+	MultiValueMap<String, String> parameters;
 
-    public SogouSearchQuery()
-    {
+	public SogouSearchQuery() {
 
-    }
+	}
 
-    public SogouSearchQuery(WxSubscriber wxFoo)
-    {
-        this.wxFoo = wxFoo;
-        this.parameters = new LinkedMultiValueMap<String, String>();
-        this.parameters.add("urls", wxFoo.getArticleUrl());
-        // "http://mp.weixin.qq.com/s?__biz=MjM5ODE4MTUzMg==&mid=202895379&idx=1&sn=a46187dd2e3fc704b72277dbf863f356&3rd=MzA3MDU4NTYzMw==&scene=6#rd");
-    }
+	public SogouSearchQuery(WxSubscriber wxFoo) {
+		this.wxFoo = wxFoo;
+		this.parameters = new LinkedMultiValueMap<String, String>();
+		this.parameters.add("urls", wxFoo.getArticleUrl());
+		// "http://mp.weixin.qq.com/s?__biz=MjM5ODE4MTUzMg==&mid=202895379&idx=1&sn=a46187dd2e3fc704b72277dbf863f356&3rd=MzA3MDU4NTYzMw==&scene=6#rd");
+	}
 
-    public void parseWxOpenId()
-    {
-        Document doc;
-        try {
+	public void parseWxOpenId() {
+		Document doc;
+		try {
 
-            // need http protocol
-            doc = Jsoup.connect(GlobalConsts.SOGOU_SEARCH_URL_BASE + wxFoo.getSubscribeId()).get();
+			// need http protocol
+			doc = Jsoup
+					.connect(
+							GlobalConsts.SOGOU_SEARCH_URL_BASE
+									+ wxFoo.getSubscribeId()).get();
 
-            // get page title
-            String title = doc.title();
-            LOG.debug("title : " + title);
-            // get all "微信号:" value of html <span>
-            Elements openIdLink =
-                doc.select(GlobalConsts.SOGOU_SEARCH_WX_OPEN_ID_HTML_ELEMENTS).select(
-                    GlobalConsts.SOGOU_SEARCH_WX_OPEN_ID_HTML_ELE_IDENTITY);
-            String openIdLinkHref = openIdLink.attr("href");
-            LOG.debug("openIdLinkHref:" + openIdLinkHref);
-            // FIXME:过滤同一个订阅号搜到多条结果，默认选择第一个
-            if (this.wxFoo.getOpenId() == null) {
-            	if (openIdLinkHref.split(GlobalConsts.SOGOU_SEARCH_WX_OPEN_ID_KEYWORDS).length>1){
-            		this.wxFoo.setOpenId(openIdLinkHref.split(GlobalConsts.SOGOU_SEARCH_WX_OPEN_ID_KEYWORDS)[1]);
-            	}
-                LOG.info("saved wxOpenId value: " + this.wxFoo.getOpenId());
-                GlobalVariables.wxFooListWithOpenId.add(this.wxFoo);
-                // Save the procedure CSVReporting
-                new CSVReporter(GlobalConsts.CSV_RESOURCE_FILE_OUTPUT_OPENID, GlobalVariables.wxFooListWithOpenId,
-                    CSVReporter.REPORTER_TYPE.R_T_OPENID).write();
-                // Then,OpenID JSON site parse
-                this.parseSogouJsonSite(this.wxFoo.getOpenId());
-            }
+			// get page title
+			String title = doc.title();
+			LOG.debug("title : " + title);
+			// get all "微信号:" value of html <span>
+			Elements openIdLink = doc.select(
+					GlobalConsts.SOGOU_SEARCH_WX_OPEN_ID_HTML_ELEMENTS).select(
+					GlobalConsts.SOGOU_SEARCH_WX_OPEN_ID_HTML_ELE_IDENTITY);
+			String openIdLinkHref = openIdLink.attr("href");
+			LOG.debug("openIdLinkHref:" + openIdLinkHref);
+			// FIXME:过滤同一个订阅号搜到多条结果，默认选择第一个
+			if (this.wxFoo.getOpenId() == null) {
+				if (openIdLinkHref
+						.split(GlobalConsts.SOGOU_SEARCH_WX_OPEN_ID_KEYWORDS).length > 1) {
+					this.wxFoo
+							.setOpenId(openIdLinkHref
+									.split(GlobalConsts.SOGOU_SEARCH_WX_OPEN_ID_KEYWORDS)[1]);
+				}
+				LOG.info("saved wxOpenId value: " + this.wxFoo.getOpenId());
+				GlobalVariables.wxFooListWithOpenId.add(this.wxFoo);
+				// Save the procedure CSVReporting
+				new CSVReporter(GlobalConsts.CSV_RESOURCE_FILE_OUTPUT_OPENID,
+						GlobalVariables.wxFooListWithOpenId,
+						CSVReporter.REPORTER_TYPE.R_T_OPENID).write();
+				// Then,OpenID JSON site parse
+				this.parseSogouJsonSite(this.wxFoo.getOpenId());
+			}
 
-        } catch (IOException e) {
-            // e.printStackTrace();
-            LOG.error(e.toString());
-        }
-    }
+		} catch (IOException e) {
+			// e.printStackTrace();
+			LOG.error(e.toString());
+		}
+	}
 
-    public void parseWxUserId()
-    {
-        Document doc;
-        try {
+	public void parseWxUserId() {
+		Document doc;
+		try {
 
-            // need http protocol
-            doc = Jsoup.connect(GlobalConsts.SOGOU_SEARCH_URL_BASE + wxFoo.getSubscribeId()).get();
+			// need http protocol
+			doc = Jsoup
+					.connect(
+							GlobalConsts.SOGOU_SEARCH_URL_BASE
+									+ wxFoo.getSubscribeId()).get();
 
-            // get page title
-            String title = doc.title();
-            LOG.debug("title : " + title);
-            // get all "微信号:" value of html <span>
-            Elements openIdSpans = doc.select(GlobalConsts.SOGOU_SEARCH_WX_USER_ID_HTML_ELEMENTS);
-            //
-            for (Element openIdSpan : openIdSpans) {
-                if (openIdSpan.hasText()) {
-                    if (openIdSpan.text().contains(GlobalConsts.SOGOU_SEARCH_WX_USER_ID_KEYWORDS)) {
-                        // get the value from href attribute
-                        LOG.debug("openId span text : " + openIdSpan.text());
-                        // FIXME:过滤同一个订阅号搜到多条结果，默认选择第一个
-                        if (this.wxFoo.getUserId() == null) {
-                            this.wxFoo
-                                .setOpenId(openIdSpan.text().split(GlobalConsts.SOGOU_SEARCH_WX_USER_ID_KEYWORDS)[1]);
-                            LOG.info("saved wxUserId value: " + this.wxFoo.getUserId());
-                            GlobalVariables.wxFooListWithUserId.add(this.wxFoo);
-                        }
-                    }
-                }
-            }
+			// get page title
+			String title = doc.title();
+			LOG.debug("title : " + title);
+			// get all "微信号:" value of html <span>
+			Elements openIdSpans = doc
+					.select(GlobalConsts.SOGOU_SEARCH_WX_USER_ID_HTML_ELEMENTS);
+			//
+			for (Element openIdSpan : openIdSpans) {
+				if (openIdSpan.hasText()) {
+					if (openIdSpan.text().contains(
+							GlobalConsts.SOGOU_SEARCH_WX_USER_ID_KEYWORDS)) {
+						// get the value from href attribute
+						LOG.debug("openId span text : " + openIdSpan.text());
+						// FIXME:过滤同一个订阅号搜到多条结果，默认选择第一个
+						if (this.wxFoo.getUserId() == null) {
+							this.wxFoo
+									.setOpenId(openIdSpan
+											.text()
+											.split(GlobalConsts.SOGOU_SEARCH_WX_USER_ID_KEYWORDS)[1]);
+							LOG.info("saved wxUserId value: "
+									+ this.wxFoo.getUserId());
+							GlobalVariables.wxFooListWithUserId.add(this.wxFoo);
+						}
+					}
+				}
+			}
 
-        } catch (IOException e) {
-            // e.printStackTrace();
-            LOG.error(e.toString());
-        }
-    }
+		} catch (IOException e) {
+			// e.printStackTrace();
+			LOG.error(e.toString());
+		}
+	}
 
-    // @see: http://weixin.sogou.com/gzhjs?cb=sogou.weixin.gzhcb&openid=oIWsFt_Ri_gqjARIY_shVuqjc3Zo
-    private void parseSogouJsonSite(String openId)
-    {
-        ObjectMapper mapper = new ObjectMapper(); // can reuse, share globally
-        WxSogou wxSogouJson = null;
-        try {
-            wxSogouJson =
-                mapper.readValue(this.getJsonContent(GlobalConsts.SOGOU_SEARCH_URL_JSON + openId), WxSogou.class);
-        } catch (JsonParseException e) {
-            LOG.error(e.toString());
-        } catch (JsonMappingException e) {
-            LOG.error(e.toString());
-        } catch (IOException e) {
-            LOG.error(e.toString());
-        }
-        GlobalVariables.openIdWithArticleList.put(openId, wxSogouJson);// Store it.
-        LOG.info("wxSogou json result:" + wxSogouJson.toString());
-        LOG.info("GlobalVariables.openIdWithArticleList:" + GlobalVariables.openIdWithArticleList.toString());
-        // Save the procedure CSVReporting
-        new CSVReporter(GlobalConsts.CSV_RESOURCE_FILE_OUTPUT_OPENID_ARITICLE, GlobalVariables.wxFooListWithOpenId,
-            CSVReporter.REPORTER_TYPE.R_T_OPENID_ARTICLE).write();
-    }
+	// @see:
+	// http://weixin.sogou.com/gzhjs?cb=sogou.weixin.gzhcb&openid=oIWsFt_Ri_gqjARIY_shVuqjc3Zo
+	private void parseSogouJsonSite(String openId) {
+		ObjectMapper mapper = new ObjectMapper(); // can reuse, share globally
+		WxSogou wxSogouJson = null;
+		try {
+			wxSogouJson = mapper.readValue(
+					this.getJsonContent(GlobalConsts.SOGOU_SEARCH_URL_JSON
+							+ openId), WxSogou.class);
 
-    private String getJsonContent(String urlStr)
-    {
-        try {// 获取HttpURLConnection连接对象
-            URL url = new URL(urlStr);
-            HttpURLConnection httpConn = (HttpURLConnection) url.openConnection();
-            // 设置连接属性
-            httpConn.setConnectTimeout(3000);
-            httpConn.setDoInput(true);
-            httpConn.setRequestMethod("GET");
-            // 获取相应码
-            int respCode = httpConn.getResponseCode();
-            if (respCode == 200) {
-                String a = ConvertStream2Json(httpConn.getInputStream());
-                return a.substring(a.indexOf("(") + 1, a.lastIndexOf(")"));
-            }
-        } catch (MalformedURLException e) {
-            LOG.error(e.toString());
-        } catch (IOException e) {
-            LOG.error(e.toString());
-        }
-        return "";
-    }
+			LOG.info("wxSogou json result:" + wxSogouJson.toString());
+		} catch (JsonParseException e) {
+			LOG.error(e.toString());
+		} catch (JsonMappingException e) {
+			LOG.error(e.toString());
+		} catch (IOException e) {
+			LOG.error(e.toString());
+		}
+		GlobalVariables.openIdWithArticleList.put(openId, wxSogouJson);// Store
+																		// it.
+		LOG.info("GlobalVariables.openIdWithArticleList:"
+				+ GlobalVariables.openIdWithArticleList.toString());
+		// Save the procedure CSVReporting
+		new CSVReporter(GlobalConsts.CSV_RESOURCE_FILE_OUTPUT_OPENID_ARITICLE,
+				GlobalVariables.wxFooListWithOpenId,
+				CSVReporter.REPORTER_TYPE.R_T_OPENID_ARTICLE).write();
+	}
 
-    private String ConvertStream2Json(InputStream inputStream)
-    {
-        String jsonStr = "";
-        // ByteArrayOutputStream相当于内存输出流
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        byte[] buffer = new byte[1024];
-        int len = 0;
-        // 将输入流转移到内存输出流中
-        try {
-            while ((len = inputStream.read(buffer, 0, buffer.length)) != -1) {
-                out.write(buffer, 0, len);
-            }
-            // 将内存流转换为字符串
-            jsonStr = new String(out.toByteArray(), "utf-8");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return jsonStr;
-    }
+	private String getJsonContent(String urlStr) {
+		try {// 获取HttpURLConnection连接对象
+			URL url = new URL(urlStr);
+			HttpURLConnection httpConn = (HttpURLConnection) url
+					.openConnection();
+			// 设置连接属性
+			httpConn.setConnectTimeout(3000);
+			httpConn.setDoInput(true);
+			httpConn.setRequestMethod("GET");
+			// 获取相应码
+			int respCode = httpConn.getResponseCode();
+			if (respCode == 200) {
+				String a = ConvertStream2Json(httpConn.getInputStream());
+				return a.substring(a.indexOf("(") + 1, a.lastIndexOf(")"));
+			}
+		} catch (MalformedURLException e) {
+			LOG.error(e.toString());
+		} catch (IOException e) {
+			LOG.error(e.toString());
+		}
+		return "";
+	}
+
+	private String ConvertStream2Json(InputStream inputStream) {
+		String jsonStr = "";
+		// ByteArrayOutputStream相当于内存输出流
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		byte[] buffer = new byte[1024];
+		int len = 0;
+		// 将输入流转移到内存输出流中
+		try {
+			while ((len = inputStream.read(buffer, 0, buffer.length)) != -1) {
+				out.write(buffer, 0, len);
+			}
+			// 将内存流转换为字符串
+			jsonStr = new String(out.toByteArray(), "utf-8");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return jsonStr;
+	}
 }
