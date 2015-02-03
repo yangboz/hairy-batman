@@ -26,6 +26,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
@@ -61,12 +62,27 @@ public class WxBatchConfiguration
     public ItemReader<WxSubscriber> reader()
     {
         FlatFileItemReader<WxSubscriber> reader = new FlatFileItemReader<WxSubscriber>();
-        // reader.setResource(new ClassPathResource(GlobalConsts.CSV_RESOURCE_FILE_INPUT_CSV));
-        // reader.setEncoding("GBK");
+        // PoiItemReader<WxSubscriber> reader = new PoiItemReader<WxSubscriber>();
+        // reader.setResource(new ClassPathResource(GlobalConsts.CSV_RESOURCE_FILE_INPUT_XLS));
+        reader.setResource(new ClassPathResource(GlobalConsts.CSV_RESOURCE_FILE_INPUT_CSV));
+        reader.setEncoding("UTF-16");
+        reader.setLinesToSkip(1);
+        // reader.setTargetType(WxSubscriber.class);
+        // PassThroughRowMapper rowMapper = new PassThroughRowMapper();
+        // BeanPropertyRowMapper<WxSubscriber> rowMapper = new BeanPropertyRowMapper<WxSubscriber>();
+        // try {
+        // rowMapper.afterPropertiesSet();
+        // } catch (Exception e) {
+        // LOG.error(e.toString());
+        // }
+        // reader.setRowMapper(rowMapper);
+        // reader.open(new ExecutionContext());
+        // reader.setRowMapper(rowMapper);
         reader.setLineMapper(new DefaultLineMapper<WxSubscriber>()
         {
             {
-                setLineTokenizer(new DelimitedLineTokenizer(GlobalConsts.CSV_DELIMITED_LINE_TOKENIZER)
+                // setLineTokenizer(new DelimitedLineTokenizer(GlobalConsts.CSV_DELIMITED_LINE_TOKENIZER)
+                setLineTokenizer(new DelimitedLineTokenizer(DelimitedLineTokenizer.DELIMITER_TAB)
                 {
                     {
                         // System.out.println("GlobalConsts.CSV_COLUMNS_NAME: " + GlobalConsts.CSV_COLUMNS_NAME);
@@ -82,19 +98,6 @@ public class WxBatchConfiguration
             }
         });
         //
-        // ClassLoader classLoader = getClass().getClassLoader();
-        // File excelFile = new File(classLoader.getResource(GlobalConsts.CSV_RESOURCE_FILE_INPUT_XLS).getFile());
-        // // List<WxSubscriberModel> items = null;
-        // try {
-        // GlobalVariables.wxSubscriberModelList =
-        // ExOM.mapFromExcel(excelFile).toObjectOf(WxSubscriberModel.class).map();
-        // } catch (Throwable e) {
-        // LOG.error(e.toString());
-        // }
-        // //
-        // for (WxSubscriberModel item : GlobalVariables.wxSubscriberModelList) {
-        // LOG.info("WxSubscriberModel:" + item.toString());
-        // }
         return reader;
     }
 
