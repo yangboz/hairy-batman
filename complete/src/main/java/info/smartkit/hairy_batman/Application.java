@@ -3,9 +3,8 @@ package info.smartkit.hairy_batman;
 import info.smartkit.hairy_batman.config.GlobalConsts;
 import info.smartkit.hairy_batman.config.GlobalVariables;
 import info.smartkit.hairy_batman.domain.WxSubscriber;
+import info.smartkit.hairy_batman.reports.CSVReporter;
 
-import java.io.FileWriter;
-import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -18,8 +17,6 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
-
-import au.com.bytecode.opencsv.CSVWriter;
 
 @ComponentScan
 @EnableAutoConfiguration
@@ -52,33 +49,13 @@ public class Application
             // System.out.println("Found <" + wxFoo + "> in the database.");
             LOG.debug("Found <" + wxFoo + "> in the database.");
         }
-        // CSVWriter
-        CSVWriter writer = null;
-        try {
-            writer = new CSVWriter(new FileWriter(GlobalConsts.CSV_RESOURCE_FILE_OUTPUT, true));
-        } catch (IOException e) {
-            // e.printStackTrace();
-            // System.out.println(e.toString());
-            LOG.error(e.toString());
-        }
-        // for (WxFoo elem : batch_results) {
-        // System.out.println("elem.toStringArray():" + elem.toStringArray());
-        // writer.writeNext(elem.toStringArray());
-        // }
-
-        List<String[]> allElements = new ArrayList<String[]>();
+        // CSVReporting
+        ArrayList<String[]> allElements = new ArrayList<String[]>();
         for (WxSubscriber elem : batch_results) {
             // System.out.println("elem.toStringArray():" + elem.toStringArray());
             LOG.debug("elem.toStringArray():" + elem.toStringArray());
             allElements.add(elem.toStringArray());
         }
-        writer.writeAll(allElements);
-        try {
-            writer.close();
-        } catch (IOException e) {
-            // e.printStackTrace();
-            // System.out.println(e.toString());
-            LOG.error(e.toString());
-        }
+        new CSVReporter(GlobalConsts.CSV_RESOURCE_FILE_OUTPUT_OPENID, allElements).write();
     }
 }

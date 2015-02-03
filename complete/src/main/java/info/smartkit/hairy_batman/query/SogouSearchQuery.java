@@ -152,7 +152,9 @@ public class SogouSearchQuery
         }
         GlobalVariables.openIdWithArticleList.put(openId, wxSogouJson);// Store it.
         LOG.info("wxSogou json result:" + wxSogouJson.toString());
-        // Dom4j parse items XML
+        LOG.info("GlobalVariables.openIdWithArticleList:" + GlobalVariables.openIdWithArticleList.toString());
+        // Save it to CSV.
+
     }
 
     private String getJsonContent(String urlStr)
@@ -191,7 +193,7 @@ public class SogouSearchQuery
                 out.write(buffer, 0, len);
             }
             // 将内存流转换为字符串
-            jsonStr = new String(out.toByteArray());
+            jsonStr = new String(out.toByteArray(), "utf-8");
         } catch (IOException e) {
             e.printStackTrace();
         }

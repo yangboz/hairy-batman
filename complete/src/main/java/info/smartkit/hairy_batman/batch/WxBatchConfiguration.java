@@ -119,25 +119,17 @@ public class WxBatchConfiguration
     }
 
     // @Bean
-    // public Job openIdQueryJob(JobBuilderFactory jobs, Step s1)
+    // public Job openIdQueryJob(JobBuilderFactory jobs, Step s2)
     // {
-    // return jobs.get("openIdQueryJob").incrementer(new RunIdIncrementer()).flow(s1).end().build();
-    // }
-    //
-    // @Bean
-    // public Step step1(StepBuilderFactory stepBuilderFactory, ItemReader<WxFoo> reader, ItemWriter<WxFoo> writer,
-    // ItemProcessor<WxFoo, WxFoo> processor)
-    // {
-    // return stepBuilderFactory.get("step1").<WxFoo, WxFoo>chunk(10).reader(reader).processor(processor)
-    // .writer(writer).build();
+    // return jobs.get("openIdQueryJob").incrementer(new RunIdIncrementer()).flow(s2).end().build();
     // }
 
     // @Bean
-    // public Step step2(StepBuilderFactory stepBuilderFactory, ItemReader<WxFoo> reader, ItemWriter<WxFoo> writer,
-    // ItemProcessor<WxFoo, WxFoo> processor)
+    // public Step step2(StepBuilderFactory stepBuilderFactory, ItemReader<WxSubscriber> reader,
+    // ItemWriter<WxSubscriber> writer, ItemProcessor<WxSubscriber, WxSubscriber> processor)
     // {
-    // return stepBuilderFactory.get("step2").<WxFoo, WxFoo>chunk(10).reader(reader).processor(processor)
-    // .writer(writer).build();
+    // return stepBuilderFactory.get("step2").<WxSubscriber, WxSubscriber>chunk(10).reader(reader)
+    // .processor(processor).writer(writer).build();
     // }
 
     // end::jobstep[]

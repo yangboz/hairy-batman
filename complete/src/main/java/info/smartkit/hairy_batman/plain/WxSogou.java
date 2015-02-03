@@ -94,7 +94,7 @@ public class WxSogou
     public String toString()
     {
         return "page:" + this.getPage() + ",totalPages:" + this.getTotalPages() + ",totalItems:" + this.getTotalItems()
-            + ",items:" + this.getTitles().toString();
+            + ",items:" + this.getTitles().toString() + ",urls:" + this.getUrls().toString();
     }
 
     //
@@ -122,6 +122,7 @@ public class WxSogou
                     String title = itemEle.elementTextTrim("title");
                     // String title1 = itemEle.elementTextTrim("title1");
                     LOG.info("item title:" + title);
+                    // Store values.
                     this.titles.add(title);
                     // System.out.println("title1:" + title1);
                 }
@@ -131,5 +132,41 @@ public class WxSogou
             }
         }
         return this.titles;
+    }
+
+    private ArrayList<String> urls = new ArrayList<String>();
+
+    // Get items' urls.
+    public ArrayList<String> getUrls()
+    {
+        // XML travel to title element,and push it to titles;
+        for (Object item : this.items) {
+            try {
+                Document doc = DocumentHelper.parseText(item.toString());
+                Element root = doc.getRootElement();
+
+                @SuppressWarnings("rawtypes")
+                List aa = root.selectNodes("//item//display");
+
+                @SuppressWarnings("rawtypes")
+                Iterator iters = aa.iterator();
+                //
+                while (iters.hasNext()) {
+
+                    Element itemEle = (Element) iters.next();
+
+                    String url = itemEle.elementTextTrim("url");
+                    // String title1 = itemEle.elementTextTrim("title1");
+                    LOG.info("item url:" + url);
+                    // Store values.
+                    this.urls.add(url);
+                    // System.out.println("title1:" + title1);
+                }
+            } catch (DocumentException e) {
+                // e.printStackTrace();
+                LOG.error(e.toString());
+            }
+        }
+        return this.urls;
     }
 }
