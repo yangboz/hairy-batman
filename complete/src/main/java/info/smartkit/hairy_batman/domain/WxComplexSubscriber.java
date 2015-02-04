@@ -42,30 +42,32 @@ public class WxComplexSubscriber extends WxSimpleSubscriber
         this.wxFooArticle = wxFooArticle;
     }
 
-    public WxComplexSubscriber(Integer id, String code, String store, String manager, String agency, String unit,
-        String onSubscribe, String subscribeId, String moniterTime, WxFooArticle wxFooArticle)
+    // public WxComplexSubscriber(Integer id, String code, String store, String manager, String agency, String unit,
+    public WxComplexSubscriber(Integer id, String code, String store, String onSubscribe, String subscribeId,
+        String moniterTime, WxFooArticle wxFooArticle)
     {
         this.id = id;
         this.code = code;
         this.store = store;
-        this.manager = manager;
-        this.agency = agency;
-        this.unit = unit;
+        // this.manager = manager;
+        // this.agency = agency;
+        // this.unit = unit;
         this.onSubscribe = onSubscribe;
         this.subscribeId = subscribeId;
         this.wxFooArticle = wxFooArticle;
     }
 
-    public WxComplexSubscriber(Integer id, String code, String store, String manager, String agency, String unit,
-        String onSubscribe, String subscribeId, String articleTime, String articleUrl, String articleTitle,
-        String articleReadNum, String articleLikeNum, String articleLikeRate, String moniterTime)
+    // public WxComplexSubscriber(Integer id, String code, String store, String manager, String agency, String unit,
+    public WxComplexSubscriber(Integer id, String code, String store, String onSubscribe, String subscribeId,
+        String articleTime, String articleUrl, String articleTitle, String articleReadNum, String articleLikeNum,
+        String articleLikeRate, String moniterTime)
     {
         this.id = id;
         this.code = code;
         this.store = store;
-        this.manager = manager;
-        this.agency = agency;
-        this.unit = unit;
+        // this.manager = manager;
+        // this.agency = agency;
+        // this.unit = unit;
         this.onSubscribe = onSubscribe;
         this.subscribeId = subscribeId;
         this.articleTime = articleTime;
@@ -209,11 +211,19 @@ public class WxComplexSubscriber extends WxSimpleSubscriber
         this.moniterTime = moniterTime;
     }
 
+    // @Override
+    // public String toString()
+    // {
+    // return "code: " + code + ", store: " + store + ",manager: " + manager + ",agency: " + agency + ",unit: " + unit
+    // + ",onSubscribe: " + onSubscribe + ",subscribeId: " + subscribeId + ",articleTime: " + articleTime
+    // + ",articleUrl: " + articleUrl + ",articleTitle: " + articleTitle + ",articleReadNum: " + articleReadNum
+    // + ",articleLikeNum: " + articleLikeNum + ",articleLikeRate: " + articleLikeRate + ",moniterTime: "
+    // + moniterTime;
+    // }
     @Override
     public String toString()
     {
-        return "code: " + code + ", store: " + store + ",manager: " + manager + ",agency: " + agency + ",unit: " + unit
-            + ",onSubscribe: " + onSubscribe + ",subscribeId: " + subscribeId + ",articleTime: " + articleTime
+        return "code: " + code + ", store: " + store + ",subscribeId: " + subscribeId + ",articleTime: " + articleTime
             + ",articleUrl: " + articleUrl + ",articleTitle: " + articleTitle + ",articleReadNum: " + articleReadNum
             + ",articleLikeNum: " + articleLikeNum + ",articleLikeRate: " + articleLikeRate + ",moniterTime: "
             + moniterTime;

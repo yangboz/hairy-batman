@@ -17,8 +17,8 @@ public class WxFooItemProcessor implements ItemProcessor<WxSimpleSubscriber, WxS
     {
         LOG.info("WxFooItemProcessor processing..." + wxFoo);
         // LOG.debug("SogouSearchQuery processing..." + wxFoo);
-        new SogouSearchQuery(new WxComplexSubscriber(wxFoo.getId(), wxFoo.getCode(), wxFoo.getStore(), null, null,
-            null, null, wxFoo.getSubscribeId(), null, null)).parseWxOpenId();
+        new SogouSearchQuery(new WxComplexSubscriber(wxFoo.getId(), wxFoo.getCode(), wxFoo.getStore(), null,
+            wxFoo.getSubscribeId(), null, null)).parseWxOpenId();
         // new KJsonApiQuery(wxFoo).query();
         // LOG.debug("KJsonApiQuery processing..." + wxFoo);
         // TODO:JobLauncher start here.

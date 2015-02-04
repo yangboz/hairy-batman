@@ -1,7 +1,7 @@
---DROP TABLE IF EXISTS `wxfoo`;
+DROP TABLE IF EXISTS `wxfoo`;
 
-CREATE TABLE wxfoo IF NOT EXISTS DEFAULT CHARSET=utf8(
-    wxfoo_id BigInt( 20 ) AUTO_INCREMENT NOT NULL,
+CREATE TABLE wxfoo(
+    id BigInt( 20 ) AUTO_INCREMENT NOT NULL,
     code VARCHAR(20),
     store VARCHAR(20),
 --    manager VARCHAR(20),
@@ -16,5 +16,5 @@ CREATE TABLE wxfoo IF NOT EXISTS DEFAULT CHARSET=utf8(
     articleLikeNum VARCHAR(10),
     articleLikeRate VARCHAR(5),
     moniterTime VARCHAR(20),
-    PRIMARY KEY ( `wxfoo_id` )
+    PRIMARY KEY ( `id` )
 );

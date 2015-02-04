@@ -1,6 +1,7 @@
 package info.smartkit.hairy_batman.batch;
 
 import info.smartkit.hairy_batman.config.GlobalConsts;
+import info.smartkit.hairy_batman.domain.WxComplexSubscriber;
 import info.smartkit.hairy_batman.domain.WxSimpleSubscriber;
 
 import javax.sql.DataSource;
@@ -92,7 +93,7 @@ public class WxBatchConfiguration
                 setFieldSetMapper(new BeanWrapperFieldSetMapper<WxSimpleSubscriber>()
                 {
                     {
-                        setTargetType(WxSimpleSubscriber.class);
+                        setTargetType(WxComplexSubscriber.class);
                     }
                 });
             }
