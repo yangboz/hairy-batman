@@ -82,12 +82,15 @@ public class GlobalConsts
 
     public static final String FILE_REPORTER_TYPE_CSV = ".csv";
 
-    public static final Object[] FILE_REPORTER_EXCEL_HEADER_OPENID = new Object[] {"代码", "店名", "订阅号", "OpenId"};
+    public static final String[] FILE_REPORTER_EXCEL_HEADER_OPENID = new String[] {"代码", "店名", "订阅号", "OpenId"};
 
-    public static final Object[] FILE_REPORTER_EXCEL_HEADER_OPENID_ARTICLE = new Object[] {"代码", "店名", "订阅号", "OpenId",
+    public static final String[] FILE_REPORTER_EXCEL_HEADER_OPENID_ARTICLE = new String[] {"代码", "店名", "订阅号", "OpenId",
     "文章标题", "文章地址"};
 
-    public static final Object[] FILE_REPORTER_EXCEL_HEADER_OPENID_FULL = new Object[] {"代码", "店名", "订阅号", "OpenId",
-    "文章标题", "文章地址"};
+    public static final String[] FILE_REPORTER_EXCEL_HEADER_OPENID_ARTICLE_READ_LIKE = new String[] {"代码", "店名", "订阅号",
+    "OpenId", "文章标题", "文章地址", "阅读数", "点赞数"};
+
+    public static final String[] FILE_REPORTER_EXCEL_HEADER_OPENID_FULL = new String[] {"代码", "店名", "订阅号", "OpenId",
+    "文章标题", "文章地址", "阅读数", "点赞数"};
 
 }

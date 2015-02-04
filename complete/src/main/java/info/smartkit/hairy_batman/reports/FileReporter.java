@@ -79,8 +79,6 @@ public class FileReporter
         return fileName + this.getFileExt();
     }
 
-    private Object[] excelHeader = GlobalConsts.FILE_REPORTER_EXCEL_HEADER_OPENID;
-
     private ArrayList<String[]> dataSource = new ArrayList<String[]>();
 
     public ArrayList<String[]> getDataSource()
@@ -91,19 +89,15 @@ public class FileReporter
             switch (this.reporterType) {
                 case R_T_OPENID:
                     elemStrings = elem.toOpenIdStringArray();
-                    excelHeader = GlobalConsts.FILE_REPORTER_EXCEL_HEADER_OPENID;
                     break;
                 case R_T_OPENID_ARTICLE:
                     elemStrings = elem.toOpenIdArticleStringArray();
-                    excelHeader = GlobalConsts.FILE_REPORTER_EXCEL_HEADER_OPENID_ARTICLE;
                     break;
                 case R_T_OPENID_ARTICLE_READ_LIKE:
                     elemStrings = elem.toOpenIdArticleReadLikeStringArray();
-                    excelHeader = GlobalConsts.FILE_REPORTER_EXCEL_HEADER_OPENID_ARTICLE;
                     break;
                 case R_T_FULL:
                     elemStrings = elem.toFullStringArray();
-                    excelHeader = GlobalConsts.FILE_REPORTER_EXCEL_HEADER_OPENID_FULL;
                     break;
                 default:
                     break;
@@ -176,16 +170,61 @@ public class FileReporter
 
     }
 
+    private String[] getExcelHeader()
+    {
+        String[] excelHeader = new String[] {};
+        // System.out.println("elem.toStringArray():" + elem.toStringArray());
+        switch (this.reporterType) {
+            case R_T_OPENID:
+                excelHeader = GlobalConsts.FILE_REPORTER_EXCEL_HEADER_OPENID;
+                break;
+            case R_T_OPENID_ARTICLE:
+                excelHeader = GlobalConsts.FILE_REPORTER_EXCEL_HEADER_OPENID_ARTICLE;
+                break;
+            case R_T_OPENID_ARTICLE_READ_LIKE:
+                excelHeader = GlobalConsts.FILE_REPORTER_EXCEL_HEADER_OPENID_ARTICLE_READ_LIKE;
+                break;
+            case R_T_FULL:
+                excelHeader = GlobalConsts.FILE_REPORTER_EXCEL_HEADER_OPENID_FULL;
+                break;
+            default:
+                break;
+        }
+        return excelHeader;
+    }
+
+    private String[] getExcelRowContents(WxComplexSubscriber subscriber)
+    {
+        String[] getExcelRowContents = new String[] {};
+        // System.out.println("elem.toStringArray():" + elem.toStringArray());
+        switch (this.reporterType) {
+            case R_T_OPENID:
+                getExcelRowContents = subscriber.toOpenIdStringArray();
+                break;
+            case R_T_OPENID_ARTICLE:
+                getExcelRowContents = subscriber.toOpenIdArticleStringArray();
+                break;
+            case R_T_OPENID_ARTICLE_READ_LIKE:
+                getExcelRowContents = subscriber.toOpenIdArticleReadLikeStringArray();
+                break;
+            case R_T_FULL:
+                getExcelRowContents = subscriber.toFullStringArray();
+                break;
+            default:
+                break;
+        }
+        return getExcelRowContents;
+    }
+
     public void writeExcel()
     {
         HSSFWorkbook workbook = new HSSFWorkbook();
         HSSFSheet sheet = workbook.createSheet("Statistic Sheet");
 
-        Map<String, Object[]> data = new HashMap<String, Object[]>();
-        data.put("0".toString(), this.excelHeader);
+        Map<String, String[]> data = new HashMap<String, String[]>();
+        data.put("0".toString(), this.getExcelHeader());
         for (WxComplexSubscriber subscriber : this.getRawDataSource()) {
-            data.put(subscriber.getId().toString(), new Object[] {subscriber.getCode(), subscriber.getStore(),
-            subscriber.getSubscribeId(), subscriber.getArticleTitle()});
+            data.put(subscriber.getId().toString(), this.getExcelRowContents(subscriber));
         }
 
         Set<String> keyset = data.keySet();
