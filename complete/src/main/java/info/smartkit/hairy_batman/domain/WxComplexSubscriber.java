@@ -246,14 +246,15 @@ public class WxComplexSubscriber extends WxSimpleSubscriber
 
     public String[] toOpenIdArticleStringArray()
     {
-        return new String[] {this.getId().toString(), this.getCode(), this.getSubscribeId(), this.getOpenId(),
-        this.getArticleTitle(), this.getArticleUrl()};
+        return new String[] {this.getId().toString(), this.getCode(), this.getStore(), this.getSubscribeId(),
+        this.getOpenId(), this.getArticleTitle(), this.getArticleUrl()};
     }
 
     public String[] toOpenIdArticleReadLikeStringArray()
     {
-        return new String[] {this.getCode(), this.getSubscribeId(), this.getOpenId(), this.getArticleTitle(),
-        this.getArticleUrl(), this.getArticleReadNum(), this.getArticleLikeNum(), this.getArticleLikeRate()};
+        return new String[] {this.getId().toString(), this.getCode(), this.getStore(), this.getSubscribeId(),
+        this.getOpenId(), this.getArticleTitle(), this.getArticleUrl(), this.getArticleReadNum(),
+        this.getArticleLikeNum(), this.getArticleLikeRate(), this.getMoniterTime()};
     }
 
     private String openId = null;// 微信openID

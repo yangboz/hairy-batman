@@ -90,8 +90,8 @@ public class SogouSearchQuery
                 this.wxFoo.setOpenId(openIdLinkHref.split(GlobalConsts.SOGOU_SEARCH_WX_OPEN_ID_KEYWORDS)[1]);
                 LOG.info("saved wxOpenId value: " + this.wxFoo.getOpenId());
                 GlobalVariables.wxFooListWithOpenId.add(this.wxFoo);
-                // Save the procedure CSVReporting
-                new FileReporter(GlobalConsts.CSV_RESOURCE_FILE_OUTPUT_OPENID, GlobalVariables.wxFooListWithOpenId,
+                // File reporting
+                new FileReporter(GlobalConsts.REPORT_FILE_OUTPUT_OPENID, GlobalVariables.wxFooListWithOpenId,
                     FileReporter.REPORTER_TYPE.R_T_OPENID, FileReporter.REPORTER_FILE_TYPE.EXCEL).write();
                 // Then,OpenID JSON site parse
                 this.parseSogouJsonSite(this.wxFoo.getOpenId());
@@ -214,6 +214,7 @@ public class SogouSearchQuery
             subscriber.setId(this.wxFoo.getId());
             subscriber.setCode(this.wxFoo.getCode());
             subscriber.setStore(this.wxFoo.getStore());
+            subscriber.setSubscribeId(this.wxFoo.getSubscribeId());
             subscriber.setOpenId(this.wxFoo.getOpenId());
             subscriber.setArticleTitle(titleUrl.getTitle());
             subscriber.setArticleUrl(titleUrl.getUrl());
@@ -223,12 +224,11 @@ public class SogouSearchQuery
         LOG.info("GlobalVariables.wxFooListWithOpenIdArticle(size): "
             + GlobalVariables.wxFooListWithOpenIdArticle.size() + ", raw: "
             + GlobalVariables.wxFooListWithOpenIdArticle.toString());
-        //
-        new FileReporter(GlobalConsts.CSV_RESOURCE_FILE_OUTPUT_OPENID_ARITICLE,
-            GlobalVariables.wxFooListWithOpenIdArticle, FileReporter.REPORTER_TYPE.R_T_OPENID_ARTICLE,
-            FileReporter.REPORTER_FILE_TYPE.EXCEL).write();
+        // File reporting...
+        new FileReporter(GlobalConsts.REPORT_FILE_OUTPUT_OPENID_ARITICLE, GlobalVariables.wxFooListWithOpenIdArticle,
+            FileReporter.REPORTER_TYPE.R_T_OPENID_ARTICLE, FileReporter.REPORTER_FILE_TYPE.EXCEL).write();
         // KJSON API call.
-        // new KJsonApiQuery(wxFoo).query();
+        // new KJsonApiQuery(GlobalVariables.wxFooListWithOpenIdArticle).query();
         // LOG.debug("KJsonApiQuery processing..." + wxFoo);
     }
 }

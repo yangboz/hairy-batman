@@ -36,7 +36,7 @@ public class LoadExcel2Model
         // LOG.info("birth date --> {}", item.getBirthdate());
         // LOG.info("");
         // }
-        File excelFile = new ClassPathResource(GlobalConsts.CSV_RESOURCE_FILE_INPUT_XLS).getFile();
+        File excelFile = new ClassPathResource(GlobalConsts.RESOURCE_FILE_INPUT_XLS).getFile();
         List<WxSubscriberExcelModel> items = ExOM.mapFromExcel(excelFile).toObjectOf(WxSubscriberExcelModel.class).map();
 
         for (WxSubscriberExcelModel item : items) {

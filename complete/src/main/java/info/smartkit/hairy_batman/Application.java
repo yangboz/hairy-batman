@@ -3,7 +3,6 @@ package info.smartkit.hairy_batman;
 import info.smartkit.hairy_batman.config.GlobalConsts;
 import info.smartkit.hairy_batman.config.GlobalVariables;
 import info.smartkit.hairy_batman.domain.WxComplexSubscriber;
-import info.smartkit.hairy_batman.reports.FileReporter;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -48,8 +47,8 @@ public class Application
             // System.out.println("Found <" + wxFoo + "> in the database.");
             LOG.info("Found <" + wxFoo + "> in the database.");
         }
-        // CSVReporting
-        new FileReporter(GlobalConsts.CSV_RESOURCE_FILE_OUTPUT_FULL, batch_results,
-            FileReporter.REPORTER_TYPE.R_T_FULL, FileReporter.REPORTER_FILE_TYPE.EXCEL).write();
+        // Final file reporting
+        // new FileReporter(GlobalConsts.REPORT_FILE_OUTPUT_FULL, batch_results,
+        // FileReporter.REPORTER_TYPE.R_T_FULL, FileReporter.REPORTER_FILE_TYPE.EXCEL).write();
     }
 }

@@ -65,7 +65,7 @@ public class WxBatchConfiguration
         FlatFileItemReader<WxSimpleSubscriber> reader = new FlatFileItemReader<WxSimpleSubscriber>();
         // PoiItemReader<WxSubscriber> reader = new PoiItemReader<WxSubscriber>();
         // reader.setResource(new ClassPathResource(GlobalConsts.CSV_RESOURCE_FILE_INPUT_XLS));
-        reader.setResource(new ClassPathResource(GlobalConsts.CSV_RESOURCE_FILE_INPUT_CSV));
+        reader.setResource(new ClassPathResource(GlobalConsts.RESOURCE_FILE_INPUT_CSV));
         reader.setEncoding("UTF-16");
         reader.setLinesToSkip(1);
         // reader.setTargetType(WxSubscriber.class);

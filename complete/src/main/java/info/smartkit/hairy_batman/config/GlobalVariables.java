@@ -41,13 +41,14 @@ public class GlobalVariables
     public static ApplicationContext appContext = null;
 
     //
-    public static List<WxComplexSubscriber> wxFooList = new ArrayList<WxComplexSubscriber>();
+    // public static List<WxComplexSubscriber> wxFooList = new ArrayList<WxComplexSubscriber>();
 
     //
     public static List<WxSubscriberExcelModel> wxSubscriberModelList = new ArrayList<WxSubscriberExcelModel>();
 
     //
-    public static final String DATE_FORMAT_NOW = "yyyy-MM-dd HH:mm:ss";
+    // public static final String DATE_FORMAT_NOW = "yyyy-MM-dd HH:mm:ss";
+    public static final String DATE_FORMAT_NOW = "yyyy/MM/dd";
 
     public static String now()
     {
@@ -57,15 +58,19 @@ public class GlobalVariables
     }
 
     // Temporary for storage with WX OpenId info updated.
-    public static List<WxComplexSubscriber> wxFooListWithOpenId = new ArrayList<WxComplexSubscriber>();
+    public static ArrayList<WxComplexSubscriber> wxFooListWithOpenId = new ArrayList<WxComplexSubscriber>();
 
     // Temporary for storage with WX UserId info updated.
-    public static List<WxComplexSubscriber> wxFooListWithUserId = new ArrayList<WxComplexSubscriber>();
+    public static ArrayList<WxComplexSubscriber> wxFooListWithUserId = new ArrayList<WxComplexSubscriber>();
 
     // Temporary for storage with WX OpenId info updated.
     public static Map<String, WxSogou> openIdWithArticleList = new HashMap<String, WxSogou>();
 
     // Temporary for storage with WX OpenId info updated.
-    public static List<WxComplexSubscriber> wxFooListWithOpenIdArticle = new ArrayList<WxComplexSubscriber>();
+    public static ArrayList<WxComplexSubscriber> wxFooListWithOpenIdArticle = new ArrayList<WxComplexSubscriber>();
+
+    // Temporary for storage with WX OpenId info updated.
+    public static ArrayList<WxComplexSubscriber> wxFooListWithOpenIdArticleReadLike =
+        new ArrayList<WxComplexSubscriber>();
 
 }

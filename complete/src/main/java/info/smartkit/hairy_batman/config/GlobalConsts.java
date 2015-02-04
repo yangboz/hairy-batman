@@ -45,18 +45,18 @@ public class GlobalConsts
 
     public static final String[] CSV_COLUMNS_NAME_SIMPLE = QUERY_COLUMNS_NAME_SIMPLE.split(",");
 
-    public static final String CSV_RESOURCE_FILE_INPUT_CSV = "wxStatistic.csv";
+    public static final String RESOURCE_FILE_INPUT_CSV = "wxStatistic.csv";
 
-    public static final String CSV_RESOURCE_FILE_INPUT_XLS = "wxStatistic.xls";
+    public static final String RESOURCE_FILE_INPUT_XLS = "wxStatistic.xls";
 
-    public static final String CSV_RESOURCE_FILE_OUTPUT_FULL = "QueryNumOfReadLike_output_full";
+    public static final String REPORT_FILE_OUTPUT_FULL = "QueryNumOfReadLike_output_full";
 
-    public static final String CSV_RESOURCE_FILE_OUTPUT_OPENID_ARITICLE = "QueryNumOfReadLike_output_openid_article";
+    public static final String REPORT_FILE_OUTPUT_OPENID_ARITICLE = "QueryNumOfReadLike_output_openid_article";
 
-    public static final String CSV_RESOURCE_FILE_OUTPUT_OPENID_ARITICLE_READ_LIKE =
+    public static final String REPORT_FILE_OUTPUT_OPENID_ARITICLE_READ_LIKE =
         "QueryNumOfReadLike_output_openid_article_readlike";
 
-    public static final String CSV_RESOURCE_FILE_OUTPUT_OPENID = "QueryNumOfReadLike_output_openid";
+    public static final String REPORT_FILE_OUTPUT_OPENID = "QueryNumOfReadLike_output_openid";
 
     public static final String CSV_DELIMITED_LINE_TOKENIZER = ";";
 
@@ -90,7 +90,7 @@ public class GlobalConsts
     "OpenId", "文章标题", "文章地址"};
 
     public static final String[] FILE_REPORTER_EXCEL_HEADER_OPENID_ARTICLE_READ_LIKE = new String[] {"序号", "代码", "店名",
-    "订阅号", "OpenId", "文章标题", "文章地址", "阅读数", "点赞数"};
+    "订阅号", "OpenId", "文章标题", "文章地址", "阅读数", "点赞数", "点赞率", "监测时间"};
 
     public static final String[] FILE_REPORTER_EXCEL_HEADER_OPENID_FULL = new String[] {"序号", "代码", "店名", "订阅号",
     "OpenId", "文章标题", "文章地址", "阅读数", "点赞数"};

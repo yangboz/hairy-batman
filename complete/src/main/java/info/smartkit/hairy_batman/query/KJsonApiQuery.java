@@ -22,6 +22,7 @@ import info.smartkit.hairy_batman.config.GlobalVariables;
 import info.smartkit.hairy_batman.domain.WxComplexSubscriber;
 import info.smartkit.hairy_batman.plain.WxBar;
 import info.smartkit.hairy_batman.plain.WxKJson;
+import info.smartkit.hairy_batman.reports.FileReporter;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -31,7 +32,6 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 /**
@@ -43,21 +43,43 @@ public class KJsonApiQuery
 {
     private static Logger LOG = LogManager.getLogger(KJsonApiQuery.class);
 
-    protected WxComplexSubscriber wxFoo;
+    protected ArrayList<WxComplexSubscriber> subscribers;
 
-    MultiValueMap<String, String> parameters;
+    protected WxComplexSubscriber queriedSubscriber;
+
+    // MultiValueMap<String, String> parameters;
+
+    protected ArrayList<WxComplexSubscriber> queriedSubscribers = new ArrayList<WxComplexSubscriber>();
 
     public KJsonApiQuery()
     {
 
     }
 
-    public KJsonApiQuery(WxComplexSubscriber wxFoo)
+    public KJsonApiQuery(ArrayList<WxComplexSubscriber> subscribers)
     {
-        this.wxFoo = wxFoo;
-        this.parameters = new LinkedMultiValueMap<String, String>();
-        this.parameters.add("urls", wxFoo.getArticleUrl());
+        this.subscribers = subscribers;
+    }
+
+    private LinkedMultiValueMap<String, String> getParameters()
+    {
+        LinkedMultiValueMap<String, String> parameters = new LinkedMultiValueMap<String, String>();
+        // long numbOfBundle = this.subscribers.size() % GlobalConsts.KJSON_API_PPQ;
+        // String[] urlsBundle = new String[] {subscribers.get(0).getArticleUrl(), subscribers.get(1).getArticleUrl()};
+        // this.parameters.add("urls", urlsBundle.toString());
+        parameters.add("urls", this.subscribers.remove(0).getArticleUrl());
+        //
+        // for (long i = 0; i < numbOfBundle; i++)
+        // {
+        // for(long j=0;j<GlobalConsts.KJSON_API_PPQ;j++)
+        // {
+        // this.parameters.add("urls", this.singleSubscriber.getArticleUrl());
+        // }
+        // this.parameters.add("urls", this.singleSubscriber.getArticleUrl());
+        // //
         // "http://mp.weixin.qq.com/s?__biz=MjM5ODE4MTUzMg==&mid=202895379&idx=1&sn=a46187dd2e3fc704b72277dbf863f356&3rd=MzA3MDU4NTYzMw==&scene=6#rd");
+        // }
+        return parameters;
     }
 
     public void query()
@@ -72,7 +94,8 @@ public class KJsonApiQuery
         restTemplate.getMessageConverters().add(converter);
         // Spring batch for CSV reading.
         //
-        WxBar api_query_resutls = restTemplate.postForObject(GlobalConsts.KJSON_API_URI, this.parameters, WxBar.class);
+        WxBar api_query_resutls =
+            restTemplate.postForObject(GlobalConsts.KJSON_API_URI, this.getParameters(), WxBar.class);
         // WxBar returns = restTemplate.getForObject(GlobalConsts.KJSON_API_URI, WxBar.class);
         ArrayList<WxKJson> api_query_resutls_data = api_query_resutls.getData();
         // System.out.println("ApiQuery result data:  " + api_query_resutls_data);
@@ -85,17 +108,27 @@ public class KJsonApiQuery
         //
         Long readNum = Long.parseLong(wxKJson.getRead());
         Long likeNum = Long.parseLong(wxKJson.getLike());
-        this.wxFoo.setArticleReadNum(wxKJson.getRead());
-        this.wxFoo.setArticleLikeNum(wxKJson.getLike());
+        this.queriedSubscriber.setArticleReadNum(wxKJson.getRead());
+        this.queriedSubscriber.setArticleLikeNum(wxKJson.getLike());
         Long likeRate = (long) ((float) likeNum / readNum * 100);
-        this.wxFoo.setArticleLikeRate(likeRate.toString() + "%");
+        this.queriedSubscriber.setArticleLikeRate(likeRate.toString() + "%");
         //
-        this.wxFoo.setMoniterTime(GlobalVariables.now());
+        this.queriedSubscriber.setMoniterTime(GlobalVariables.now());
         //
-        GlobalVariables.wxFooList.add(this.wxFoo);
+        GlobalVariables.wxFooListWithOpenIdArticleReadLike.add(this.queriedSubscriber);
         //
-        // System.out.println("GlobalVariables.wxFooList:" + GlobalVariables.wxFooList.toString());
-        LOG.info("GlobalVariables.wxFooList:" + GlobalVariables.wxFooList.toString());
+        LOG.info("GlobalVariables.wxFooListWithOpenIdArticleReadLike(size):"
+            + GlobalVariables.wxFooListWithOpenIdArticleReadLike.size() + ",raw: "
+            + GlobalVariables.wxFooListWithOpenIdArticleReadLike.toString());
+        //
+        if (this.subscribers.size() > 0) {
+            // this.query();
+        } else {
+            // File reporting...
+            new FileReporter(GlobalConsts.REPORT_FILE_OUTPUT_OPENID_ARITICLE_READ_LIKE,
+                GlobalVariables.wxFooListWithOpenIdArticleReadLike,
+                FileReporter.REPORTER_TYPE.R_T_OPENID_ARTICLE_READ_LIKE, FileReporter.REPORTER_FILE_TYPE.EXCEL).write();
+        }
     }
 
 }
