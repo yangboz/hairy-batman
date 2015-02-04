@@ -65,4 +65,7 @@ public class GlobalVariables
     // Temporary for storage with WX OpenId info updated.
     public static Map<String, WxSogou> openIdWithArticleList = new HashMap<String, WxSogou>();
 
+    // Temporary for storage with WX OpenId info updated.
+    public static List<WxComplexSubscriber> wxFooListWithOpenIdArticle = new ArrayList<WxComplexSubscriber>();
+
 }

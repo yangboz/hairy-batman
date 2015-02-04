@@ -25,6 +25,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -76,7 +77,7 @@ public class FileReporter
 
     public String getFullFileName()
     {
-        return fileName + this.getFileExt();
+        return fileName + new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss-SSS").format(new Date()) + this.getFileExt();
     }
 
     private ArrayList<String[]> dataSource = new ArrayList<String[]>();
@@ -222,9 +223,13 @@ public class FileReporter
         HSSFSheet sheet = workbook.createSheet("Statistic Sheet");
 
         Map<String, String[]> data = new HashMap<String, String[]>();
-        data.put("0".toString(), this.getExcelHeader());
-        for (WxComplexSubscriber subscriber : this.getRawDataSource()) {
-            data.put(subscriber.getId().toString(), this.getExcelRowContents(subscriber));
+        data.put(GlobalConsts.LINES_SKIP_FOR_HEADER_EXCEL.toString(), this.getExcelHeader());
+        // for (WxComplexSubscriber subscriber : this.getRawDataSource()) {
+        // data.put(subscriber.getId().toString(), this.getExcelRowContents(subscriber));
+        // }
+        for (Integer i = 0; i < this.getRawDataSource().size(); i++) {
+            data.put(Integer.toString(i + GlobalConsts.LINES_SKIP_FOR_HEADER_EXCEL + 1),
+                this.getExcelRowContents(this.getRawDataSource().get(i)));
         }
 
         Set<String> keyset = data.keySet();

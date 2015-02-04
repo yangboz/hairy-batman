@@ -21,6 +21,7 @@ import info.smartkit.hairy_batman.config.GlobalConsts;
 import info.smartkit.hairy_batman.config.GlobalVariables;
 import info.smartkit.hairy_batman.domain.WxComplexSubscriber;
 import info.smartkit.hairy_batman.plain.WxSogou;
+import info.smartkit.hairy_batman.plain.WxSogouSimple;
 import info.smartkit.hairy_batman.reports.FileReporter;
 
 import java.io.ByteArrayOutputStream;
@@ -29,6 +30,7 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -155,14 +157,8 @@ public class SogouSearchQuery
             LOG.error(e.toString());
         }
         GlobalVariables.openIdWithArticleList.put(openId, wxSogouJson);// Store it.
-        LOG.info("wxSogou json result:" + wxSogouJson.toString());
-        LOG.info("GlobalVariables.openIdWithArticleList:" + GlobalVariables.openIdWithArticleList.toString());
         // Save the procedure CSVReporting
-        new FileReporter(GlobalConsts.CSV_RESOURCE_FILE_OUTPUT_OPENID_ARITICLE, GlobalVariables.wxFooListWithOpenId,
-            FileReporter.REPORTER_TYPE.R_T_OPENID_ARTICLE, FileReporter.REPORTER_FILE_TYPE.EXCEL).write();
-        // KJSON API call.
-        // new KJsonApiQuery(wxFoo).query();
-        // LOG.debug("KJsonApiQuery processing..." + wxFoo);
+        this.assembleWxfooListWithAritcle(wxSogouJson);
     }
 
     private String getJsonContent(String urlStr)
@@ -206,5 +202,33 @@ public class SogouSearchQuery
             e.printStackTrace();
         }
         return jsonStr;
+    }
+
+    private void assembleWxfooListWithAritcle(WxSogou wxSogou)
+    {
+        LOG.info("wxSogou json result:" + wxSogou.toString());
+        //
+        ArrayList<WxSogouSimple> titlesUrls = wxSogou.getTitlesUrls();
+        for (WxSogouSimple titleUrl : titlesUrls) {
+            WxComplexSubscriber subscriber = new WxComplexSubscriber();
+            subscriber.setId(this.wxFoo.getId());
+            subscriber.setCode(this.wxFoo.getCode());
+            subscriber.setStore(this.wxFoo.getStore());
+            subscriber.setOpenId(this.wxFoo.getOpenId());
+            subscriber.setArticleTitle(titleUrl.getTitle());
+            subscriber.setArticleUrl(titleUrl.getUrl());
+            GlobalVariables.wxFooListWithOpenIdArticle.add(subscriber);
+        }
+        //
+        LOG.info("GlobalVariables.wxFooListWithOpenIdArticle(size): "
+            + GlobalVariables.wxFooListWithOpenIdArticle.size() + ", raw: "
+            + GlobalVariables.wxFooListWithOpenIdArticle.toString());
+        //
+        new FileReporter(GlobalConsts.CSV_RESOURCE_FILE_OUTPUT_OPENID_ARITICLE,
+            GlobalVariables.wxFooListWithOpenIdArticle, FileReporter.REPORTER_TYPE.R_T_OPENID_ARTICLE,
+            FileReporter.REPORTER_FILE_TYPE.EXCEL).write();
+        // KJSON API call.
+        // new KJsonApiQuery(wxFoo).query();
+        // LOG.debug("KJsonApiQuery processing..." + wxFoo);
     }
 }

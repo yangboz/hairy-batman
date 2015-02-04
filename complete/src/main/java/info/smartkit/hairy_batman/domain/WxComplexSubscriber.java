@@ -17,7 +17,6 @@
  */
 package info.smartkit.hairy_batman.domain;
 
-
 /**
  * Foo object entity
  * 
@@ -231,13 +230,14 @@ public class WxComplexSubscriber extends WxSimpleSubscriber
     public String[] toOpenIdStringArray()
     {
         // return ArrayUtil.addAll(super.toStringArray(), new String[] {this.getOpenId()});
-        return new String[] {this.getCode(), this.getStore(), this.getSubscribeId(), this.getOpenId()};
+        return new String[] {this.getId().toString(), this.getCode(), this.getStore(), this.getSubscribeId(),
+        this.getOpenId()};
     }
 
     public String[] toOpenIdArticleStringArray()
     {
-        return new String[] {this.getCode(), this.getSubscribeId(), this.getOpenId(), this.getArticleTitle(),
-        this.getArticleUrl()};
+        return new String[] {this.getId().toString(), this.getCode(), this.getSubscribeId(), this.getOpenId(),
+        this.getArticleTitle(), this.getArticleUrl()};
     }
 
     public String[] toOpenIdArticleReadLikeStringArray()

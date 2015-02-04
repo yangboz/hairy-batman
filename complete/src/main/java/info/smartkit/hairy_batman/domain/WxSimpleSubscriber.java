@@ -17,6 +17,8 @@
  */
 package info.smartkit.hairy_batman.domain;
 
+import info.smartkit.hairy_batman.config.GlobalConsts;
+
 /**
  * Foo object entity
  * 
@@ -42,7 +44,7 @@ public class WxSimpleSubscriber
 
     public Integer getId()
     {
-        return id;
+        return id + GlobalConsts.LINES_SKIP_FOR_HEADER_EXCEL;
     }
 
     public void setId(Integer id)
