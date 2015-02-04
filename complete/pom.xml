@@ -119,7 +119,7 @@
 		<dependency>
 			<groupId>org.springframework.batch</groupId>
 			<artifactId>spring-batch-excel</artifactId>
-			<version>0.5.0-SNAPSHOT</version>
+			<version>1.3.0-SNAPSHOT</version>
 		</dependency>
 		<!-- MySQL/JPA -->
 		<dependency>
