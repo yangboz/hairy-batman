@@ -34,7 +34,8 @@ public class GlobalConsts
     public static final String QUERY_TABLE_NAME = "wxfoo";
 
     public static final String QUERY_COLUMNS_NAME =
-        "code,store,manager,agency,unit,onSubscribe,subscribeId,articleTime,articleUrl,articleTitle,articleReadNum,articleLikeNum,articleLikeRate,moniterTime";
+    // "code,store,manager,agency,unit,onSubscribe,subscribeId,articleTime,articleUrl,articleTitle,articleReadNum,articleLikeNum,articleLikeRate,moniterTime";
+        "id,code,store,onSubscribe,subscribeId,articleTime,articleUrl,articleTitle,articleReadNum,articleLikeNum,articleLikeRate,moniterTime";
 
     public static final String QUERY_COLUMNS_NAME_SIMPLE = "id,code,store,subscribeId";
 
@@ -48,15 +49,14 @@ public class GlobalConsts
 
     public static final String CSV_RESOURCE_FILE_INPUT_XLS = "wxStatistic.xls";
 
-    public static final String CSV_RESOURCE_FILE_OUTPUT_FULL = "QueryNumOfReadLike_output_full.csv";
+    public static final String CSV_RESOURCE_FILE_OUTPUT_FULL = "QueryNumOfReadLike_output_full";
 
-    public static final String CSV_RESOURCE_FILE_OUTPUT_OPENID_ARITICLE =
-        "QueryNumOfReadLike_output_openid_article.csv";
+    public static final String CSV_RESOURCE_FILE_OUTPUT_OPENID_ARITICLE = "QueryNumOfReadLike_output_openid_article";
 
     public static final String CSV_RESOURCE_FILE_OUTPUT_OPENID_ARITICLE_READ_LIKE =
-        "QueryNumOfReadLike_output_openid_article_readlike.csv";
+        "QueryNumOfReadLike_output_openid_article_readlike";
 
-    public static final String CSV_RESOURCE_FILE_OUTPUT_OPENID = "QueryNumOfReadLike_output_openid.csv";
+    public static final String CSV_RESOURCE_FILE_OUTPUT_OPENID = "QueryNumOfReadLike_output_openid";
 
     public static final String CSV_DELIMITED_LINE_TOKENIZER = ";";
 
@@ -77,4 +77,17 @@ public class GlobalConsts
     public static final String SOGOU_SEARCH_WX_OPEN_ID_KEYWORDS = "openid=";
 
     public static final String SOGOU_SEARCH_URL_JSON = "http://weixin.sogou.com/gzhjs?openid=";
+
+    public static final String FILE_REPORTER_TYPE_EXCEL = ".xls";
+
+    public static final String FILE_REPORTER_TYPE_CSV = ".csv";
+
+    public static final Object[] FILE_REPORTER_EXCEL_HEADER_OPENID = new Object[] {"代码", "店名", "订阅号", "OpenId"};
+
+    public static final Object[] FILE_REPORTER_EXCEL_HEADER_OPENID_ARTICLE = new Object[] {"代码", "店名", "订阅号", "OpenId",
+    "文章标题", "文章地址"};
+
+    public static final Object[] FILE_REPORTER_EXCEL_HEADER_OPENID_FULL = new Object[] {"代码", "店名", "订阅号", "OpenId",
+    "文章标题", "文章地址"};
+
 }

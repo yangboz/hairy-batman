@@ -1,12 +1,12 @@
-DROP TABLE IF EXISTS `vendors`;
+DROP TABLE IF EXISTS `wxfoo`;
 
-CREATE TABLE wxfoo (
+CREATE TABLE wxfoo DEFAULT CHARSET=utf8(
     wxfoo_id BigInt( 20 ) AUTO_INCREMENT NOT NULL,
     code VARCHAR(20),
     store VARCHAR(20),
-    manager VARCHAR(20),
-    agency VARCHAR(20),
-    unit VARCHAR(20),
+--    manager VARCHAR(20),
+--    agency VARCHAR(20),
+--    unit VARCHAR(20),
     onSubscribe VARCHAR(5),
     subscribeId VARCHAR(20),
     articleTime VARCHAR(10),

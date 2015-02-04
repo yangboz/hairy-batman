@@ -21,7 +21,7 @@ import info.smartkit.hairy_batman.config.GlobalConsts;
 import info.smartkit.hairy_batman.config.GlobalVariables;
 import info.smartkit.hairy_batman.domain.WxComplexSubscriber;
 import info.smartkit.hairy_batman.plain.WxSogou;
-import info.smartkit.hairy_batman.reports.CSVReporter;
+import info.smartkit.hairy_batman.reports.FileReporter;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -89,8 +89,8 @@ public class SogouSearchQuery
                 LOG.info("saved wxOpenId value: " + this.wxFoo.getOpenId());
                 GlobalVariables.wxFooListWithOpenId.add(this.wxFoo);
                 // Save the procedure CSVReporting
-                new CSVReporter(GlobalConsts.CSV_RESOURCE_FILE_OUTPUT_OPENID, GlobalVariables.wxFooListWithOpenId,
-                    CSVReporter.REPORTER_TYPE.R_T_OPENID).write();
+                new FileReporter(GlobalConsts.CSV_RESOURCE_FILE_OUTPUT_OPENID, GlobalVariables.wxFooListWithOpenId,
+                    FileReporter.REPORTER_TYPE.R_T_OPENID, FileReporter.REPORTER_FILE_TYPE.EXCEL).write();
                 // Then,OpenID JSON site parse
                 this.parseSogouJsonSite(this.wxFoo.getOpenId());
             }
@@ -158,8 +158,8 @@ public class SogouSearchQuery
         LOG.info("wxSogou json result:" + wxSogouJson.toString());
         LOG.info("GlobalVariables.openIdWithArticleList:" + GlobalVariables.openIdWithArticleList.toString());
         // Save the procedure CSVReporting
-        new CSVReporter(GlobalConsts.CSV_RESOURCE_FILE_OUTPUT_OPENID_ARITICLE, GlobalVariables.wxFooListWithOpenId,
-            CSVReporter.REPORTER_TYPE.R_T_OPENID_ARTICLE).write();
+        new FileReporter(GlobalConsts.CSV_RESOURCE_FILE_OUTPUT_OPENID_ARITICLE, GlobalVariables.wxFooListWithOpenId,
+            FileReporter.REPORTER_TYPE.R_T_OPENID_ARTICLE, FileReporter.REPORTER_FILE_TYPE.EXCEL).write();
         // KJSON API call.
         // new KJsonApiQuery(wxFoo).query();
         // LOG.debug("KJsonApiQuery processing..." + wxFoo);
