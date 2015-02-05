@@ -221,6 +221,9 @@ public class SogouSearchQuery
             subscriber.setId(this.wxFoo.getId());
             subscriber.setCode(this.wxFoo.getCode());
             subscriber.setStore(this.wxFoo.getStore());
+            subscriber.setAgency(this.wxFoo.getAgency());
+            subscriber.setUnit(this.wxFoo.getUnit());
+            subscriber.setOnSubscribe(this.wxFoo.getOnSubscribe());
             subscriber.setSubscribeId(this.wxFoo.getSubscribeId());
             subscriber.setOpenId(this.wxFoo.getOpenId());
             subscriber.setArticleTitle(titleUrl.getTitle());
