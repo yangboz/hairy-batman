@@ -98,6 +98,8 @@ public class KJsonApiQuery
         //
         WxBar api_query_resutls =
             restTemplate.postForObject(GlobalConsts.KJSON_API_URI, this.getParameters(), WxBar.class);
+        if (api_query_resutls.getData().size() <= 0)// FIXME: null JSON exception handler here.
+            return;
         // WxBar returns = restTemplate.getForObject(GlobalConsts.KJSON_API_URI, WxBar.class);
         ArrayList<WxKJson> api_query_resutls_data = api_query_resutls.getData();
         // System.out.println("ApiQuery result data:  " + api_query_resutls_data);
@@ -136,5 +138,4 @@ public class KJsonApiQuery
                 FileReporter.REPORTER_TYPE.R_T_OPENID_ARTICLE_READ_LIKE, FileReporter.REPORTER_FILE_TYPE.EXCEL).write();
         }
     }
-
 }

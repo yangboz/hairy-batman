@@ -247,6 +247,6 @@ public class SogouSearchQuery
             FileReporter.REPORTER_TYPE.R_T_OPENID_ARTICLE, FileReporter.REPORTER_FILE_TYPE.EXCEL).write();
         // KJSON API call.
         new KJsonApiQuery(GlobalVariables.wxFooListWithOpenIdArticle).query();
-        LOG.debug("KJsonApiQuery processing..." + wxFoo);
+        LOG.debug("KJsonApiQuery processing..." + wxFoo.toString());
     }
 }
