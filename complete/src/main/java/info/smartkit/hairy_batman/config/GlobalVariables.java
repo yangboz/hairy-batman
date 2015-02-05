@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.context.ApplicationContext;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 /**
  * Global variables storage here.
@@ -72,5 +73,7 @@ public class GlobalVariables
     // Temporary for storage with WX OpenId info updated.
     public static ArrayList<WxComplexSubscriber> wxFooListWithOpenIdArticleReadLike =
         new ArrayList<WxComplexSubscriber>();
+
+    public static JdbcTemplate jdbcTempate;
 
 }

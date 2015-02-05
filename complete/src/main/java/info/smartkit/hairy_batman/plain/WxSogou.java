@@ -122,11 +122,13 @@ public class WxSogou
                     String title = itemEle.elementTextTrim("title");
                     // String title1 = itemEle.elementTextTrim("title1");
                     LOG.info("item title:" + title);
+                    String date = itemEle.elementTextTrim("date");
+                    LOG.info("item date:" + date);
                     String url = itemEle.elementTextTrim("url");
                     // String title1 = itemEle.elementTextTrim("title1");
                     LOG.info("item url:" + url);
                     // Store values.
-                    this.titlesUrls.add(new WxSogouSimple(title, url));
+                    this.titlesUrls.add(new WxSogouSimple(title, date, url));
                     // System.out.println("title1:" + title1);
                 }
             } catch (DocumentException e) {

@@ -26,6 +26,8 @@ public class GlobalConsts
 {
     public static final String KJSON_API_URI = "http://www.kjson.com/weixin/api?key=45cfa3defbebeaab767517d2339b57e5";
 
+    public static final Integer DEFINITION_PRECISION = 5;
+
     // @see:http://www.kjson.com/weixin/bind
     public static final long KJSON_API_QPM = 60;// Query numbers per minutes;
 
@@ -90,9 +92,9 @@ public class GlobalConsts
     "OpenId", "文章标题", "文章地址"};
 
     public static final String[] FILE_REPORTER_EXCEL_HEADER_OPENID_ARTICLE_READ_LIKE = new String[] {"序号", "代码", "店名",
-    "订阅号", "OpenId", "文章标题", "文章地址", "阅读数", "点赞数", "点赞率", "监测时间"};
+    "订阅号", "OpenId", "文章标题", "发表时间", "文章地址", "阅读数", "点赞数", "点赞率", "监测时间"};
 
     public static final String[] FILE_REPORTER_EXCEL_HEADER_OPENID_FULL = new String[] {"序号", "代码", "店名", "订阅号",
-    "OpenId", "文章标题", "文章地址", "阅读数", "点赞数"};
+    "OpenId", "文章标题", "发表时间", "文章地址", "阅读数", "点赞数"};
 
 }

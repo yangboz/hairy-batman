@@ -67,7 +67,9 @@ public class KJsonApiQuery
         // long numbOfBundle = this.subscribers.size() % GlobalConsts.KJSON_API_PPQ;
         // String[] urlsBundle = new String[] {subscribers.get(0).getArticleUrl(), subscribers.get(1).getArticleUrl()};
         // this.parameters.add("urls", urlsBundle.toString());
-        parameters.add("urls", this.subscribers.remove(0).getArticleUrl());
+        this.queriedSubscriber = this.subscribers.remove(0);
+        LOG.info("this.queriedSubscriber: " + this.queriedSubscriber.toString());
+        parameters.add("urls", this.queriedSubscriber.getArticleUrl());
         //
         // for (long i = 0; i < numbOfBundle; i++)
         // {
@@ -110,8 +112,12 @@ public class KJsonApiQuery
         Long likeNum = Long.parseLong(wxKJson.getLike());
         this.queriedSubscriber.setArticleReadNum(wxKJson.getRead());
         this.queriedSubscriber.setArticleLikeNum(wxKJson.getLike());
-        Long likeRate = (long) ((float) likeNum / readNum * 100);
-        this.queriedSubscriber.setArticleLikeRate(likeRate.toString() + "%");
+        double likeRate = (double) likeNum / readNum * 100;
+        java.math.BigDecimal bigLikeRate = new java.math.BigDecimal(likeRate);
+        String bigLikeRateStr =
+            bigLikeRate.setScale(GlobalConsts.DEFINITION_PRECISION, java.math.BigDecimal.ROUND_HALF_UP).doubleValue()
+                + "%";
+        this.queriedSubscriber.setArticleLikeRate(bigLikeRateStr);
         //
         this.queriedSubscriber.setMoniterTime(GlobalVariables.now());
         //
@@ -122,7 +128,7 @@ public class KJsonApiQuery
             + GlobalVariables.wxFooListWithOpenIdArticleReadLike.toString());
         //
         if (this.subscribers.size() > 0) {
-            // this.query();
+            this.query();
         } else {
             // File reporting...
             new FileReporter(GlobalConsts.REPORT_FILE_OUTPUT_OPENID_ARITICLE_READ_LIKE,

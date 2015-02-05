@@ -25,9 +25,10 @@ package info.smartkit.hairy_batman.plain;
 public class WxSogouSimple
 {
 
-    public WxSogouSimple(String title, String url)
+    public WxSogouSimple(String title, String date, String url)
     {
         this.title = title;
+        this.date = date;
         this.url = url;
     }
 
@@ -55,9 +56,21 @@ public class WxSogouSimple
         this.url = url;
     }
 
+    private String date;
+
+    public String getDate()
+    {
+        return date;
+    }
+
+    public void setDate(String date)
+    {
+        this.date = date;
+    }
+
     @Override
     public String toString()
     {
-        return "title: " + this.title + ",url: " + url;
+        return "title: " + this.title + ",date: " + this.date + ",url: " + url;
     }
 }
