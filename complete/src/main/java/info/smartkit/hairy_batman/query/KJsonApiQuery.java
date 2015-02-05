@@ -64,23 +64,20 @@ public class KJsonApiQuery
     private LinkedMultiValueMap<String, String> getParameters()
     {
         LinkedMultiValueMap<String, String> parameters = new LinkedMultiValueMap<String, String>();
-        // long numbOfBundle = this.subscribers.size() % GlobalConsts.KJSON_API_PPQ;
-        // String[] urlsBundle = new String[] {subscribers.get(0).getArticleUrl(), subscribers.get(1).getArticleUrl()};
-        // this.parameters.add("urls", urlsBundle.toString());
+        //
+        // for (long j = 0; j < GlobalConsts.KJSON_API_PPQ; j++) {
+        // if (this.subscribers.size() >= 1) {
+        // this.queriedSubscriber = this.subscribers.remove(0);
+        // LOG.info("this.queriedSubscriber: " + this.queriedSubscriber.toString());
+        // parameters.add("urls", this.queriedSubscriber.getArticleUrl() + "\n");
+        // } else {
+        // break;
+        // }
+        // }
         this.queriedSubscriber = this.subscribers.remove(0);
         LOG.info("this.queriedSubscriber: " + this.queriedSubscriber.toString());
         parameters.add("urls", this.queriedSubscriber.getArticleUrl());
-        //
-        // for (long i = 0; i < numbOfBundle; i++)
-        // {
-        // for(long j=0;j<GlobalConsts.KJSON_API_PPQ;j++)
-        // {
-        // this.parameters.add("urls", this.singleSubscriber.getArticleUrl());
-        // }
-        // this.parameters.add("urls", this.singleSubscriber.getArticleUrl());
-        // //
         // "http://mp.weixin.qq.com/s?__biz=MjM5ODE4MTUzMg==&mid=202895379&idx=1&sn=a46187dd2e3fc704b72277dbf863f356&3rd=MzA3MDU4NTYzMw==&scene=6#rd");
-        // }
         return parameters;
     }
 
@@ -103,7 +100,7 @@ public class KJsonApiQuery
         // WxBar returns = restTemplate.getForObject(GlobalConsts.KJSON_API_URI, WxBar.class);
         ArrayList<WxKJson> api_query_resutls_data = api_query_resutls.getData();
         // System.out.println("ApiQuery result data:  " + api_query_resutls_data);
-        LOG.info("ApiQuery result data:  " + api_query_resutls_data);
+        LOG.info("ApiQuery result data:  " + api_query_resutls_data.toString());
         WxKJson wxKJson = api_query_resutls_data.get(0);
         // System.out.println("Parsed ApiQuery results,articleReadNum:" + wxKJson.getRead() + ",articleLikeNum: "
         // + wxKJson.getLike());
