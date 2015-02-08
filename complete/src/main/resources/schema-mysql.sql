@@ -1,7 +1,8 @@
 DROP TABLE IF EXISTS `wxfoo`;
 
 CREATE TABLE wxfoo(
-    id BigInt( 20 ) AUTO_INCREMENT NOT NULL,
+    wxfoo_id BigInt( 20 ) AUTO_INCREMENT NOT NULL,
+    id VARCHAR(20),
     code VARCHAR(20),
     store VARCHAR(20),
 	manager VARCHAR(20),
@@ -12,7 +13,15 @@ CREATE TABLE wxfoo(
     onService VARCHAR(5),
     serviceId VARCHAR(20),
     openId VARCHAR(100),
-    PRIMARY KEY ( `id` )
+    articleTitle VARCHAR(50),
+    articleUrl VARCHAR(255),
+    articleTime VARCHAR(10),
+    articleReadNum VARCHAR(10),
+    articleLikeNum VARCHAR(10),
+    articleLikeRate VARCHAR(10),
+    moniterTime VARCHAR(20),
+--    isValid VARCHAR(1),
+    PRIMARY KEY ( `wxfoo_id` )
 );
 
 --CREATE TABLE Tmpwxfoo(

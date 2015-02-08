@@ -134,7 +134,7 @@ public class WxBatchConfiguration
     public Step step1(StepBuilderFactory stepBuilderFactory, ItemReader<WxSimpleSubscriber> reader,
         ItemWriter<WxSimpleSubscriber> writer, ItemProcessor<WxSimpleSubscriber, WxSimpleSubscriber> processor)
     {
-        return stepBuilderFactory.get("step1").<WxSimpleSubscriber, WxSimpleSubscriber>chunk(60).reader(reader)
+        return stepBuilderFactory.get("step1").<WxSimpleSubscriber, WxSimpleSubscriber>chunk(10000).reader(reader)
             .processor(processor).writer(writer).build();
     }
 

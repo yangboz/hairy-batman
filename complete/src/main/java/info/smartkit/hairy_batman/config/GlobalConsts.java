@@ -43,11 +43,13 @@ public class GlobalConsts
 
     public static final String QUERY_COLUMNS_LABEL = QUERY_COLUMNS_NAME.replace(",", ",:");
 
+    public static final String QUERY_COLUMNS_LABEL_SIMPLE = ("? ? ? ? ? ? ? ? ? ? ? ? ? ? ");
+
     public static final String[] CSV_COLUMNS_NAME = QUERY_COLUMNS_NAME.split(",");
 
     public static final String[] CSV_COLUMNS_NAME_SIMPLE = QUERY_COLUMNS_NAME_SIMPLE.split(",");
 
-    public static final String RESOURCE_FILE_INPUT_CSV = "wxStatisticInput.csv";
+    public static final String RESOURCE_FILE_INPUT_CSV = "wxStatisticInputSample.csv";
 
     public static final String RESOURCE_FILE_INPUT_XLS = "wxStatisticInput.xlsx";
 

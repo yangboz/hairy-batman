@@ -41,9 +41,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
@@ -59,9 +57,6 @@ public class SogouSearchQuery
     protected WxComplexSubscriber wxFoo;
 
     MultiValueMap<String, String> parameters;
-
-    @Autowired
-    JdbcTemplate jdbcTemplate;
 
     public SogouSearchQuery()
     {
@@ -101,19 +96,26 @@ public class SogouSearchQuery
                     FileReporter.REPORTER_TYPE.R_T_OPENID, FileReporter.REPORTER_FILE_TYPE.EXCEL).write();
                 // Then,OpenID JSON site parse
                 if (this.wxFoo.getOpenId() != null) {
-                	//Save openId to DB.
-                	try {
-						GlobalVariables.jdbcTempate.update( "insert into "+GlobalConsts.QUERY_TABLE_NAME+"(openId) values(?)" ,
-						        new Object[] { this.wxFoo.getOpenId() },
-						        new int [] { java.sql.Types. VARCHAR });
-						//
-	                    this.parseSogouJsonSite(this.wxFoo.getOpenId());
-					} catch (DataAccessException e) {
-//						e.printStackTrace();
-						LOG.error(e.toString());
-					}
-                }else{
-                	LOG.warn("SogouSearchQuery getOpenId Failure!");
+                    // Save openId to DB.
+                    try {
+                        GlobalVariables.jdbcTempate.update(
+                            "insert into " + GlobalConsts.QUERY_TABLE_NAME
+                                + "(id,store,agency,unit,subscribeId,onSubscribe,code,openId) values(?,?,?,?,?,?,?,?)",
+                            new Object[] {this.wxFoo.getId(), this.wxFoo.getStore(), this.wxFoo.getAgency(),
+                            this.wxFoo.getUnit(), this.wxFoo.getSubscribeId(), this.wxFoo.getOnSubscribe(),
+                            this.wxFoo.getCode(), this.wxFoo.getOpenId()}, new int[] {java.sql.Types.INTEGER,
+                            java.sql.Types.VARCHAR, java.sql.Types.VARCHAR, java.sql.Types.VARCHAR,
+                            java.sql.Types.VARCHAR, java.sql.Types.VARCHAR, java.sql.Types.VARCHAR,
+                            java.sql.Types.VARCHAR});
+                        LOG.info("INSERT INTO openId: " + this.wxFoo.getOpenId());
+                        //
+                        this.parseSogouJsonSite(this.wxFoo.getOpenId());
+                    } catch (DataAccessException e) {
+                        // e.printStackTrace();
+                        LOG.error(e.toString());
+                    }
+                } else {
+                    LOG.warn("SogouSearchQuery getOpenId Failure!");
                 }
             }
 
@@ -259,7 +261,7 @@ public class SogouSearchQuery
         new FileReporter(GlobalConsts.REPORT_FILE_OUTPUT_OPENID_ARITICLE, GlobalVariables.wxFooListWithOpenIdArticle,
             FileReporter.REPORTER_TYPE.R_T_OPENID_ARTICLE, FileReporter.REPORTER_FILE_TYPE.EXCEL).write();
         // KJSON API call.
-        new KJsonApiQuery(GlobalVariables.wxFooListWithOpenIdArticle).query();
-        LOG.debug("KJsonApiQuery processing..." + wxFoo.toString());
+        // new KJsonApiQuery(GlobalVariables.wxFooListWithOpenIdArticle).query();
+        // LOG.debug("KJsonApiQuery processing..." + wxFoo.toString());
     }
 }

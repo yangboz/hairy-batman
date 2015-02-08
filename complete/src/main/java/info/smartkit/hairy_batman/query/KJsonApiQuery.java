@@ -65,18 +65,18 @@ public class KJsonApiQuery
     {
         LinkedMultiValueMap<String, String> parameters = new LinkedMultiValueMap<String, String>();
         //
-        // for (long j = 0; j < GlobalConsts.KJSON_API_PPQ; j++) {
-        // if (this.subscribers.size() >= 1) {
+        for (long j = 0; j < GlobalConsts.KJSON_API_PPQ; j++) {
+            if (this.subscribers.size() >= 1) {
+                this.queriedSubscriber = this.subscribers.remove(0);
+                LOG.info("this.queriedSubscriber: " + this.queriedSubscriber.toString());
+                parameters.add("urls", this.queriedSubscriber.getArticleUrl() + "\\n");
+            } else {
+                break;
+            }
+        }
         // this.queriedSubscriber = this.subscribers.remove(0);
         // LOG.info("this.queriedSubscriber: " + this.queriedSubscriber.toString());
-        // parameters.add("urls", this.queriedSubscriber.getArticleUrl() + "\n");
-        // } else {
-        // break;
-        // }
-        // }
-        this.queriedSubscriber = this.subscribers.remove(0);
-        LOG.info("this.queriedSubscriber: " + this.queriedSubscriber.toString());
-        parameters.add("urls", this.queriedSubscriber.getArticleUrl());
+        // parameters.add("urls", this.queriedSubscriber.getArticleUrl());
         // "http://mp.weixin.qq.com/s?__biz=MjM5ODE4MTUzMg==&mid=202895379&idx=1&sn=a46187dd2e3fc704b72277dbf863f356&3rd=MzA3MDU4NTYzMw==&scene=6#rd");
         return parameters;
     }
