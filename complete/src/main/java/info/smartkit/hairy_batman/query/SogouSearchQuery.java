@@ -263,10 +263,6 @@ public class SogouSearchQuery
                 "insert into wxArticle (articleTime,articleUrl,articleTitle,openId) values (?, ?,?, ?)",
                 titleUrl.getDate(), titleUrl.getTitle(), titleUrl.getUrl(), this.wxFoo.getOpenId());
         }
-        // Also insert to database.
-        // this.jdbcTemplate.batchUpdate(("INSERT INTO " + GlobalConsts.QUERY_TABLE_NAME + "(" +
-        // GlobalConsts.QUERY_COLUMNS_NAME
-        // + ") VALUES (:" + GlobalConsts.QUERY_COLUMNS_LABEL + ")"), subscriber)
         //
         LOG.info("GlobalVariables.wxFooListWithOpenIdArticle(size): "
             + GlobalVariables.wxFooListWithOpenIdArticle.size() + ", raw: "
@@ -275,7 +271,7 @@ public class SogouSearchQuery
         new FileReporter(GlobalConsts.REPORT_FILE_OUTPUT_OPENID_ARITICLE, GlobalVariables.wxFooListWithOpenIdArticle,
             FileReporter.REPORTER_TYPE.R_T_OPENID_ARTICLE, FileReporter.REPORTER_FILE_TYPE.EXCEL).write();
         // KJSON API call.
-        // new KJsonApiQuery(GlobalVariables.wxFooListWithOpenIdArticle).query();
-        // LOG.debug("KJsonApiQuery processing..." + wxFoo.toString());
+        new KJsonApiQuery(GlobalVariables.wxFooListWithOpenIdArticle).query();
+        LOG.debug("KJsonApiQuery processing..." + wxFoo.toString());
     }
 }

@@ -24,6 +24,7 @@ import info.smartkit.hairy_batman.plain.WxBar;
 import info.smartkit.hairy_batman.plain.WxKJson;
 import info.smartkit.hairy_batman.reports.FileReporter;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -31,6 +32,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
@@ -81,6 +83,10 @@ public class KJsonApiQuery
         return parameters;
     }
 
+    private Long readNum;
+
+    private Long likeNum;
+
     public void query()
     {
         // KJSON API testing using RestTemplate.
@@ -107,8 +113,8 @@ public class KJsonApiQuery
         LOG.info("Parsed ApiQuery results,articleReadNum:" + wxKJson.getRead() + ",articleLikeNum: "
             + wxKJson.getLike());
         //
-        Long readNum = Long.parseLong(wxKJson.getRead());
-        Long likeNum = Long.parseLong(wxKJson.getLike());
+        this.readNum = Long.parseLong(wxKJson.getRead());
+        this.likeNum = Long.parseLong(wxKJson.getLike());
         this.queriedSubscriber.setArticleReadNum(wxKJson.getRead());
         this.queriedSubscriber.setArticleLikeNum(wxKJson.getLike());
         double likeRate = (double) likeNum / readNum * 100;
@@ -133,6 +139,20 @@ public class KJsonApiQuery
             new FileReporter(GlobalConsts.REPORT_FILE_OUTPUT_OPENID_ARITICLE_READ_LIKE,
                 GlobalVariables.wxFooListWithOpenIdArticleReadLike,
                 FileReporter.REPORTER_TYPE.R_T_OPENID_ARTICLE_READ_LIKE, FileReporter.REPORTER_FILE_TYPE.EXCEL).write();
+            // Save to DB.
+            GlobalVariables.jdbcTempate.update(
+                "update wxArticle set articleLikeNum=? AND articleReadNum=? where openId=?",
+                new PreparedStatementSetter()
+                {
+                    @Override
+                    public void setValues(java.sql.PreparedStatement ps) throws SQLException
+                    {
+                        LOG.info("likeNum: " + likeNum + ",readNum: " + readNum);
+                        ps.setInt(1, likeNum.intValue());
+                        ps.setInt(2, readNum.intValue());
+                        ps.setString(3, queriedSubscriber.getOpenId());
+                    }
+                });
         }
     }
 }
