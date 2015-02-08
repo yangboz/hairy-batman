@@ -11,19 +11,20 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.context.annotation.ComponentScan;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
-@ComponentScan
-@EnableAutoConfiguration
+//@ComponentScan
+//@EnableAutoConfiguration
+@SpringBootApplication
 public class Application
 {
     private static Logger LOG = LogManager.getLogger(Application.class);
 
     public static void main(String[] args)
     {
+        // GlobalVariables.appContext = SpringApplication.run(ScheduledTasks.class, args);
         //
         GlobalVariables.appContext = SpringApplication.run(Application.class, args);
         // Check the openId storage results:
