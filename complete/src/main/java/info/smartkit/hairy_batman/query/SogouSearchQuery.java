@@ -87,7 +87,8 @@ public class SogouSearchQuery
             String openIdLinkHref = openIdLink.attr("href");
             LOG.debug("openIdLinkHref:" + openIdLinkHref);
             // FIXME:过滤同一个订阅号搜到多条结果，默认选择第一个
-            if (this.wxFoo.getOpenId() == null) {
+            if (this.wxFoo.getOpenId() == null && openIdLinkHref.length() > 0) {
+
                 this.wxFoo.setOpenId(openIdLinkHref.split(GlobalConsts.SOGOU_SEARCH_WX_OPEN_ID_KEYWORDS)[1]);
                 LOG.info("saved wxOpenId value: " + this.wxFoo.getOpenId());
                 GlobalVariables.wxFooListWithOpenId.add(this.wxFoo);
@@ -169,18 +170,30 @@ public class SogouSearchQuery
         ObjectMapper mapper = new ObjectMapper(); // can reuse, share globally
         WxSogou wxSogouJson = null;
         try {
-            wxSogouJson =
-                mapper.readValue(this.getJsonContent(GlobalConsts.SOGOU_SEARCH_URL_JSON + openId), WxSogou.class);
+            String url = GlobalConsts.SOGOU_SEARCH_URL_JSON + openId;
+            wxSogouJson = mapper.readValue(this.getJsonContent(url), WxSogou.class);
+            // Thread.sleep(6000);
+            long totalPages = wxSogouJson.getTotalPages();
+            int i = 2;
+            while (i < totalPages + 1) {
+                wxSogouJson =
+                    mapper.readValue(this.getJsonContent(GlobalConsts.SOGOU_SEARCH_URL_JSON + openId), WxSogou.class);
+                GlobalVariables.openIdWithArticleList.put(openId, wxSogouJson);// Store it.
+                // Thread.sleep(6000);
+                i++;
+            }
+            if (i >= wxSogouJson.getTotalPages()) {
+                // Save the procedure CSVReporting
+                this.assembleWxfooListWithAritcle(wxSogouJson);
+            }
         } catch (JsonParseException e) {
-            LOG.error(e.toString());
+            e.printStackTrace();
         } catch (JsonMappingException e) {
-            LOG.error(e.toString());
+            e.printStackTrace();
         } catch (IOException e) {
-            LOG.error(e.toString());
+            e.printStackTrace();
         }
-        GlobalVariables.openIdWithArticleList.put(openId, wxSogouJson);// Store it.
-        // Save the procedure CSVReporting
-        this.assembleWxfooListWithAritcle(wxSogouJson);
+
     }
 
     private String getJsonContent(String urlStr)
@@ -245,9 +258,10 @@ public class SogouSearchQuery
             subscriber.setArticleUrl(titleUrl.getUrl());
             subscriber.setArticleTime(titleUrl.getDate());
             GlobalVariables.wxFooListWithOpenIdArticle.add(subscriber);
-            // TODO:save to database.
-            // GlobalVariables.jdbcTempate.update("insert into wxfoo (articleTitle, articleUrl) values (?, ?)",
-            // titleUrl.getTitle(), titleUrl.getUrl());
+            // Save values to DB(wxArticle).
+            GlobalVariables.jdbcTempate.update(
+                "insert into wxArticle (articleTime,articleUrl,articleTitle,openId) values (?, ?,?, ?)",
+                titleUrl.getDate(), titleUrl.getTitle(), titleUrl.getUrl(), this.wxFoo.getOpenId());
         }
         // Also insert to database.
         // this.jdbcTemplate.batchUpdate(("INSERT INTO " + GlobalConsts.QUERY_TABLE_NAME + "(" +

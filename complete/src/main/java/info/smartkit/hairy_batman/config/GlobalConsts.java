@@ -43,8 +43,6 @@ public class GlobalConsts
 
     public static final String QUERY_COLUMNS_LABEL = QUERY_COLUMNS_NAME.replace(",", ",:");
 
-    public static final String QUERY_COLUMNS_LABEL_SIMPLE = ("? ? ? ? ? ? ? ? ? ? ? ? ? ? ");
-
     public static final String[] CSV_COLUMNS_NAME = QUERY_COLUMNS_NAME.split(",");
 
     public static final String[] CSV_COLUMNS_NAME_SIMPLE = QUERY_COLUMNS_NAME_SIMPLE.split(",");
@@ -100,4 +98,5 @@ public class GlobalConsts
     public static final String[] FILE_REPORTER_EXCEL_HEADER_OPENID_FULL = new String[] {"序号", "店代码", "店名", "订阅号",
     "OpenId", "文章标题", "发表时间", "文章地址", "阅读数", "点赞数"};
 
+    public static final int BATCH_MAX_LIMIT = 10;
 }

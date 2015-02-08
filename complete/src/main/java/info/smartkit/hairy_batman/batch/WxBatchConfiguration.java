@@ -42,6 +42,10 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 @PropertySource("classpath:application.properties")
 public class WxBatchConfiguration
 {
+    /**
+     * TODO: DOCUMENT ME!
+     */
+
     private static Logger LOG = LogManager.getLogger(WxBatchConfiguration.class);
 
     /*
@@ -134,7 +138,8 @@ public class WxBatchConfiguration
     public Step step1(StepBuilderFactory stepBuilderFactory, ItemReader<WxSimpleSubscriber> reader,
         ItemWriter<WxSimpleSubscriber> writer, ItemProcessor<WxSimpleSubscriber, WxSimpleSubscriber> processor)
     {
-        return stepBuilderFactory.get("step1").<WxSimpleSubscriber, WxSimpleSubscriber>chunk(10000).reader(reader)
+        return stepBuilderFactory.get("step1")
+            .<WxSimpleSubscriber, WxSimpleSubscriber>chunk(GlobalConsts.BATCH_MAX_LIMIT).reader(reader)
             .processor(processor).writer(writer).build();
     }
 

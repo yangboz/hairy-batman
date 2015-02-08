@@ -8,17 +8,17 @@ CREATE TABLE wxfoo(
 	manager VARCHAR(20),
     agency VARCHAR(20),
     unit VARCHAR(20),
-    onSubscribe VARCHAR(5),
-    subscribeId VARCHAR(20),
-    onService VARCHAR(5),
-    serviceId VARCHAR(20),
+    onSubscribe VARCHAR(10),
+    subscribeId VARCHAR(100),
+    onService VARCHAR(10),
+    serviceId VARCHAR(100),
     openId VARCHAR(100),
-    articleTitle VARCHAR(50),
+    articleTitle VARCHAR(255),
     articleUrl VARCHAR(255),
-    articleTime VARCHAR(10),
-    articleReadNum VARCHAR(10),
-    articleLikeNum VARCHAR(10),
-    articleLikeRate VARCHAR(10),
+    articleTime VARCHAR(20),
+    articleReadNum VARCHAR(20),
+    articleLikeNum VARCHAR(20),
+    articleLikeRate VARCHAR(20),
     moniterTime VARCHAR(20),
 --    isValid VARCHAR(1),
     PRIMARY KEY ( `wxfoo_id` )
@@ -45,15 +45,17 @@ CREATE TABLE wxfoo(
 --    PRIMARY KEY ( `id,articleId` )
 --);
 --
---CREATE TABLE wxArticle(
---    id BigInt( 20 ) AUTO_INCREMENT NOT NULL,
---    articleTitle VARCHAR(50),
---    articleUrl VARCHAR(255),
---    articleTime VARCHAR(10),
---    articleReadNum VARCHAR(10),
---    articleLikeNum VARCHAR(10),
---    moniterTime VARCHAR(20),
---    PRIMARY KEY ( `id` )
---);
+DROP TABLE IF EXISTS `wxArticle`;
+CREATE TABLE wxArticle(
+    id BigInt( 20 ) AUTO_INCREMENT NOT NULL,
+    openId VARCHAR(100),
+    articleTitle VARCHAR(255),
+    articleUrl VARCHAR(255),
+    articleTime VARCHAR(20),
+    articleReadNum VARCHAR(20),
+    articleLikeNum VARCHAR(20),
+    moniterTime VARCHAR(20),
+    PRIMARY KEY ( `id` )
+);
 
 
