@@ -99,4 +99,7 @@ public class GlobalConsts
     "OpenId", "文章标题", "发表时间", "文章地址", "阅读数", "点赞数"};
 
     public static final int BATCH_MAX_LIMIT = 10;
+
+    public static final String JDBC_QUERY_UPDATE_ARTICLE_READ_LIKE =
+        "UPDATE wxArticle SET articleReadNum = ?, articleLikeNum = ? WHERE openId = ?";
 }

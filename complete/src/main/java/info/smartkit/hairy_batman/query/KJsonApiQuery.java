@@ -24,7 +24,7 @@ import info.smartkit.hairy_batman.plain.WxBar;
 import info.smartkit.hairy_batman.plain.WxKJson;
 import info.smartkit.hairy_batman.reports.FileReporter;
 
-import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -32,7 +32,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
@@ -140,19 +139,24 @@ public class KJsonApiQuery
                 GlobalVariables.wxFooListWithOpenIdArticleReadLike,
                 FileReporter.REPORTER_TYPE.R_T_OPENID_ARTICLE_READ_LIKE, FileReporter.REPORTER_FILE_TYPE.EXCEL).write();
             // Save to DB.
-            GlobalVariables.jdbcTempate.update(
-                "update wxArticle set articleLikeNum=? AND articleReadNum=? where openId=?",
-                new PreparedStatementSetter()
-                {
-                    @Override
-                    public void setValues(java.sql.PreparedStatement ps) throws SQLException
-                    {
-                        LOG.info("likeNum: " + likeNum + ",readNum: " + readNum);
-                        ps.setInt(1, likeNum.intValue());
-                        ps.setInt(2, readNum.intValue());
-                        ps.setString(3, queriedSubscriber.getOpenId());
-                    }
-                });
+            Object[] params = {likeNum.intValue(), readNum.intValue(), queriedSubscriber.getOpenId()};
+            int[] types = {Types.INTEGER, Types.INTEGER, Types.VARCHAR};
+            int rows =
+                GlobalVariables.jdbcTempate.update(GlobalConsts.JDBC_QUERY_UPDATE_ARTICLE_READ_LIKE, params, types);
+            LOG.info("rows(s): " + rows + " updated." + ",likeNum: " + likeNum + ",readNum: " + readNum);
+            // GlobalVariables.jdbcTempate.update(
+            // "update wxArticle set articleLikeNum=? AND articleReadNum=? where openId=?",
+            // new PreparedStatementSetter()
+            // {
+            // @Override
+            // public void setValues(java.sql.PreparedStatement ps) throws SQLException
+            // {
+            // LOG.info("likeNum: " + likeNum + ",readNum: " + readNum);
+            // ps.setInt(1, likeNum.intValue());
+            // ps.setInt(2, readNum.intValue());
+            // ps.setString(3, queriedSubscriber.getOpenId());
+            // }
+            // });
         }
     }
 }
