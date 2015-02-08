@@ -42,6 +42,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -100,7 +101,19 @@ public class SogouSearchQuery
                     FileReporter.REPORTER_TYPE.R_T_OPENID, FileReporter.REPORTER_FILE_TYPE.EXCEL).write();
                 // Then,OpenID JSON site parse
                 if (this.wxFoo.getOpenId() != null) {
-                    this.parseSogouJsonSite(this.wxFoo.getOpenId());
+                	//Save openId to DB.
+                	try {
+						GlobalVariables.jdbcTempate.update( "insert into "+GlobalConsts.QUERY_TABLE_NAME+"(openId) values(?)" ,
+						        new Object[] { this.wxFoo.getOpenId() },
+						        new int [] { java.sql.Types. VARCHAR });
+						//
+	                    this.parseSogouJsonSite(this.wxFoo.getOpenId());
+					} catch (DataAccessException e) {
+//						e.printStackTrace();
+						LOG.error(e.toString());
+					}
+                }else{
+                	LOG.warn("SogouSearchQuery getOpenId Failure!");
                 }
             }
 
