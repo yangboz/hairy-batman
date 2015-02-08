@@ -37,7 +37,8 @@ public class LoadExcel2Model
         // LOG.info("");
         // }
         File excelFile = new ClassPathResource(GlobalConsts.RESOURCE_FILE_INPUT_XLS).getFile();
-        List<WxSubscriberExcelModel> items = ExOM.mapFromExcel(excelFile).toObjectOf(WxSubscriberExcelModel.class).map();
+        List<WxSubscriberExcelModel> items =
+            ExOM.mapFromExcel(excelFile).toObjectOf(WxSubscriberExcelModel.class).map();
 
         for (WxSubscriberExcelModel item : items) {
             LOG.info("WxSubscriberModel:" + item.toString());

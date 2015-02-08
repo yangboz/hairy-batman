@@ -11,19 +11,20 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.context.annotation.ComponentScan;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
-@ComponentScan
-@EnableAutoConfiguration
+//@ComponentScan
+//@EnableAutoConfiguration
+@SpringBootApplication
 public class Application
 {
     private static Logger LOG = LogManager.getLogger(Application.class);
 
     public static void main(String[] args)
     {
+        // GlobalVariables.appContext = SpringApplication.run(ScheduledTasks.class, args);
         //
         GlobalVariables.appContext = SpringApplication.run(Application.class, args);
         // Check the openId storage results:
@@ -37,9 +38,11 @@ public class Application
                     @Override
                     public WxComplexSubscriber mapRow(ResultSet rs, int row) throws SQLException
                     {
-                        return new WxComplexSubscriber(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4),
-                            rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs
-                                .getString(10), rs.getString(11), rs.getString(12));
+                        WxComplexSubscriber subscriber =
+                            new WxComplexSubscriber(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs
+                                .getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs
+                                .getString(10), rs.getString(11), rs.getString(12), rs.getString(13), rs.getString(14));
+                        return subscriber;
                     }
                 });
 

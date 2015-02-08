@@ -32,11 +32,15 @@ public class WxSimpleSubscriber
 
     }
 
-    public WxSimpleSubscriber(Integer id, String code, String store, String subscribeId)
+    public WxSimpleSubscriber(Integer id, String code, String agency, String unit, String store, String onSubscribe,
+        String subscribeId)
     {
         this.id = id;
         this.code = code;
+        this.agency = agency;
+        this.unit = unit;
         this.store = store;
+        this.onSubscribe = onSubscribe;
         this.subscribeId = subscribeId;
     }
 
@@ -88,15 +92,65 @@ public class WxSimpleSubscriber
         this.subscribeId = subscribeId;
     }
 
+    // private String manager;// 区域经理
+    //
+    // public String getManager()
+    // {
+    // return manager;
+    // }
+    //
+    // public void setManager(String manager)
+    // {
+    // this.manager = manager;
+    // }
+
+    protected String agency;// 办事处
+
+    public String getAgency()
+    {
+        return agency;
+    }
+
+    public void setAgency(String agency)
+    {
+        this.agency = agency;
+    }
+
+    protected String unit;// 事业部
+
+    public String getUnit()
+    {
+        return unit;
+    }
+
+    public void setUnit(String unit)
+    {
+        this.unit = unit;
+    }
+
+    protected String onSubscribe;// 是否开通订阅号/订阅号类型
+
+    public String getOnSubscribe()
+    {
+        return onSubscribe;
+    }
+
+    public void setOnSubscribe(String onSubscribe)
+    {
+        this.onSubscribe = onSubscribe;
+    }
+
     @Override
     public String toString()
     {
-        return "id: " + id + ",code: " + code + ", store: " + store + ",subscribeId: " + subscribeId;
+        return "id: " + id + ", store: " + store + ",agency: " + agency + ",unit: " + unit + ",onSubscribe: "
+            + onSubscribe + ",subscribeId: " + subscribeId + ",code: " + code;
     }
 
     public String[] toStringArray()
     {
-        return new String[] {this.getCode(), this.getStore(), this.getSubscribeId()};
+        return new String[] {this.getId().toString(), this.getStore(), this.getAgency(), this.getUnit(),
+        this.getOnSubscribe(), this.getSubscribeId(), this.getCode()};
     }
 
 }

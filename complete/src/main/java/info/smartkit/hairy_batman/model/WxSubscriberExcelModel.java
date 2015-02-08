@@ -36,7 +36,7 @@ public class WxSubscriberExcelModel
         return code;
     }
 
-    @Column(name = "特约店名")
+    @Column(name = "店名")
     private String store;// 特约店名
 
     public String getStore()
@@ -88,7 +88,7 @@ public class WxSubscriberExcelModel
         this.unit = unit;
     }
 
-    @Column(name = "订阅号开通")
+    @Column(name = "微信号类型")
     private String onSubscribe;// 是否开通订阅号
 
     public String getOnSubscribe()
@@ -101,7 +101,7 @@ public class WxSubscriberExcelModel
         this.onSubscribe = onSubscribe;
     }
 
-    @Column(name = "订阅号ID")
+    @Column(name = "微信号全称")
     private String subscribeId;// 订阅号名全称,subscribeId VARCHAR(20),
 
     public String getSubscribeId()

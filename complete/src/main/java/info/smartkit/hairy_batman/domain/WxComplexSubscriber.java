@@ -43,31 +43,31 @@ public class WxComplexSubscriber extends WxSimpleSubscriber
     }
 
     // public WxComplexSubscriber(Integer id, String code, String store, String manager, String agency, String unit,
-    public WxComplexSubscriber(Integer id, String code, String store, String onSubscribe, String subscribeId,
-        String moniterTime, WxFooArticle wxFooArticle)
+    public WxComplexSubscriber(Integer id, String code, String store, String agency, String unit, String onSubscribe,
+        String subscribeId, String moniterTime, WxFooArticle wxFooArticle)
     {
         this.id = id;
         this.code = code;
         this.store = store;
         // this.manager = manager;
-        // this.agency = agency;
-        // this.unit = unit;
+        this.agency = agency;
+        this.unit = unit;
         this.onSubscribe = onSubscribe;
         this.subscribeId = subscribeId;
         this.wxFooArticle = wxFooArticle;
     }
 
     // public WxComplexSubscriber(Integer id, String code, String store, String manager, String agency, String unit,
-    public WxComplexSubscriber(Integer id, String code, String store, String onSubscribe, String subscribeId,
-        String articleTime, String articleUrl, String articleTitle, String articleReadNum, String articleLikeNum,
-        String articleLikeRate, String moniterTime)
+    public WxComplexSubscriber(Integer id, String code, String store, String agency, String unit, String onSubscribe,
+        String subscribeId, String articleTime, String articleUrl, String articleTitle, String articleReadNum,
+        String articleLikeNum, String articleLikeRate, String moniterTime)
     {
         this.id = id;
         this.code = code;
         this.store = store;
         // this.manager = manager;
-        // this.agency = agency;
-        // this.unit = unit;
+        this.agency = agency;
+        this.unit = unit;
         this.onSubscribe = onSubscribe;
         this.subscribeId = subscribeId;
         this.articleTime = articleTime;
@@ -77,54 +77,6 @@ public class WxComplexSubscriber extends WxSimpleSubscriber
         this.articleLikeNum = articleLikeNum;
         this.articleLikeRate = articleLikeRate;
         this.moniterTime = moniterTime;
-    }
-
-    private String manager;// 区域经理
-
-    public String getManager()
-    {
-        return manager;
-    }
-
-    public void setManager(String manager)
-    {
-        this.manager = manager;
-    }
-
-    private String agency;// 办事处
-
-    public String getAgency()
-    {
-        return agency;
-    }
-
-    public void setAgency(String agency)
-    {
-        this.agency = agency;
-    }
-
-    private String unit;// 事业部
-
-    public String getUnit()
-    {
-        return unit;
-    }
-
-    public void setUnit(String unit)
-    {
-        this.unit = unit;
-    }
-
-    private String onSubscribe;// 是否开通订阅号
-
-    public String getOnSubscribe()
-    {
-        return onSubscribe;
-    }
-
-    public void setOnSubscribe(String onSubscribe)
-    {
-        this.onSubscribe = onSubscribe;
     }
 
     private String articleTime;// 文章发布日期，articleTime VARCHAR(10),
@@ -231,30 +183,31 @@ public class WxComplexSubscriber extends WxSimpleSubscriber
 
     public String[] toFullStringArray()
     {
-        return new String[] {this.getCode(), this.getStore(), this.getManager(), this.getAgency(), this.getUnit(),
-        this.getOnSubscribe(), this.getSubscribeId(), this.getArticleTime(), this.getArticleUrl(),
+        return new String[] {this.getId().toString(), this.getCode(), this.getStore(), this.getAgency(),
+        this.getUnit(), this.getOnSubscribe(), this.getSubscribeId(), this.getArticleTime(), this.getArticleUrl(),
         this.getArticleTitle(), this.getArticleReadNum(), this.getArticleLikeNum(), this.getArticleLikeRate(),
         this.getMoniterTime()};
     }
 
     public String[] toOpenIdStringArray()
     {
-        // return ArrayUtil.addAll(super.toStringArray(), new String[] {this.getOpenId()});
-        return new String[] {this.getId().toString(), this.getCode(), this.getStore(), this.getSubscribeId(),
-        this.getOpenId()};
+        return new String[] {this.getId().toString(), this.getCode(), this.getStore(), this.getAgency(),
+        this.getUnit(), this.getOnSubscribe(), this.getSubscribeId(), this.getOpenId()};
     }
 
     public String[] toOpenIdArticleStringArray()
     {
-        return new String[] {this.getId().toString(), this.getCode(), this.getStore(), this.getSubscribeId(),
-        this.getOpenId(), this.getArticleTitle(), this.getArticleUrl()};
+        return new String[] {this.getId().toString(), this.getCode(), this.getStore(), this.getAgency(),
+        this.getUnit(), this.getOnSubscribe(), this.getSubscribeId(), this.getOpenId(), this.getArticleTitle(),
+        this.getArticleTime(), this.getArticleUrl()};
     }
 
     public String[] toOpenIdArticleReadLikeStringArray()
     {
-        return new String[] {this.getId().toString(), this.getCode(), this.getStore(), this.getSubscribeId(),
-        this.getOpenId(), this.getArticleTitle(), this.getArticleUrl(), this.getArticleReadNum(),
-        this.getArticleLikeNum(), this.getArticleLikeRate(), this.getMoniterTime()};
+        return new String[] {this.getId().toString(), this.getCode(), this.getStore(), this.getAgency(),
+        this.getUnit(), this.getOnSubscribe(), this.getSubscribeId(), this.getOpenId(), this.getArticleTitle(),
+        this.getArticleTime(), this.getArticleUrl(), this.getArticleReadNum(), this.getArticleLikeNum(),
+        this.getArticleLikeRate(), this.getMoniterTime()};
     }
 
     private String openId = null;// 微信openID

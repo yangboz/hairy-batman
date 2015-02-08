@@ -41,6 +41,8 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
@@ -56,6 +58,9 @@ public class SogouSearchQuery
     protected WxComplexSubscriber wxFoo;
 
     MultiValueMap<String, String> parameters;
+
+    @Autowired
+    JdbcTemplate jdbcTemplate;
 
     public SogouSearchQuery()
     {
@@ -94,7 +99,9 @@ public class SogouSearchQuery
                 new FileReporter(GlobalConsts.REPORT_FILE_OUTPUT_OPENID, GlobalVariables.wxFooListWithOpenId,
                     FileReporter.REPORTER_TYPE.R_T_OPENID, FileReporter.REPORTER_FILE_TYPE.EXCEL).write();
                 // Then,OpenID JSON site parse
-                this.parseSogouJsonSite(this.wxFoo.getOpenId());
+                if (this.wxFoo.getOpenId() != null) {
+                    this.parseSogouJsonSite(this.wxFoo.getOpenId());
+                }
             }
 
         } catch (IOException e) {
@@ -214,12 +221,23 @@ public class SogouSearchQuery
             subscriber.setId(this.wxFoo.getId());
             subscriber.setCode(this.wxFoo.getCode());
             subscriber.setStore(this.wxFoo.getStore());
+            subscriber.setAgency(this.wxFoo.getAgency());
+            subscriber.setUnit(this.wxFoo.getUnit());
+            subscriber.setOnSubscribe(this.wxFoo.getOnSubscribe());
             subscriber.setSubscribeId(this.wxFoo.getSubscribeId());
             subscriber.setOpenId(this.wxFoo.getOpenId());
             subscriber.setArticleTitle(titleUrl.getTitle());
             subscriber.setArticleUrl(titleUrl.getUrl());
+            subscriber.setArticleTime(titleUrl.getDate());
             GlobalVariables.wxFooListWithOpenIdArticle.add(subscriber);
+            // TODO:save to database.
+            // GlobalVariables.jdbcTempate.update("insert into wxfoo (articleTitle, articleUrl) values (?, ?)",
+            // titleUrl.getTitle(), titleUrl.getUrl());
         }
+        // Also insert to database.
+        // this.jdbcTemplate.batchUpdate(("INSERT INTO " + GlobalConsts.QUERY_TABLE_NAME + "(" +
+        // GlobalConsts.QUERY_COLUMNS_NAME
+        // + ") VALUES (:" + GlobalConsts.QUERY_COLUMNS_LABEL + ")"), subscriber)
         //
         LOG.info("GlobalVariables.wxFooListWithOpenIdArticle(size): "
             + GlobalVariables.wxFooListWithOpenIdArticle.size() + ", raw: "
@@ -228,7 +246,7 @@ public class SogouSearchQuery
         new FileReporter(GlobalConsts.REPORT_FILE_OUTPUT_OPENID_ARITICLE, GlobalVariables.wxFooListWithOpenIdArticle,
             FileReporter.REPORTER_TYPE.R_T_OPENID_ARTICLE, FileReporter.REPORTER_FILE_TYPE.EXCEL).write();
         // KJSON API call.
-        // new KJsonApiQuery(GlobalVariables.wxFooListWithOpenIdArticle).query();
-        // LOG.debug("KJsonApiQuery processing..." + wxFoo);
+        new KJsonApiQuery(GlobalVariables.wxFooListWithOpenIdArticle).query();
+        LOG.debug("KJsonApiQuery processing..." + wxFoo.toString());
     }
 }

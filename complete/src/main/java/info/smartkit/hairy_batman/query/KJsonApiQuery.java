@@ -64,21 +64,20 @@ public class KJsonApiQuery
     private LinkedMultiValueMap<String, String> getParameters()
     {
         LinkedMultiValueMap<String, String> parameters = new LinkedMultiValueMap<String, String>();
-        // long numbOfBundle = this.subscribers.size() % GlobalConsts.KJSON_API_PPQ;
-        // String[] urlsBundle = new String[] {subscribers.get(0).getArticleUrl(), subscribers.get(1).getArticleUrl()};
-        // this.parameters.add("urls", urlsBundle.toString());
-        parameters.add("urls", this.subscribers.remove(0).getArticleUrl());
         //
-        // for (long i = 0; i < numbOfBundle; i++)
-        // {
-        // for(long j=0;j<GlobalConsts.KJSON_API_PPQ;j++)
-        // {
-        // this.parameters.add("urls", this.singleSubscriber.getArticleUrl());
+        // for (long j = 0; j < GlobalConsts.KJSON_API_PPQ; j++) {
+        // if (this.subscribers.size() >= 1) {
+        // this.queriedSubscriber = this.subscribers.remove(0);
+        // LOG.info("this.queriedSubscriber: " + this.queriedSubscriber.toString());
+        // parameters.add("urls", this.queriedSubscriber.getArticleUrl() + "\n");
+        // } else {
+        // break;
         // }
-        // this.parameters.add("urls", this.singleSubscriber.getArticleUrl());
-        // //
+        // }
+        this.queriedSubscriber = this.subscribers.remove(0);
+        LOG.info("this.queriedSubscriber: " + this.queriedSubscriber.toString());
+        parameters.add("urls", this.queriedSubscriber.getArticleUrl());
         // "http://mp.weixin.qq.com/s?__biz=MjM5ODE4MTUzMg==&mid=202895379&idx=1&sn=a46187dd2e3fc704b72277dbf863f356&3rd=MzA3MDU4NTYzMw==&scene=6#rd");
-        // }
         return parameters;
     }
 
@@ -96,10 +95,12 @@ public class KJsonApiQuery
         //
         WxBar api_query_resutls =
             restTemplate.postForObject(GlobalConsts.KJSON_API_URI, this.getParameters(), WxBar.class);
+        if (api_query_resutls.getData().size() <= 0)// FIXME: null JSON exception handler here.
+            return;
         // WxBar returns = restTemplate.getForObject(GlobalConsts.KJSON_API_URI, WxBar.class);
         ArrayList<WxKJson> api_query_resutls_data = api_query_resutls.getData();
         // System.out.println("ApiQuery result data:  " + api_query_resutls_data);
-        LOG.info("ApiQuery result data:  " + api_query_resutls_data);
+        LOG.info("ApiQuery result data:  " + api_query_resutls_data.toString());
         WxKJson wxKJson = api_query_resutls_data.get(0);
         // System.out.println("Parsed ApiQuery results,articleReadNum:" + wxKJson.getRead() + ",articleLikeNum: "
         // + wxKJson.getLike());
@@ -110,8 +111,12 @@ public class KJsonApiQuery
         Long likeNum = Long.parseLong(wxKJson.getLike());
         this.queriedSubscriber.setArticleReadNum(wxKJson.getRead());
         this.queriedSubscriber.setArticleLikeNum(wxKJson.getLike());
-        Long likeRate = (long) ((float) likeNum / readNum * 100);
-        this.queriedSubscriber.setArticleLikeRate(likeRate.toString() + "%");
+        double likeRate = (double) likeNum / readNum * 100;
+        java.math.BigDecimal bigLikeRate = new java.math.BigDecimal(likeRate);
+        String bigLikeRateStr =
+            bigLikeRate.setScale(GlobalConsts.DEFINITION_PRECISION, java.math.BigDecimal.ROUND_HALF_UP).doubleValue()
+                + "%";
+        this.queriedSubscriber.setArticleLikeRate(bigLikeRateStr);
         //
         this.queriedSubscriber.setMoniterTime(GlobalVariables.now());
         //
@@ -122,7 +127,7 @@ public class KJsonApiQuery
             + GlobalVariables.wxFooListWithOpenIdArticleReadLike.toString());
         //
         if (this.subscribers.size() > 0) {
-            // this.query();
+            this.query();
         } else {
             // File reporting...
             new FileReporter(GlobalConsts.REPORT_FILE_OUTPUT_OPENID_ARITICLE_READ_LIKE,
@@ -130,5 +135,4 @@ public class KJsonApiQuery
                 FileReporter.REPORTER_TYPE.R_T_OPENID_ARTICLE_READ_LIKE, FileReporter.REPORTER_FILE_TYPE.EXCEL).write();
         }
     }
-
 }

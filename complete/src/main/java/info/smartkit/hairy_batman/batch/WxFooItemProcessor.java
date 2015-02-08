@@ -17,8 +17,15 @@ public class WxFooItemProcessor implements ItemProcessor<WxSimpleSubscriber, WxS
     {
         LOG.info("WxFooItemProcessor processing..." + wxFoo);
         // LOG.debug("SogouSearchQuery processing..." + wxFoo);
-        new SogouSearchQuery(new WxComplexSubscriber(wxFoo.getId(), wxFoo.getCode(), wxFoo.getStore(), null,
-            wxFoo.getSubscribeId(), null, null)).parseWxOpenId();
+        if (wxFoo.getSubscribeId() != "NULL") {
+
+            new SogouSearchQuery(new WxComplexSubscriber(wxFoo.getId(), wxFoo.getCode(), wxFoo.getStore(),
+                wxFoo.getAgency(), wxFoo.getUnit(), wxFoo.getOnSubscribe(), wxFoo.getSubscribeId(), null, null, null,
+                null, null, null, null)).parseWxOpenId();
+            ;
+        } else {
+            LOG.warn("wxFoo.getSubscribeId() is NULL.");
+        }
         // new KJsonApiQuery(wxFoo).query();
         // LOG.debug("KJsonApiQuery processing..." + wxFoo);
         // TODO:JobLauncher start here.
@@ -36,5 +43,4 @@ public class WxFooItemProcessor implements ItemProcessor<WxSimpleSubscriber, WxS
         //
         return wxFoo;
     }
-
 }

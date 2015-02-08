@@ -220,7 +220,7 @@ public class FileReporter
     public void writeExcel()
     {
         HSSFWorkbook workbook = new HSSFWorkbook();
-        HSSFSheet sheet = workbook.createSheet("Statistic Sheet");
+        HSSFSheet sheet = workbook.createSheet("WxStatistic Sheet");
 
         Map<String, String[]> data = new HashMap<String, String[]>();
         data.put(GlobalConsts.LINES_SKIP_FOR_HEADER_EXCEL.toString(), this.getExcelHeader());

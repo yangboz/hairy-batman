@@ -26,6 +26,8 @@ public class GlobalConsts
 {
     public static final String KJSON_API_URI = "http://www.kjson.com/weixin/api?key=45cfa3defbebeaab767517d2339b57e5";
 
+    public static final Integer DEFINITION_PRECISION = 5;
+
     // @see:http://www.kjson.com/weixin/bind
     public static final long KJSON_API_QPM = 60;// Query numbers per minutes;
 
@@ -35,9 +37,9 @@ public class GlobalConsts
 
     public static final String QUERY_COLUMNS_NAME =
     // "code,store,manager,agency,unit,onSubscribe,subscribeId,articleTime,articleUrl,articleTitle,articleReadNum,articleLikeNum,articleLikeRate,moniterTime";
-        "id,code,store,onSubscribe,subscribeId,articleTime,articleUrl,articleTitle,articleReadNum,articleLikeNum,articleLikeRate,moniterTime";
+        "id,code,store,agency,unit,onSubscribe,subscribeId,articleTime,articleUrl,articleTitle,articleReadNum,articleLikeNum,articleLikeRate,moniterTime";
 
-    public static final String QUERY_COLUMNS_NAME_SIMPLE = "id,code,store,subscribeId";
+    public static final String QUERY_COLUMNS_NAME_SIMPLE = "id,store,agency,unit,subscribeId,onSubscribe,code";
 
     public static final String QUERY_COLUMNS_LABEL = QUERY_COLUMNS_NAME.replace(",", ",:");
 
@@ -45,9 +47,9 @@ public class GlobalConsts
 
     public static final String[] CSV_COLUMNS_NAME_SIMPLE = QUERY_COLUMNS_NAME_SIMPLE.split(",");
 
-    public static final String RESOURCE_FILE_INPUT_CSV = "wxStatistic.csv";
+    public static final String RESOURCE_FILE_INPUT_CSV = "wxStatisticInput.csv";
 
-    public static final String RESOURCE_FILE_INPUT_XLS = "wxStatistic.xls";
+    public static final String RESOURCE_FILE_INPUT_XLS = "wxStatisticInput.xlsx";
 
     public static final String REPORT_FILE_OUTPUT_FULL = "QueryNumOfReadLike_output_full";
 
@@ -84,15 +86,16 @@ public class GlobalConsts
 
     public static final Integer LINES_SKIP_FOR_HEADER_EXCEL = 1;
 
-    public static final String[] FILE_REPORTER_EXCEL_HEADER_OPENID = new String[] {"序号", "代码", "店名", "订阅号", "OpenId"};
+    public static final String[] FILE_REPORTER_EXCEL_HEADER_OPENID = new String[] {"序号", "店代码", "店名", "办事处", "事业部",
+    "微信号类型", "微信号全称", "OpenId"};
 
-    public static final String[] FILE_REPORTER_EXCEL_HEADER_OPENID_ARTICLE = new String[] {"序号", "代码", "店名", "订阅号",
-    "OpenId", "文章标题", "文章地址"};
+    public static final String[] FILE_REPORTER_EXCEL_HEADER_OPENID_ARTICLE = new String[] {"序号", "店代码", "店名", "办事处",
+    "事业部", "微信号类型", "微信号全称", "OpenId", "文章标题", "文章地址"};
 
-    public static final String[] FILE_REPORTER_EXCEL_HEADER_OPENID_ARTICLE_READ_LIKE = new String[] {"序号", "代码", "店名",
-    "订阅号", "OpenId", "文章标题", "文章地址", "阅读数", "点赞数", "点赞率", "监测时间"};
+    public static final String[] FILE_REPORTER_EXCEL_HEADER_OPENID_ARTICLE_READ_LIKE = new String[] {"序号", "店代码", "店名",
+    "办事处", "事业部", "微信号类型", "微信号全称", "OpenId", "文章标题", "发表时间", "文章地址", "阅读数", "点赞数", "点赞率", "监测时间"};
 
-    public static final String[] FILE_REPORTER_EXCEL_HEADER_OPENID_FULL = new String[] {"序号", "代码", "店名", "订阅号",
-    "OpenId", "文章标题", "文章地址", "阅读数", "点赞数"};
+    public static final String[] FILE_REPORTER_EXCEL_HEADER_OPENID_FULL = new String[] {"序号", "店代码", "店名", "订阅号",
+    "OpenId", "文章标题", "发表时间", "文章地址", "阅读数", "点赞数"};
 
 }

@@ -1,6 +1,7 @@
 package info.smartkit.hairy_batman.batch;
 
 import info.smartkit.hairy_batman.config.GlobalConsts;
+import info.smartkit.hairy_batman.config.GlobalVariables;
 import info.smartkit.hairy_batman.domain.WxComplexSubscriber;
 import info.smartkit.hairy_batman.domain.WxSimpleSubscriber;
 
@@ -167,8 +168,9 @@ public class WxBatchConfiguration
     @Bean
     public JdbcTemplate jdbcTemplate(DataSource dataSource)
     {
-        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-        return jdbcTemplate;
+        // JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+        GlobalVariables.jdbcTempate = new JdbcTemplate(dataSource);
+        return GlobalVariables.jdbcTempate;
     }
 
 }
