@@ -31,7 +31,7 @@ public class WxFooItemProcessor implements ItemProcessor<WxSimpleSubscriber, WxS
         if ( wxFoo!=null && wxFoo.getSubscribeId()!= "NULL") {
         	String dbOpenId;
 			try {
-				dbOpenId = (String)  GlobalVariables.jdbcTempate.queryForObject( "SELECT openId FROM "+GlobalConsts.QUERY_TABLE_NAME+" WHERE code= ?", new Object[] {wxFoo.getCode()}, java.lang.String.class);
+				dbOpenId = (String)  GlobalVariables.jdbcTempate.queryForObject( "SELECT openId FROM "+GlobalConsts.QUERY_TABLE_NAME_BASIC+" WHERE code= ?", new Object[] {wxFoo.getCode()}, java.lang.String.class);
 			} catch (Exception e) {
 				 LOG.info("get dbOpenId is NULL,goto SogouSearchQuery");
 				new SogouSearchQuery(new WxComplexSubscriber(wxFoo.getId(), wxFoo.getCode(), wxFoo.getStore(),

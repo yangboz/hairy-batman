@@ -32,7 +32,7 @@ public class Application
         // Spring-batch reading CSV testing.
         List<WxComplexSubscriber> batch_results =
             GlobalVariables.appContext.getBean(JdbcTemplate.class).query(
-                "SELECT " + GlobalConsts.QUERY_COLUMNS_NAME + " FROM " + GlobalConsts.QUERY_TABLE_NAME,
+                "SELECT " + GlobalConsts.QUERY_COLUMNS_NAME + " FROM " + GlobalConsts.QUERY_TABLE_NAME_BASIC,
                 new RowMapper<WxComplexSubscriber>()
                 {
                     @Override

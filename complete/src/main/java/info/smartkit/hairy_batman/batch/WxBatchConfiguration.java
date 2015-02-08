@@ -119,7 +119,7 @@ public class WxBatchConfiguration
         LOG.debug("GlobalConsts.QUERY_COLUMNS_LABEL: " + GlobalConsts.QUERY_COLUMNS_LABEL);
         JdbcBatchItemWriter<WxSimpleSubscriber> writer = new JdbcBatchItemWriter<WxSimpleSubscriber>();
         writer.setItemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<WxSimpleSubscriber>());
-        writer.setSql("INSERT INTO " + GlobalConsts.QUERY_TABLE_NAME + "(" + GlobalConsts.QUERY_COLUMNS_NAME
+        writer.setSql("INSERT INTO " + GlobalConsts.QUERY_TABLE_NAME_BASIC + "(" + GlobalConsts.QUERY_COLUMNS_NAME
             + ") VALUES (:" + GlobalConsts.QUERY_COLUMNS_LABEL + ")");
         writer.setDataSource(dataSource);
         return writer;

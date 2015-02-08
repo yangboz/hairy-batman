@@ -100,7 +100,7 @@ public class SogouSearchQuery
                     // Save openId to DB.
                     try {
                         GlobalVariables.jdbcTempate.update(
-                            "insert into " + GlobalConsts.QUERY_TABLE_NAME
+                            "insert into " + GlobalConsts.QUERY_TABLE_NAME_BASIC
                                 + "(id,store,agency,unit,subscribeId,onSubscribe,code,openId) values(?,?,?,?,?,?,?,?)",
                             new Object[] {this.wxFoo.getId(), this.wxFoo.getStore(), this.wxFoo.getAgency(),
                             this.wxFoo.getUnit(), this.wxFoo.getSubscribeId(), this.wxFoo.getOnSubscribe(),

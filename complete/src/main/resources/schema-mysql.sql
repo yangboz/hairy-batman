@@ -21,6 +21,7 @@ CREATE TABLE wxfoo(
     articleLikeRate VARCHAR(20),
     moniterTime VARCHAR(20),
 --    isValid VARCHAR(1),
+-- 	UNIQUE KEY `code` (`code`),
     PRIMARY KEY ( `wxfoo_id` )
 );
 

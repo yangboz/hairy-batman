@@ -76,4 +76,5 @@ public class GlobalVariables
 
     public static JdbcTemplate jdbcTempate;
 
+    public static long kjsonQueryCounter = 0;
 }

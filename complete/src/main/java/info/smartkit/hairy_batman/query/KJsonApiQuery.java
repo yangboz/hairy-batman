@@ -66,18 +66,18 @@ public class KJsonApiQuery
     {
         LinkedMultiValueMap<String, String> parameters = new LinkedMultiValueMap<String, String>();
         //
-        for (long j = 0; j < GlobalConsts.KJSON_API_PPQ; j++) {
-            if (this.subscribers.size() >= 1) {
-                this.queriedSubscriber = this.subscribers.remove(0);
-                LOG.info("this.queriedSubscriber: " + this.queriedSubscriber.toString());
-                parameters.add("urls", this.queriedSubscriber.getArticleUrl() + "\\n");
-            } else {
-                break;
-            }
-        }
+        // for (long j = 0; j < GlobalConsts.KJSON_API_PPQ; j++) {
+        // if (this.subscribers.size() >= 1) {
         // this.queriedSubscriber = this.subscribers.remove(0);
         // LOG.info("this.queriedSubscriber: " + this.queriedSubscriber.toString());
-        // parameters.add("urls", this.queriedSubscriber.getArticleUrl());
+        // parameters.add("urls", this.queriedSubscriber.getArticleUrl() + "\\n");
+        // } else {
+        // break;
+        // }
+        // }
+        this.queriedSubscriber = this.subscribers.remove(0);
+        LOG.info("this.queriedSubscriber: " + this.queriedSubscriber.toString());
+        parameters.add("urls", this.queriedSubscriber.getArticleUrl());
         // "http://mp.weixin.qq.com/s?__biz=MjM5ODE4MTUzMg==&mid=202895379&idx=1&sn=a46187dd2e3fc704b72277dbf863f356&3rd=MzA3MDU4NTYzMw==&scene=6#rd");
         return parameters;
     }
@@ -132,7 +132,16 @@ public class KJsonApiQuery
             + GlobalVariables.wxFooListWithOpenIdArticleReadLike.toString());
         //
         if (this.subscribers.size() > 0) {
-            this.query();
+            if (GlobalVariables.kjsonQueryCounter >= GlobalConsts.KJSON_API_QPM / 6) {
+                try {
+                    Thread.sleep(30000);
+                    GlobalVariables.kjsonQueryCounter = 0;
+                } catch (InterruptedException e) {
+                    LOG.error(e.toString());
+                }
+                this.query();
+                GlobalVariables.kjsonQueryCounter++;
+            }
         } else {
             // File reporting...
             new FileReporter(GlobalConsts.REPORT_FILE_OUTPUT_OPENID_ARITICLE_READ_LIKE,
@@ -142,7 +151,8 @@ public class KJsonApiQuery
             Object[] params = {likeNum.intValue(), readNum.intValue(), queriedSubscriber.getOpenId()};
             int[] types = {Types.INTEGER, Types.INTEGER, Types.VARCHAR};
             int rows =
-                GlobalVariables.jdbcTempate.update(GlobalConsts.JDBC_QUERY_UPDATE_ARTICLE_READ_LIKE, params, types);
+                GlobalVariables.jdbcTempate.update(GlobalConsts.JDBC_QUERY_UPDATE_OPENID_ARTICLE_READ_LIKE, params,
+                    types);
             LOG.info("rows(s): " + rows + " updated." + ",likeNum: " + likeNum + ",readNum: " + readNum);
             // GlobalVariables.jdbcTempate.update(
             // "update wxArticle set articleLikeNum=? AND articleReadNum=? where openId=?",

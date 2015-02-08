@@ -33,7 +33,9 @@ public class GlobalConsts
 
     public static final long KJSON_API_PPQ = 20;// Page numbers per query;
 
-    public static final String QUERY_TABLE_NAME = "wxfoo";
+    public static final String QUERY_TABLE_NAME_BASIC = "wxfoo";
+
+    public static final String QUERY_TABLE_NAME_ARTICLE = "wxArticle";
 
     public static final String QUERY_COLUMNS_NAME =
     // "code,store,manager,agency,unit,onSubscribe,subscribeId,articleTime,articleUrl,articleTitle,articleReadNum,articleLikeNum,articleLikeRate,moniterTime";
@@ -47,7 +49,7 @@ public class GlobalConsts
 
     public static final String[] CSV_COLUMNS_NAME_SIMPLE = QUERY_COLUMNS_NAME_SIMPLE.split(",");
 
-    public static final String RESOURCE_FILE_INPUT_CSV = "wxStatisticInputSample.csv";
+    public static final String RESOURCE_FILE_INPUT_CSV = "wxStatisticInput.csv";// wxStatisticInputSample.csv
 
     public static final String RESOURCE_FILE_INPUT_XLS = "wxStatisticInput.xlsx";
 
@@ -100,6 +102,8 @@ public class GlobalConsts
 
     public static final int BATCH_MAX_LIMIT = 10;
 
-    public static final String JDBC_QUERY_UPDATE_ARTICLE_READ_LIKE =
-        "UPDATE wxArticle SET articleReadNum = ?, articleLikeNum = ? WHERE openId = ?";
+    public static final String JDBC_QUERY_UPDATE_OPENID_ARTICLE_READ_LIKE = "UPDATE " + QUERY_TABLE_NAME_ARTICLE
+        + " SET articleReadNum = ?, articleLikeNum = ? WHERE openId = ?";
+
+    public static final String JDBC_QUERY_UPDATE_OPENID = "UPDATE " + QUERY_TABLE_NAME_BASIC + " SET monitorTime = ?";
 }
