@@ -55,6 +55,7 @@ CREATE TABLE wxArticle(
     articleTime VARCHAR(20),
     articleReadNum INTEGER,
     articleLikeNum INTEGER,
+    articleLikeRate VARCHAR(20),
     moniterTime VARCHAR(20),
     PRIMARY KEY ( `id` )
 );

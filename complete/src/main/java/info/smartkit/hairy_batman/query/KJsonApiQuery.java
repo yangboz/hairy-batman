@@ -124,49 +124,42 @@ public class KJsonApiQuery
         this.queriedSubscriber.setArticleLikeRate(bigLikeRateStr);
         //
         this.queriedSubscriber.setMoniterTime(GlobalVariables.now());
+        this.queriedSubscriber.setArticleUrl(wxKJson.getUrl());
         //
         GlobalVariables.wxFooListWithOpenIdArticleReadLike.add(this.queriedSubscriber);
+        // File reporting...
+        new FileReporter(GlobalConsts.REPORT_FILE_OUTPUT_OPENID_ARITICLE_READ_LIKE,
+            GlobalVariables.wxFooListWithOpenIdArticleReadLike,
+            FileReporter.REPORTER_TYPE.R_T_OPENID_ARTICLE_READ_LIKE, FileReporter.REPORTER_FILE_TYPE.EXCEL).write();
+        // Save to DB.
+        Object[] params =
+            {likeNum.intValue(), readNum.intValue(), this.queriedSubscriber.getArticleLikeRate(),
+            this.queriedSubscriber.getArticleUrl()};
+        int[] types = {Types.INTEGER, Types.INTEGER, Types.VARCHAR, Types.VARCHAR};
+        int rows =
+            GlobalVariables.jdbcTempate.update(GlobalConsts.JDBC_QUERY_UPDATE_OPENID_ARTICLE_READ_LIKE, params, types);
+        LOG.info("rows(s): " + rows + " updated." + ",likeNum: " + likeNum + ",readNum: " + readNum
+            + ",bigLikeRateStr: " + bigLikeRateStr + ",articleUrl: " + this.queriedSubscriber.getArticleUrl());
         //
         LOG.info("GlobalVariables.wxFooListWithOpenIdArticleReadLike(size):"
             + GlobalVariables.wxFooListWithOpenIdArticleReadLike.size() + ",raw: "
             + GlobalVariables.wxFooListWithOpenIdArticleReadLike.toString());
         //
         if (this.subscribers.size() > 0) {
-            if (GlobalVariables.kjsonQueryCounter >= GlobalConsts.KJSON_API_QPM / 6) {
-                try {
-                    Thread.sleep(30000);
-                    GlobalVariables.kjsonQueryCounter = 0;
-                } catch (InterruptedException e) {
-                    LOG.error(e.toString());
-                }
-                this.query();
-                GlobalVariables.kjsonQueryCounter++;
-            }
-        } else {
-            // File reporting...
-            new FileReporter(GlobalConsts.REPORT_FILE_OUTPUT_OPENID_ARITICLE_READ_LIKE,
-                GlobalVariables.wxFooListWithOpenIdArticleReadLike,
-                FileReporter.REPORTER_TYPE.R_T_OPENID_ARTICLE_READ_LIKE, FileReporter.REPORTER_FILE_TYPE.EXCEL).write();
-            // Save to DB.
-            Object[] params = {likeNum.intValue(), readNum.intValue(), queriedSubscriber.getOpenId()};
-            int[] types = {Types.INTEGER, Types.INTEGER, Types.VARCHAR};
-            int rows =
-                GlobalVariables.jdbcTempate.update(GlobalConsts.JDBC_QUERY_UPDATE_OPENID_ARTICLE_READ_LIKE, params,
-                    types);
-            LOG.info("rows(s): " + rows + " updated." + ",likeNum: " + likeNum + ",readNum: " + readNum);
-            // GlobalVariables.jdbcTempate.update(
-            // "update wxArticle set articleLikeNum=? AND articleReadNum=? where openId=?",
-            // new PreparedStatementSetter()
-            // {
-            // @Override
-            // public void setValues(java.sql.PreparedStatement ps) throws SQLException
-            // {
-            // LOG.info("likeNum: " + likeNum + ",readNum: " + readNum);
-            // ps.setInt(1, likeNum.intValue());
-            // ps.setInt(2, readNum.intValue());
-            // ps.setString(3, queriedSubscriber.getOpenId());
+            this.query();
+            // if (GlobalVariables.kjsonQueryCounter >= GlobalConsts.KJSON_API_QPM / 6) {
+            // try {
+            // Thread.sleep(30000);
+            // GlobalVariables.kjsonQueryCounter = 0;
+            // } catch (InterruptedException e) {
+            // LOG.error(e.toString());
             // }
-            // });
+            // //
+            // this.query();
+            // GlobalVariables.kjsonQueryCounter++;
+            // }
+        } else {
+            //
         }
     }
 }

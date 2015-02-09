@@ -108,7 +108,7 @@ public class SogouSearchQuery
                             java.sql.Types.VARCHAR, java.sql.Types.VARCHAR, java.sql.Types.VARCHAR,
                             java.sql.Types.VARCHAR, java.sql.Types.VARCHAR, java.sql.Types.VARCHAR,
                             java.sql.Types.VARCHAR});
-                        LOG.info("INSERT INTO openId: " + this.wxFoo.getOpenId());
+                        LOG.info("INSERTed openId: " + this.wxFoo.getOpenId());
                         //
                         this.parseSogouJsonSite(this.wxFoo.getOpenId());
                     } catch (DataAccessException e) {
@@ -259,9 +259,8 @@ public class SogouSearchQuery
             subscriber.setArticleTime(titleUrl.getDate());
             GlobalVariables.wxFooListWithOpenIdArticle.add(subscriber);
             // Save values to DB(wxArticle).
-            GlobalVariables.jdbcTempate.update(
-                "insert into wxArticle (articleTime,articleUrl,articleTitle,openId) values (?, ?,?, ?)",
-                titleUrl.getDate(), titleUrl.getTitle(), titleUrl.getUrl(), this.wxFoo.getOpenId());
+            GlobalVariables.jdbcTempate.update(GlobalConsts.JDBC_QUERY_INSERT_OPENID_ARTICLE, titleUrl.getDate(),
+                titleUrl.getTitle(), titleUrl.getUrl(), this.wxFoo.getOpenId());
         }
         //
         LOG.info("GlobalVariables.wxFooListWithOpenIdArticle(size): "

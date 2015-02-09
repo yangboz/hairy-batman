@@ -49,9 +49,9 @@ public class GlobalConsts
 
     public static final String[] CSV_COLUMNS_NAME_SIMPLE = QUERY_COLUMNS_NAME_SIMPLE.split(",");
 
-    public static final String RESOURCE_FILE_INPUT_CSV = "wxStatisticInput.csv";// wxStatisticInputSample.csv
+    public static final String RESOURCE_FILE_INPUT_CSV = "wxStatisticInputSample.csv";// wxStatisticInputSample.csv
 
-    public static final String RESOURCE_FILE_INPUT_XLS = "wxStatisticInput.xlsx";
+    public static final String RESOURCE_FILE_INPUT_XLS = "wxStatisticInputSample.xlsx";
 
     public static final String REPORT_FILE_OUTPUT_FULL = "QueryNumOfReadLike_output_full";
 
@@ -103,7 +103,10 @@ public class GlobalConsts
     public static final int BATCH_MAX_LIMIT = 60;
 
     public static final String JDBC_QUERY_UPDATE_OPENID_ARTICLE_READ_LIKE = "UPDATE " + QUERY_TABLE_NAME_ARTICLE
-        + " SET articleReadNum = ?, articleLikeNum = ? WHERE openId = ?";
+        + " SET articleReadNum = ?, articleLikeNum = ?,articleLikeRate = ? WHERE articleUrl = ?";
 
-    public static final String JDBC_QUERY_UPDATE_OPENID = "UPDATE " + QUERY_TABLE_NAME_BASIC + " SET monitorTime = ?";
+    public static final String JDBC_QUERY_INSERT_RAW = "UPDATE " + QUERY_TABLE_NAME_BASIC + " SET monitorTime = ?";
+
+    public static final String JDBC_QUERY_INSERT_OPENID_ARTICLE = "INSERT INTO " + QUERY_TABLE_NAME_ARTICLE
+        + " (articleTime,articleTitle,articleUrl,openId) VALUES (?, ?,?, ?)";
 }

@@ -33,7 +33,8 @@ public class Application
         List<WxComplexSubscriber> batch_results =
             GlobalVariables.appContext.getBean(JdbcTemplate.class).query(
                 "SELECT " + GlobalConsts.QUERY_COLUMNS_NAME + " FROM " + GlobalConsts.QUERY_TABLE_NAME_BASIC
-                    + " WHERE openId!='null'", new RowMapper<WxComplexSubscriber>()
+                // + " WHERE openId!='null'", new RowMapper<WxComplexSubscriber>()
+                , new RowMapper<WxComplexSubscriber>()
                 {
                     @Override
                     public WxComplexSubscriber mapRow(ResultSet rs, int row) throws SQLException
@@ -45,7 +46,7 @@ public class Application
                         return subscriber;
                     }
                 });
-
+        LOG.info("But db with null insert values(size):" + batch_results.size());
         // for (WxComplexSubscriber wxFoo : batch_results) {
         // // System.out.println("Found <" + wxFoo + "> in the database.");
         // LOG.info("Found <" + wxFoo + "> in the database.");
@@ -54,4 +55,5 @@ public class Application
         // new FileReporter(GlobalConsts.REPORT_FILE_OUTPUT_FULL, batch_results,
         // FileReporter.REPORTER_TYPE.R_T_FULL, FileReporter.REPORTER_FILE_TYPE.EXCEL).write();
     }
+
 }
