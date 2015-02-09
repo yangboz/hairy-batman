@@ -28,8 +28,10 @@ public class GlobalConsts
 
     public static final Integer DEFINITION_PRECISION = 5;
 
+    public static final int BATCH_MAX_LIMIT = 200;// Spring-batch-chunk-size
+
     // @see:http://www.kjson.com/weixin/bind
-    public static final long KJSON_API_QPM = 60;// Query numbers per minutes;
+    public static final long KJSON_API_QPM = 20;// Query numbers per minutes;
 
     public static final long KJSON_API_PPQ = 20;// Page numbers per query;
 
@@ -99,8 +101,6 @@ public class GlobalConsts
 
     public static final String[] FILE_REPORTER_EXCEL_HEADER_OPENID_FULL = new String[] {"序号", "店代码", "店名", "订阅号",
     "OpenId", "文章标题", "发表时间", "文章地址", "阅读数", "点赞数"};
-
-    public static final int BATCH_MAX_LIMIT = 60;
 
     public static final String JDBC_QUERY_UPDATE_OPENID_ARTICLE_READ_LIKE = "UPDATE " + QUERY_TABLE_NAME_ARTICLE
         + " SET articleReadNum = ?, articleLikeNum = ?,articleLikeRate = ? WHERE articleUrl = ?";

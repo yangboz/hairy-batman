@@ -146,18 +146,16 @@ public class KJsonApiQuery
             + GlobalVariables.wxFooListWithOpenIdArticleReadLike.toString());
         //
         if (this.subscribers.size() > 0) {
-            this.query();
-            // if (GlobalVariables.kjsonQueryCounter >= GlobalConsts.KJSON_API_QPM / 6) {
-            // try {
-            // Thread.sleep(30000);
-            // GlobalVariables.kjsonQueryCounter = 0;
-            // } catch (InterruptedException e) {
-            // LOG.error(e.toString());
-            // }
-            // //
-            // this.query();
-            // GlobalVariables.kjsonQueryCounter++;
-            // }
+            this.query();// Recursively call.
+            GlobalVariables.kjsonQueryCounter++;
+            if (GlobalVariables.kjsonQueryCounter >= GlobalConsts.KJSON_API_QPM) {
+                try {
+                    Thread.sleep(30000);
+                    GlobalVariables.kjsonQueryCounter = 0;
+                } catch (InterruptedException e) {
+                    LOG.error(e.toString());
+                }
+            }
         } else {
             //
         }
