@@ -17,13 +17,21 @@
  */
 package info.smartkit.hairy_batman.schedule;
 
+import info.smartkit.hairy_batman.config.GlobalConsts;
+import info.smartkit.hairy_batman.model.WxSubscriberExcelModel;
+
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
+
+import com.blogspot.na5cent.exom.ExOM;
 
 /**
  * @see http://spring.io/guides/gs/scheduling-tasks/
@@ -37,9 +45,16 @@ public class ScheduledTasks
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 
     @Scheduled(fixedRate = 60000)
-    public void reportCurrentTime()
+    public void reportCurrentTime() throws Throwable
     {
         LOG.info("The time is now " + dateFormat.format(new Date()));
+        File excelFile = new ClassPathResource(GlobalConsts.RESOURCE_FILE_INPUT_XLS).getFile();
+        List<WxSubscriberExcelModel> items =
+            ExOM.mapFromExcel(excelFile).toObjectOf(WxSubscriberExcelModel.class).map();
+
+        for (WxSubscriberExcelModel item : items) {
+            LOG.info("WxSubscriberModel:" + item.toString());
+        }
         /*
          * // Check the openId storage results: LOG.info("GlobalVariables.wxFooListWithOpenId(size):" +
          * GlobalVariables.wxFooListWithOpenId.size()); // Spring-batch reading CSV testing. List<WxComplexSubscriber>

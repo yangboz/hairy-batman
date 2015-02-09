@@ -14,7 +14,7 @@
 			<TimeBasedTriggeringPolicy />
 		</RollingFile>
 		<Console name="STDOUT" target="SYSTEM_OUT" ignoreExceptions="false">
-			<PatternLayout pattern="%m%n" />
+			<PatternLayout pattern="%d %p %c{1.} [%t] %m%n" />
 		</Console>
 	</Appenders>
 	<Loggers>
