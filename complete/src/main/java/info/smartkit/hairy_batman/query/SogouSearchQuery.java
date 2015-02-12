@@ -77,6 +77,7 @@ public class SogouSearchQuery
             // need http protocol
             doc = Jsoup.connect(GlobalConsts.SOGOU_SEARCH_URL_BASE + wxFoo.getSubscribeId()).get();
 
+            System.out.println("doc : " + doc.data());
             // get page title
             String title = doc.title();
             LOG.debug("title : " + title);
@@ -170,17 +171,28 @@ public class SogouSearchQuery
         ObjectMapper mapper = new ObjectMapper(); // can reuse, share globally
         WxSogou wxSogouJson = null;
         try {
-            String url = GlobalConsts.SOGOU_SEARCH_URL_JSON + openId;
-            wxSogouJson = mapper.readValue(this.getJsonContent(url), WxSogou.class);
+            String url = GlobalConsts.SOGOU_SEARCH_URL_JSON + openId+"&page=1";
+            String content = this.getJsonContent(url);
+            System.out.println("1:"+content);
+            if (content!=null && content.length()>0){
+            	wxSogouJson = mapper.readValue(this.getJsonContent(url), WxSogou.class);
+            }
+            else{
+            	System.err.print("Error get info from weixin.sogou.com. URL is :"+url);
+            }
             // Thread.sleep(6000);
             long totalPages = wxSogouJson.getTotalPages();
+
+        	System.out.println("totalPages:"+totalPages);
             int i = 2;
             while (i < totalPages + 1) {
+            	content = this.getJsonContent(GlobalConsts.SOGOU_SEARCH_URL_JSON + openId+"&page="+i);
                 wxSogouJson =
-                    mapper.readValue(this.getJsonContent(GlobalConsts.SOGOU_SEARCH_URL_JSON + openId), WxSogou.class);
+                    mapper.readValue(content, WxSogou.class);
                 GlobalVariables.openIdWithArticleList.put(openId, wxSogouJson);// Store it.
                 // Thread.sleep(6000);
                 i++;
+            	System.out.println(i+":"+totalPages+":"+content);
             }
             if (i >= wxSogouJson.getTotalPages()) {
                 // Save the procedure CSVReporting
