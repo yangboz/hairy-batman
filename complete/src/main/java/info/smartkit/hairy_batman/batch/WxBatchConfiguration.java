@@ -52,17 +52,6 @@ public class WxBatchConfiguration
         reader.setResource(new ClassPathResource(GlobalConsts.RESOURCE_FILE_INPUT_CSV));
         reader.setEncoding("UTF-16");
         reader.setLinesToSkip(1);
-        // reader.setTargetType(WxSubscriber.class);
-        // PassThroughRowMapper rowMapper = new PassThroughRowMapper();
-        // BeanPropertyRowMapper<WxSubscriber> rowMapper = new BeanPropertyRowMapper<WxSubscriber>();
-        // try {
-        // rowMapper.afterPropertiesSet();
-        // } catch (Exception e) {
-        // LOG.error(e.toString());
-        // }
-        // reader.setRowMapper(rowMapper);
-        // reader.open(new ExecutionContext());
-        // reader.setRowMapper(rowMapper);
         reader.setLineMapper(new DefaultLineMapper<WxSimpleSubscriber>()
         {
             {
@@ -70,8 +59,7 @@ public class WxBatchConfiguration
                 setLineTokenizer(new DelimitedLineTokenizer(DelimitedLineTokenizer.DELIMITER_TAB)
                 {
                     {
-                        // System.out.println("GlobalConsts.CSV_COLUMNS_NAME: " + GlobalConsts.CSV_COLUMNS_NAME_SIMPLE);
-                        setNames(GlobalConsts.CSV_COLUMNS_NAME_SIMPLE);
+                       setNames(GlobalConsts.CSV_COLUMNS_NAME_SIMPLE);
                     }
                 });
                 setFieldSetMapper(new BeanWrapperFieldSetMapper<WxSimpleSubscriber>()
@@ -118,23 +106,7 @@ public class WxBatchConfiguration
         ItemWriter<WxSimpleSubscriber> writer, ItemProcessor<WxSimpleSubscriber, WxSimpleSubscriber> processor)
     {
         return stepBuilderFactory.get("step1")
-            .<WxSimpleSubscriber, WxSimpleSubscriber>chunk(GlobalConsts.BATCH_MAX_LIMIT).reader(reader)
-            .processor(processor).writer(writer).build();
+            .<WxSimpleSubscriber, WxSimpleSubscriber>chunk(2).reader(reader)
+            .processor(processor).build();
     }
-
-    // @Bean
-    // public Job openIdQueryJob(JobBuilderFactory jobs, Step s2)
-    // {
-    // return jobs.get("openIdQueryJob").incrementer(new RunIdIncrementer()).flow(s2).end().build();
-    // }
-
-    // @Bean
-    // public Step step2(StepBuilderFactory stepBuilderFactory, ItemReader<WxSubscriber> reader,
-    // ItemWriter<WxSubscriber> writer, ItemProcessor<WxSubscriber, WxSubscriber> processor)
-    // {
-    // return stepBuilderFactory.get("step2").<WxSubscriber, WxSubscriber>chunk(10).reader(reader)
-    // .processor(processor).writer(writer).build();
-    // }
-
-    // end::jobstep[]
 }

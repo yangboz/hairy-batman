@@ -24,7 +24,7 @@ package info.smartkit.hairy_batman.config;
  */
 public class GlobalConsts
 {
-    public static final String KJSON_API_URI = "http://www.kjson.com/weixin/api?key=45cfa3defbebeaab767517d2339b57e5";
+    public static final String KJSON_API_URI = "http://www.kjson.com/weixin/api?key=d1603f7422187364d93acb8d3edc456c";
 
     public static final Integer DEFINITION_PRECISION = 5;
 
@@ -51,9 +51,9 @@ public class GlobalConsts
 
     public static final String[] CSV_COLUMNS_NAME_SIMPLE = QUERY_COLUMNS_NAME_SIMPLE.split(",");
 
-    public static final String RESOURCE_FILE_INPUT_CSV = "wxStatisticInputSample.csv";// wxStatisticInputSample.csv
+    public static final String RESOURCE_FILE_INPUT_CSV = "wxStatisticInput.csv";// wxStatisticInputSample.csv
 
-    public static final String RESOURCE_FILE_INPUT_XLS = "wxStatisticInputSample.xlsx";
+    public static final String RESOURCE_FILE_INPUT_XLS = "wxStatisticInput.xlsx";
 
     public static final String REPORT_FILE_OUTPUT_FULL = "QueryNumOfReadLike_output_full";
 
@@ -77,12 +77,14 @@ public class GlobalConsts
     public static final String SOGOU_SEARCH_WX_OPEN_ID_HTML_ELEMENTS = "div";
 
     public static final String SOGOU_SEARCH_WX_OPEN_ID_HTML_ELE_IDENTITY = "[href*=/gzh?]";
+    
+    public static final String SOGOU_SEARCH_WX_OPEN_ID_HTML_ELE_IDENTITY1= "[id*=sogou_vr_11002301_box*]";
 
     public static final String SOGOU_SEARCH_WX_USER_ID_KEYWORDS = "微信号：";
 
     public static final String SOGOU_SEARCH_WX_OPEN_ID_KEYWORDS = "openid=";
 
-    public static final String SOGOU_SEARCH_URL_JSON = "http://weixin.sogou.com/gzhjs?openid=";
+    public static final String SOGOU_SEARCH_URL_JSON = "http://weixin.sogou.com/gzhjs?cb=sogou.weixin.gzhcb&openid=";
 
     public static final String FILE_REPORTER_TYPE_EXCEL = ".xls";
 
