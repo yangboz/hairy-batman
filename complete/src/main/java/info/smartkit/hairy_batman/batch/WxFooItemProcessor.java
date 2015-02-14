@@ -63,12 +63,17 @@ public class WxFooItemProcessor implements
 						+ wxFoo.getSubscribeId() + "&page=1";
 				String content = sogouSearchQuery.getJsonContent(url);
 				System.out.println("1:" + content);
-				long totalPages = 0;
+				long totalArticles = 0;
 				if (content != null && content.length() > 0) {
-					ObjectMapper mapper = new ObjectMapper();
-					WxSogou wxSogouJson = null;
-					wxSogouJson = mapper.readValue(content, WxSogou.class);
-					totalPages = wxSogouJson.getTotalPages();
+					try {
+						ObjectMapper mapper = new ObjectMapper();
+						WxSogou wxSogouJson = null;
+						wxSogouJson = mapper.readValue(content, WxSogou.class);
+						totalArticles = wxSogouJson.getTotalItems();
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 
 				} else {
 					System.err
@@ -77,7 +82,7 @@ public class WxFooItemProcessor implements
 				}
 
 				// recollect article info
-				if (count == 0 || count < totalPages) {
+				if (count == 0 || count < totalArticles) {
 					sogouSearchQuery.parseSogouJsonSite(dbOpenId);
 				}
 			} else {
