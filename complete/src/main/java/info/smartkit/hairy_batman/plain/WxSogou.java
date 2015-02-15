@@ -104,6 +104,7 @@ public class WxSogou
     public ArrayList<WxSogouSimple> getTitlesUrls()
     {
         // XML travel to title element,and push it to titles;
+    	titlesUrls = new ArrayList<WxSogouSimple>();
         for (Object item : this.items) {
             try {
                 Document doc = DocumentHelper.parseText(item.toString());
