@@ -6,6 +6,7 @@ import info.smartkit.hairy_batman.domain.WxComplexSubscriber;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -24,9 +25,9 @@ public class Application
 
     public static void main(String[] args)
     {
-        // GlobalVariables.appContext = SpringApplication.run(ScheduledTasks.class, args);
-        //
         GlobalVariables.appContext = SpringApplication.run(Application.class, args);
+        
+        LOG.info("Weixin smartkit beginning at :"+new Date().getTime());
         // Check the openId storage results:
         LOG.info("GlobalVariables.wxFooListWithOpenId(size):" + GlobalVariables.wxFooListWithOpenId.size());
         // Spring-batch reading CSV testing.
@@ -46,14 +47,7 @@ public class Application
                         return subscriber;
                     }
                 });
-        LOG.info("But db with null insert values(size):" + batch_results.size());
-        // for (WxComplexSubscriber wxFoo : batch_results) {
-        // // System.out.println("Found <" + wxFoo + "> in the database.");
-        // LOG.info("Found <" + wxFoo + "> in the database.");
-        // }
-        // Final file reporting
-        // new FileReporter(GlobalConsts.REPORT_FILE_OUTPUT_FULL, batch_results,
-        // FileReporter.REPORTER_TYPE.R_T_FULL, FileReporter.REPORTER_FILE_TYPE.EXCEL).write();
+        LOG.info("Processed item size:" + batch_results.size());
     }
 
 }

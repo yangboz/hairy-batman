@@ -76,7 +76,8 @@ public class SogouSearchQuery {
 			// doc = Jsoup.connect(GlobalConsts.SOGOU_SEARCH_URL_BASE+ wxFoo.getSubscribeId()).get();
 			doc = Jsoup.connect("http://weixin.sogou.com/weixin?type=1&query="+wxFoo.getSubscribeId()+"&fr=sgsearch&ie=utf8&_ast=1423915648&_asf=null&w=01019900&cid=null&sut=19381").get();
 
-			// System.out.println("doc : " + doc.html());
+			LOG.debug("openID html INFO:"+doc.html());
+			
 			// get page title
 			String title = doc.title();
 			LOG.debug("title : " + title);
@@ -92,7 +93,7 @@ public class SogouSearchQuery {
 				while (itea.hasNext())
 				{
 					a = itea.next();
-					System.out.println(a.html());
+					LOG.debug("openID html INFO:"+a.html());
 					if (a.getElementsByTag("em").html().indexOf(wxFoo.getSubscribeId())!=-1)
 					{
 						break;
@@ -106,8 +107,7 @@ public class SogouSearchQuery {
 			// FIXME:过滤同一个订阅号搜到多条结果，默认选择第一个
 			if (this.wxFoo.getOpenId() == null && openIdLinkHref.length() > 0) {
 
-				this.wxFoo
-						.setOpenId(openIdLinkHref
+				this.wxFoo.setOpenId(openIdLinkHref
 								.split(GlobalConsts.SOGOU_SEARCH_WX_OPEN_ID_KEYWORDS)[1]);
 				LOG.info("saved wxOpenId value: " + this.wxFoo.getOpenId());
 				GlobalVariables.wxFooListWithOpenId.add(this.wxFoo);
@@ -140,18 +140,43 @@ public class SogouSearchQuery {
 												java.sql.Types.VARCHAR,
 												java.sql.Types.VARCHAR,
 												java.sql.Types.VARCHAR });
-						LOG.info("INSERTed openId: " + this.wxFoo.getOpenId());
-						//
 						this.parseSogouJsonSite(this.wxFoo.getOpenId());
 					} catch (DataAccessException e) {
-						// e.printStackTrace();
-						LOG.error(e.toString());
+						e.printStackTrace();
 					}
 				} else {
 					LOG.warn("SogouSearchQuery getOpenId Failure! site info:"
 							+ wxFoo.getCode());
 					// TODO write those info to File or DB for collect which
 					// agency not open weixin service
+					// Save openId to DB.
+					try {
+						GlobalVariables.jdbcTempate
+								.update("insert into "
+										+ GlobalConsts.QUERY_TABLE_NAME_BASIC
+										+ "(id,store,agency,unit,subscribeId,onSubscribe,code,openId) values(?,?,?,?,?,?,?,?)",
+										new Object[] { this.wxFoo.getId(),
+												this.wxFoo.getStore(),
+												this.wxFoo.getAgency(),
+												this.wxFoo.getUnit(),
+												this.wxFoo.getSubscribeId(),
+												this.wxFoo.getOnSubscribe(),
+												this.wxFoo.getCode(),
+												"" },
+										new int[] { java.sql.Types.INTEGER,
+												java.sql.Types.VARCHAR,
+												java.sql.Types.VARCHAR,
+												java.sql.Types.VARCHAR,
+												java.sql.Types.VARCHAR,
+												java.sql.Types.VARCHAR,
+												java.sql.Types.VARCHAR,
+												java.sql.Types.VARCHAR });
+						LOG.warn("Can not get subsriber info: " + this.wxFoo.getCode());
+
+						this.parseSogouJsonSite(this.wxFoo.getOpenId());
+					} catch (DataAccessException e) {
+						e.printStackTrace();
+					}
 				}
 			}
 
@@ -171,9 +196,6 @@ public class SogouSearchQuery {
 							GlobalConsts.SOGOU_SEARCH_URL_BASE
 									+ wxFoo.getSubscribeId()).get();
 
-			// get page title
-			String title = doc.title();
-			LOG.debug("title : " + title);
 			// get all "微信号:" value of html <span>
 			Elements openIdSpans = doc
 					.select(GlobalConsts.SOGOU_SEARCH_WX_USER_ID_HTML_ELEMENTS);
@@ -183,7 +205,7 @@ public class SogouSearchQuery {
 					if (openIdSpan.text().contains(
 							GlobalConsts.SOGOU_SEARCH_WX_USER_ID_KEYWORDS)) {
 						// get the value from href attribute
-						LOG.debug("openId span text : " + openIdSpan.text());
+						LOG.info("openId span text : " + openIdSpan.text());
 						// FIXME:过滤同一个订阅号搜到多条结果，默认选择第一个
 						if (this.wxFoo.getUserId() == null) {
 							this.wxFoo
@@ -207,8 +229,6 @@ public class SogouSearchQuery {
 	// @see:
 	// http://weixin.sogou.com/gzhjs?cb=sogou.weixin.gzhcb&openid=oIWsFt_Ri_gqjARIY_shVuqjc3Zo
 	public void parseSogouJsonSite(String openId) {
-		LOG.info("GlobalVariables.wxFooListWithOpenId before parseSogouJsonSite:"
-				+ GlobalVariables.wxFooListWithOpenId.toString());
 		ObjectMapper mapper = new ObjectMapper(); // can reuse, share globally
 		WxSogou wxSogouJson = null;
 		try {
@@ -216,7 +236,6 @@ public class SogouSearchQuery {
 			String url = GlobalConsts.SOGOU_SEARCH_URL_JSON + openId
 					+ "&page=1";
 			String content = this.getJsonContent(url);
-			System.out.println("1:" + content);
 			if (content != null && content.length() > 0) {
 				wxSogouJson = mapper.readValue(this.getJsonContent(url),
 						WxSogou.class);
@@ -224,14 +243,14 @@ public class SogouSearchQuery {
 				this.assembleWxfooListWithAritcle(wxSogouJson,openId);
 
 			} else {
-				System.err
-						.print("Error get info from weixin.sogou.com. URL is :"
+				LOG.error("Error get info from weixin.sogou.com. URL is :"
 								+ url);
+				LOG.error(wxFoo.getCode()+":" + content);
 			}
 			// Thread.sleep(6000);
 			long totalPages = wxSogouJson.getTotalPages();
 
-			System.out.println("totalPages:" + totalPages);
+			LOG.info(wxFoo.getCode()+" -- totalPages:" + totalPages);
 			while (i < totalPages + 1) {
 				Thread.sleep(2 * 1000);
 				content = this
@@ -247,7 +266,6 @@ public class SogouSearchQuery {
 				i++;
 			}
 			wxSogouJson = null;
-			System.out.println(i + ":" + totalPages + ":" + content);
 		} catch (JsonParseException e) {
 			e.printStackTrace();
 		} catch (JsonMappingException e) {
@@ -306,6 +324,7 @@ public class SogouSearchQuery {
 		LOG.info("wxSogou json result:" + wxSogou.toString());
 		//
 		ArrayList<WxSogouSimple> titlesUrls = wxSogou.getTitlesUrls();
+		LOG.info("Artilec size:"+titlesUrls.size());
 		for (WxSogouSimple titleUrl : titlesUrls) {
 			WxComplexSubscriber subscriber = new WxComplexSubscriber();
 			subscriber.setId(this.wxFoo.getId());

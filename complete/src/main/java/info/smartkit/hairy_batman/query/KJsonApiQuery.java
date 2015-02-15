@@ -62,18 +62,6 @@ public class KJsonApiQuery {
 
 	private LinkedMultiValueMap<String, String> getParameters() {
 		LinkedMultiValueMap<String, String> parameters = new LinkedMultiValueMap<String, String>();
-		//
-		// for (long j = 0; j < GlobalConsts.KJSON_API_PPQ; j++) {
-		// if (this.subscribers.size() >= 1) {
-		// this.queriedSubscriber = this.subscribers.remove(0);
-		// LOG.info("this.queriedSubscriber: " +
-		// this.queriedSubscriber.toString());
-		// parameters.add("urls", this.queriedSubscriber.getArticleUrl() +
-		// "\\n");
-		// } else {
-		// break;
-		// }
-		// }
 		this.queriedSubscriber = this.subscribers.remove(0);
 		LOG.info("this.queriedSubscriber: " + this.queriedSubscriber.toString());
 		parameters.add("urls", this.queriedSubscriber.getArticleUrl());
