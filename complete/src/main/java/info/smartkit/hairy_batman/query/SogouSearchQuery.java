@@ -246,7 +246,7 @@ public class SogouSearchQuery {
 				// Thread.sleep(6000);
 				i++;
 			}
-
+			wxSogouJson = null;
 			System.out.println(i + ":" + totalPages + ":" + content);
 		} catch (JsonParseException e) {
 			e.printStackTrace();
@@ -321,6 +321,7 @@ public class SogouSearchQuery {
 			subscriber.setArticleTime(titleUrl.getDate());
 			GlobalVariables.wxFooListWithOpenIdArticle.add(subscriber);
 			// Save values to DB(wxArticle).
+			System.out.println("titleUrl.getTitle():"+titleUrl.getTitle());
 			GlobalVariables.jdbcTempate.update(
 					GlobalConsts.JDBC_QUERY_INSERT_OPENID_ARTICLE,
 					titleUrl.getDate(), titleUrl.getTitle(), titleUrl.getUrl(),
