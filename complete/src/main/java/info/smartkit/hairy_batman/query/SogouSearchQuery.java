@@ -321,11 +321,10 @@ public class SogouSearchQuery {
 			subscriber.setArticleTime(titleUrl.getDate());
 			GlobalVariables.wxFooListWithOpenIdArticle.add(subscriber);
 			// Save values to DB(wxArticle).
-			System.out.println("titleUrl.getTitle():"+titleUrl.getTitle());
 			GlobalVariables.jdbcTempate.update(
 					GlobalConsts.JDBC_QUERY_INSERT_OPENID_ARTICLE,
 					titleUrl.getDate(), titleUrl.getTitle(), titleUrl.getUrl(),
-					this.wxFoo.getOpenId());
+					openId);
 		}
 		/*
 		 * LOG.info("GlobalVariables.wxFooListWithOpenIdArticle(size): " +
