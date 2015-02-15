@@ -221,7 +221,7 @@ public class SogouSearchQuery {
 				wxSogouJson = mapper.readValue(this.getJsonContent(url),
 						WxSogou.class);
 				GlobalVariables.openIdWithArticleList.put(openId, wxSogouJson);// Store	 it.
-				this.assembleWxfooListWithAritcle(wxSogouJson);
+				this.assembleWxfooListWithAritcle(wxSogouJson,openId);
 
 			} else {
 				System.err
@@ -239,7 +239,7 @@ public class SogouSearchQuery {
 								+ openId + "&page=" + i);
 				wxSogouJson = mapper.readValue(content, WxSogou.class);
 
-				this.assembleWxfooListWithAritcle(wxSogouJson);
+				this.assembleWxfooListWithAritcle(wxSogouJson,openId);
 
 				GlobalVariables.openIdWithArticleList.put(openId, wxSogouJson);// Store
 																				// it.
@@ -302,7 +302,7 @@ public class SogouSearchQuery {
 		return jsonStr;
 	}
 
-	private void assembleWxfooListWithAritcle(WxSogou wxSogou) {
+	private void assembleWxfooListWithAritcle(WxSogou wxSogou,String openId) {
 		LOG.info("wxSogou json result:" + wxSogou.toString());
 		//
 		ArrayList<WxSogouSimple> titlesUrls = wxSogou.getTitlesUrls();
@@ -315,7 +315,7 @@ public class SogouSearchQuery {
 			subscriber.setUnit(this.wxFoo.getUnit());
 			subscriber.setOnSubscribe(this.wxFoo.getOnSubscribe());
 			subscriber.setSubscribeId(this.wxFoo.getSubscribeId());
-			subscriber.setOpenId(this.wxFoo.getOpenId());
+			subscriber.setOpenId(openId);
 			subscriber.setArticleTitle(titleUrl.getTitle());
 			subscriber.setArticleUrl(titleUrl.getUrl());
 			subscriber.setArticleTime(titleUrl.getDate());
