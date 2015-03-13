@@ -8,6 +8,7 @@ import info.smartkit.hairy_batman.schedule.ScheduledTasks;
 import java.io.File;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -24,7 +25,7 @@ import com.blogspot.na5cent.exom.ExOM;
 @SpringBootApplication
 public class ScheduledApplication
 {
-    private static Logger LOG = LogManager.getLogger(Application.class);
+    private static Logger LOG = LogManager.getLogger(ScheduledApplication.class);
 
     public static void main(String[] args) throws Throwable
     {
@@ -33,12 +34,22 @@ public class ScheduledApplication
         File excelFile = new ClassPathResource(GlobalConsts.RESOURCE_FILE_INPUT_XLS).getFile();
         final List<WxSubscriberExcelModel> rawItems =
             ExOM.mapFromExcel(excelFile).toObjectOf(WxSubscriberExcelModel.class).map();
-
+        //
+        List<WxSubscriberExcelModel> notnullItems = new ArrayList<WxSubscriberExcelModel>();
+        List<WxSubscriberExcelModel> nullItems = new ArrayList<WxSubscriberExcelModel>();
+        //
         for (WxSubscriberExcelModel item : rawItems) {
-            LOG.info("WxSubscriberModel:" + item.toString());
+            // System.out.println(item.getSubscribeId());
+            if (!"NULL".equals(item.getSubscribeId())) {
+                notnullItems.add(item);
+                LOG.info("WxSubscriberModel(notNull):" + item.toString());
+            } else {
+                nullItems.add(item);
+                LOG.info("WxSubscriberModel(Null):" + item.toString());
+            }
         }
         // JdbcTemplate Batch save.
-        String sql = "INSERT INTO CUSTOMER " + "(CUST_ID, NAME, AGE) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO wxFoo " + "(id, code, store) VALUES (?, ?, ?)";
 
         GlobalVariables.jdbcTempate.batchUpdate(sql, new BatchPreparedStatementSetter()
         {

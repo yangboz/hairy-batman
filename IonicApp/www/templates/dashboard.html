@@ -1,0 +1,98 @@
+<ion-view title="源分析数据">
+  <ion-nav-buttons side="left">
+    <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+    <button class="button button-icon icon ion-cloud" ng-click="login()"></button>
+  </ion-nav-buttons>
+
+  <ion-tabs class="tabs-light tabs-icon-top tabs-has-header">
+
+    <ion-tab title="个人" icon-on="ion-ios7-person" icon-off="ion-ios7-person-outline" ng-controller="PersonTabCtrl">
+      <ion-content class="has-header">
+        <ion-list>
+          <a class="item item-thumbnail-left" ng-repeat="person in personlist" href="#/app/personlist/{{person.id}}">
+            <img src="img/icon_a_00.png">
+            <h2>{{person.title}}</h2>
+            <p>Nine Inch Nails</p>
+          </a>
+        </ion-list>
+
+        <label class="item item-input item-select">
+          <div class="input-label">
+            Field Value Counter(Pie):
+          </div>
+          <select>
+            <option ng-repeat="person in personNamesSelOpts">{{person.name}}</option>
+          </select>
+        </label>
+
+        <div style="padding: 3px;width:100%;height:100%;border: 1px solid red;background-color: #ffffff">
+          <nvd3 options="personNamesChartOptions" data="personNamesChartData"></nvd3>
+        </div>
+
+        <label class="item item-input item-select">
+          <div class="input-label">
+            Field Value Counter(Bubble):
+          </div>
+          <select>
+            <option ng-repeat="person in personTagsSelOpts">{{person.name}}</option>
+          </select>
+        </label>
+
+        <div style="padding: 3px;width:100%;height:100%;border: 1px solid red;background-color: #ffffff">
+          <nvd3 options="personTagsChartOptions" data="personTagsChartData"></nvd3>
+        </div>
+
+        <label class="item item-input item-select">
+          <div class="input-label">
+            Aggregate Counter():
+          </div>
+          <select>
+            <option ng-repeat="person in personAggregateSelOpts">{{person.name}}</option>
+          </select>
+        </label>
+
+        <!--<canvas barchart="" options="options" data="chart" style="bottom:0;position:absolute;height:100%;width:100%"></canvas>-->
+
+        <div style="padding: 3px;width:100%;height:100%;border: 1px solid red;background-color: #ffffff">
+          <nvd3 options="personAggregateChartOptions" data="personAggregateChartData"></nvd3>
+        </div>
+      </ion-content>
+    </ion-tab>
+
+    <ion-tab title="群体" icon-on="ion-ios7-people" icon-off="ion-ios7-people-outline" ng-controller="GroupTabCtrl">
+      <div class="tabs-top tabs-light">
+        <div class="tabs">
+          <a class="tab-item active" href="#" ng-click="changeViewIndex(0)">
+            年龄分布
+          </a>
+          <a class="tab-item" href="#" ng-click="changeViewIndex(1)">
+            性别分布
+          </a>
+          <a class="tab-item" href="#" ng-click="changeViewIndex(2)">
+            族裔分布
+          </a>
+        </div>
+        <ion-slide-box style="width: 100%; margin:100px 0px 100px;text-align:center;" active-slide="selectedViewIndex">
+          <ion-slide>
+            <div style="padding: 3px;width:100%;height:100%;border: 1px solid red;background-color: #ffffff">
+              <nvd3 options="groupAgesChartOptions" data="groupAgesChartData"></nvd3>
+            </div>
+          </ion-slide>
+          <ion-slide>
+            <div style="padding: 3px;width:100%;height:100%;border: 1px solid red;background-color: #ffffff">
+              <nvd3 options="groupGendersChartOptions" data="groupGendersChartData"></nvd3>
+            </div>
+          </ion-slide>
+          <ion-slide>
+            <div style="padding: 3px;width:100%;height:100%;border: 1px solid red;background-color: #ffffff">
+              <nvd3 options="groupRacesChartOptions" data="groupRacesChartData"></nvd3>
+            </div>
+          </ion-slide>
+        </ion-slide-box>
+      </div>
+
+    </ion-tab>
+
+  </ion-tabs>
+  </ion-content>
+</ion-view>
