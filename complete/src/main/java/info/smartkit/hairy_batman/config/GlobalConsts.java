@@ -51,7 +51,7 @@ public class GlobalConsts
 
     public static final String[] CSV_COLUMNS_NAME_SIMPLE = QUERY_COLUMNS_NAME_SIMPLE.split(",");
 
-    public static final String RESOURCE_FILE_INPUT_CSV = "wxStatisticInput.csv";// wxStatisticInputSample.csv
+    public static final String RESOURCE_FILE_INPUT_CSV = "wxStatisticInputSample.csv";// wxStatisticInputSample.csv
 
     public static final String RESOURCE_FILE_INPUT_XLS = "wxStatisticInput.xlsx";
 
@@ -77,8 +77,8 @@ public class GlobalConsts
     public static final String SOGOU_SEARCH_WX_OPEN_ID_HTML_ELEMENTS = "div";
 
     public static final String SOGOU_SEARCH_WX_OPEN_ID_HTML_ELE_IDENTITY = "[href*=/gzh?]";
-    
-    public static final String SOGOU_SEARCH_WX_OPEN_ID_HTML_ELE_IDENTITY1= "[id*=sogou_vr_11002301_box*]";
+
+    public static final String SOGOU_SEARCH_WX_OPEN_ID_HTML_ELE_IDENTITY1 = "[id*=sogou_vr_11002301_box*]";
 
     public static final String SOGOU_SEARCH_WX_USER_ID_KEYWORDS = "微信号：";
 
