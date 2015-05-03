@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout) {
+.controller('AppCtrl', function($scope, $ionicModal, $timeout , WxArticleService) {
   // Form data for the login modal
   $scope.loginData = {};
 
@@ -27,9 +27,21 @@ angular.module('starter.controllers', [])
 
     // Simulate a login delay. Remove this and replace with your login
     // code if using a login system
-    $timeout(function() {
-      $scope.closeLogin();
-    }, 1000);
+    //$timeout(function() {
+    //  $scope.closeLogin();
+    //}, 1000);
+    $scope.newWxArticle = new WxArticleService();
+    $scope.newWxArticle.subscriberId = $scope.loginData.subscriberId;
+    //WxArticleService.save($scope.newWxArticle, function(resp) {
+    //  //data saved. do something here.
+    //  console.log("WxArticleService SAVE resp:",resp);
+    //});
+    WxArticleService.delete(
+        $scope.newWxArticle, function(resp) {
+          //data saved. do something here.
+          console.log("WxArticleService DELETE resp:",resp);
+        }
+    );
   };
 })
 
