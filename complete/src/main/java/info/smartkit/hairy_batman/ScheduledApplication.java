@@ -15,6 +15,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.PropertySources;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 
@@ -23,6 +25,7 @@ import com.blogspot.na5cent.exom.ExOM;
 //@ComponentScan
 //@EnableAutoConfiguration
 @SpringBootApplication
+@PropertySources({@PropertySource(value = "classpath:application-${spring.profiles.active}.properties")})
 public class ScheduledApplication
 {
     private static Logger LOG = LogManager.getLogger(ScheduledApplication.class);
