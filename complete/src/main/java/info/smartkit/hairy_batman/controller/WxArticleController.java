@@ -21,6 +21,8 @@ import info.smartkit.hairy_batman.dto.JsonObject;
 import info.smartkit.hairy_batman.model.WxSubscriberJPAModel;
 import info.smartkit.hairy_batman.model.WxSubscriberRepository;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -69,5 +71,28 @@ public class WxArticleController
         return new JsonObject(findOne);
 
     }
+
+    @RequestMapping(method = RequestMethod.GET)
+    @ApiOperation(httpMethod = "GET", value = "列出微信订阅号IDs")
+    public JsonObject getArticles(
+        @RequestParam(value = "subscriberId", required = true, defaultValue = "gh_d8c432a3cc12") String subscriberId)
+    {
+        // /
+        List<WxSubscriberJPAModel> findAll = repository.findBySubscriberId(subscriberId);
+        //
+        return new JsonObject(findAll);
+
+    }
+
+    // @RequestMapping(method = RequestMethod.GET)
+    // @ApiOperation(httpMethod = "GET", value = "列出微信订阅号ID")
+    // public JsonObject getArticle(
+    // @RequestParam(value = "subscriberId", required = true, defaultValue = "gh_d8c432a3cc12") String subscriberId)
+    // {
+    // // /
+    // WxSubscriberJPAModel findOne = repository.findBySubscriberId(subscriberId).get(0);
+    // //
+    // return new JsonObject(findOne);
+    // }
 
 }
