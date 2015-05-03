@@ -1,7 +1,11 @@
+/Volumes/Transcend/github/hairy-batman/complete/src/main/java/info/smartkit/hairy_batman/model/WxSubscriberRepository.java
 /Volumes/Transcend/github/hairy-batman/complete/src/main/java/info/smartkit/hairy_batman/domain/WxSimpleSubscriber.java
 /Volumes/Transcend/github/hairy-batman/complete/src/main/java/info/smartkit/hairy_batman/domain/WxFooArticle.java
 /Volumes/Transcend/github/hairy-batman/complete/src/main/java/info/smartkit/hairy_batman/demo/LoadExcel2Model.java
+/Volumes/Transcend/github/hairy-batman/complete/src/main/java/info/smartkit/hairy_batman/config/SwaggerConfig.java
 /Volumes/Transcend/github/hairy-batman/complete/src/main/java/info/smartkit/hairy_batman/reports/FileReporter.java
+/Volumes/Transcend/github/hairy-batman/complete/src/main/java/info/smartkit/hairy_batman/config/StaticResourceConfiguration.java
+/Volumes/Transcend/github/hairy-batman/complete/src/main/java/info/smartkit/hairy_batman/utils/SimpleCORSFilter.java
 /Volumes/Transcend/github/hairy-batman/complete/src/main/java/info/smartkit/hairy_batman/batch/WxFooItemProcessor.java
 /Volumes/Transcend/github/hairy-batman/complete/src/main/java/info/smartkit/hairy_batman/ScheduledApplication.java
 /Volumes/Transcend/github/hairy-batman/complete/src/main/java/info/smartkit/hairy_batman/config/GlobalConsts.java
@@ -9,10 +13,12 @@
 /Volumes/Transcend/github/hairy-batman/complete/src/main/java/info/smartkit/hairy_batman/schedule/ScheduledTasks.java
 /Volumes/Transcend/github/hairy-batman/complete/src/main/java/info/smartkit/hairy_batman/model/WxSubscriberJPAModel.java
 /Volumes/Transcend/github/hairy-batman/complete/src/main/java/info/smartkit/hairy_batman/query/SogouSearchQuery.java
+/Volumes/Transcend/github/hairy-batman/complete/src/main/java/info/smartkit/hairy_batman/dto/JsonObject.java
 /Volumes/Transcend/github/hairy-batman/complete/src/main/java/info/smartkit/hairy_batman/batch/WxBatchConfiguration.java
 /Volumes/Transcend/github/hairy-batman/complete/src/main/java/info/smartkit/hairy_batman/plain/WxBar.java
 /Volumes/Transcend/github/hairy-batman/complete/src/main/java/info/smartkit/hairy_batman/demo/WeiXinAnalyzer.java
 /Volumes/Transcend/github/hairy-batman/complete/src/main/java/info/smartkit/hairy_batman/domain/WxComplexSubscriber.java
+/Volumes/Transcend/github/hairy-batman/complete/src/main/java/info/smartkit/hairy_batman/dto/JsonString.java
 /Volumes/Transcend/github/hairy-batman/complete/src/main/java/info/smartkit/hairy_batman/config/GlobalVariables.java
 /Volumes/Transcend/github/hairy-batman/complete/src/main/java/info/smartkit/hairy_batman/demo/ExcelModel.java
 /Volumes/Transcend/github/hairy-batman/complete/src/main/java/info/smartkit/hairy_batman/plain/WxKJson.java
@@ -25,5 +31,6 @@
 /Volumes/Transcend/github/hairy-batman/complete/src/main/java/info/smartkit/hairy_batman/model/WxSubscriberExcelModel.java
 /Volumes/Transcend/github/hairy-batman/complete/src/main/java/info/smartkit/hairy_batman/demo/ApplicationHtmlParse.java
 /Volumes/Transcend/github/hairy-batman/complete/src/main/java/info/smartkit/hairy_batman/query/KJsonApiQuery.java
+/Volumes/Transcend/github/hairy-batman/complete/src/main/java/info/smartkit/hairy_batman/controller/WxArticleController.java
 /Volumes/Transcend/github/hairy-batman/complete/src/main/java/info/smartkit/hairy_batman/plain/WxSogou.java
 /Volumes/Transcend/github/hairy-batman/complete/src/main/java/info/smartkit/hairy_batman/plain/WxSogouSimple.java

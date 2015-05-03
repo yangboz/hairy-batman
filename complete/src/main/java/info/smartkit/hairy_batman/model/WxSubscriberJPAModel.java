@@ -105,23 +105,23 @@ public class WxSubscriberJPAModel
         this.onSubscribe = onSubscribe;
     }
 
-    private String subscribeId;// 订阅号名全称,subscribeId VARCHAR(20),
+    private String subscriberId;// 订阅号名全称,subscribeId VARCHAR(20),
 
     public String getSubscribeId()
     {
-        return subscribeId;
+        return subscriberId;
     }
 
     public void setSubscribeId(String subscribeId)
     {
-        this.subscribeId = subscribeId;
+        this.subscriberId = subscribeId;
     }
 
     @Override
     public String toString()
     {
         return "id: " + id + ",code: " + code + ", store: " + store + ",agency: " + agency + ",unit: " + unit
-            + ",onSubscribe: " + onSubscribe + ",subscribeId: " + subscribeId;
+            + ",onSubscribe: " + onSubscribe + ",subscribeId: " + subscriberId;
     }
 
 }
