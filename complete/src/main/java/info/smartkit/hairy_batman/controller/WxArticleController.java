@@ -35,14 +35,16 @@ import com.wordnik.swagger.annotations.ApiOperation;
  * @author yangboz
  */
 @RestController
+@RequestMapping("v0/wxArticle")
 public class WxArticleController
 {
 
     @Autowired
     WxSubscriberRepository repository;
 
-    @RequestMapping(method = RequestMethod.GET, value = "v0/wxArticle")
-    @ApiOperation(httpMethod = "GET", value = "增加微信订阅号ID")
+    // @RequestMapping(method = RequestMethod.GET, value = "v0/wxArticle")
+    @RequestMapping(method = RequestMethod.PUT)
+    @ApiOperation(httpMethod = "PUT", value = "增加微信订阅号ID")
     public JsonObject addArticle(
         @RequestParam(value = "subscriberId", required = true, defaultValue = "gh_d8c432a3cc12") String subscriberId)
     {
@@ -54,4 +56,18 @@ public class WxArticleController
         return new JsonObject(repository.findBySubscriberId(subscriberId));
 
     }
+
+    @RequestMapping(method = RequestMethod.DELETE)
+    @ApiOperation(httpMethod = "DELETE", value = "删除微信订阅号ID")
+    public JsonObject delArticle(
+        @RequestParam(value = "subscriberId", required = true, defaultValue = "gh_d8c432a3cc12") String subscriberId)
+    {
+        // /
+        WxSubscriberJPAModel findOne = repository.findBySubscriberId(subscriberId).get(0);
+        repository.delete(findOne.getId());
+        //
+        return new JsonObject(findOne);
+
+    }
+
 }
