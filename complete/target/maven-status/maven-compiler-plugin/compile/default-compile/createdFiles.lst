@@ -1,6 +1,5 @@
 info/smartkit/hairy_batman/domain/WxComplexSubscriber.class
 info/smartkit/hairy_batman/config/GlobalConsts.class
-info/smartkit/hairy_batman/Application$1.class
 info/smartkit/hairy_batman/config/StaticResourceConfiguration.class
 info/smartkit/hairy_batman/demo/LoadExcel2Model.class
 info/smartkit/hairy_batman/model/WxSubscriberJPAModel.class
