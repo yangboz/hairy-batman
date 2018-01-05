@@ -37,6 +37,8 @@ url1,url2,
 // step3:读取step2保存的一行结果，请求kjson(将来要自己实现的)API得到对应每一篇文章的阅读数和点赞数并保存,例如(OpenId,[{articleUrl1,readNum1,likeNum1},{articleUrl2,readNum2,likeNum2},...)
 // step4:基于step3保存表做数据报表/KPI/统计分析;
 
+TODO: http://bj.58.com/wuliu/?key=货运&final=1&jump=1&PGTID=0d3000d4-0000-1107-5acb-11206f159c4a&ClickID=1
+
 Online API
 ==========
 
